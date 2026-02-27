@@ -2,6 +2,20 @@
 
 这些模板用于不同的输出风格与详略程度。**无论选择哪种模板，最终呈现给用户的内容必须为简体中文**（链接保持原样；专有名词可保留英文/缩写）。
 
+## 通用：每条新闻目录索引（必做）
+
+为避免“只有大框架目录”，**无论选择哪种模板**，最终 Markdown 都必须包含 **每篇新闻/条目的可点击目录索引**。
+
+**硬性要求**：
+- **目录必须细到每条新闻**：在「📑 目录」下，按模板的组织方式（分类/时间线/公司/论文）做**二级嵌套**，列出该组下每条新闻标题的链接。
+- **每条新闻必须有稳定锚点**：在每条新闻标题（或条目）上方插入一行 HTML 锚点：`<a id="xxx"></a>`，目录用 `(#xxx)` 进行链接，避免依赖不同渲染器的自动标题锚点规则。
+
+**推荐锚点命名**（同一份简报内唯一且连续）：
+- Standard / Deep / Brief（按分类）：`maj-01`、`res-01`、`biz-01`、`tool-01`、`pol-01`、`guru-01`…
+- Chronological（按时间段）：`am-01`、`pm-01`、`eve-01`…（早/午/晚各自从 01 开始）
+- By-Company（按公司）：`openai-01`、`google-01`、`anthropic-01`、`meta-01`、`msft-01`、`other-01`、`guru-01`…
+- Research-Only（论文为主）：`paper-01`、`paper-02`…（热门方向可选：`topic-01`…）
+
 ## Standard Format (Default)
 
 The most commonly used format with categorized summaries and links.
@@ -19,11 +33,18 @@ The most commonly used format with categorized summaries and links.
 
 - [🔺 今日新闻五层架构分布（黄仁勋 AI 产业金字塔）](#-今日新闻五层架构分布黄仁勋-ai-产业金字塔)
 - [🔥 重要发布](#-重要发布)
+  - [（maj-01）新闻标题 1](#maj-01)
+  - [（maj-02）新闻标题 2](#maj-02)
 - [🔬 研究与论文](#-研究与论文)
+  - [（res-01）论文/新闻标题 1](#res-01)
 - [💰 产业与商业](#-产业与商业)
+  - [（biz-01）新闻标题 1](#biz-01)
 - [🛠️ 工具与应用](#-工具与应用)
+  - [（tool-01）新闻标题 1](#tool-01)
 - [🌍 政策与伦理](#-政策与伦理)
+  - [（pol-01）新闻标题 1](#pol-01)
 - [🧠 技术大牛最新观点分享](#-技术大牛最新观点分享)
+  - [（guru-01）观点标题 1](#guru-01)
 - [🎯 今日要点](#-今日要点)
 
 ---
@@ -54,11 +75,11 @@ The most commonly used format with categorized summaries and links.
 
 ### 各层新闻一览
 
-**⚡ L1-能源**：[新闻标题1]、[新闻标题2]…
-**🔧 L2-芯片**：[新闻标题3]…
-**🏗️ L3-基建**：[新闻标题4]…
-**🧠 L4-大模型**：[新闻标题5]、[新闻标题6]…
-**🚀 L5-应用**：[新闻标题7]、[新闻标题8]…
+**⚡ L1-能源**：[新闻标题](#biz-01)…
+**🔧 L2-芯片**：[新闻标题](#pol-01)…
+**🏗️ L3-基建**：[新闻标题](#res-01)…
+**🧠 L4-大模型**：[新闻标题](#maj-01)、[新闻标题](#maj-02)…
+**🚀 L5-应用**：[新闻标题](#tool-01)…
 
 ### 💡 层级洞察
 
@@ -69,6 +90,7 @@ The most commonly used format with categorized summaries and links.
 
 ## 🔥 重要发布
 
+<a id="maj-01"></a>
 ### [新闻标题 1（中文，可选附英文原文）]
 
 **摘要**： `🧠 L4-大模型` [用 1 句中文概括]
@@ -85,6 +107,7 @@ The most commonly used format with categorized summaries and links.
 
 ---
 
+<a id="maj-02"></a>
 ### [新闻标题 2]
 
 **摘要**： `🚀 L5-应用` [用 1 句中文概括]
@@ -102,6 +125,7 @@ The most commonly used format with categorized summaries and links.
 
 ## 🔬 研究与论文
 
+<a id="res-01"></a>
 ### [新闻标题 3 / 论文标题]
 
 **摘要**： `🧠 L4-大模型` [用 1 句中文概括]
@@ -120,6 +144,7 @@ The most commonly used format with categorized summaries and links.
 
 ## 💰 产业与商业
 
+<a id="biz-01"></a>
 ### [新闻标题 4]
 
 **摘要**： `⚡ L1-能源` [用 1 句中文概括]
@@ -137,6 +162,7 @@ The most commonly used format with categorized summaries and links.
 
 ## 🛠️ 工具与应用
 
+<a id="tool-01"></a>
 ### [新闻标题 5]
 
 **摘要**： `🚀 L5-应用` [用 1 句中文概括]
@@ -154,6 +180,7 @@ The most commonly used format with categorized summaries and links.
 
 ## 🌍 政策与伦理
 
+<a id="pol-01"></a>
 ### [新闻标题 6]
 
 **摘要**： `🔧 L2-芯片` [用 1 句中文概括]
@@ -173,6 +200,7 @@ The most commonly used format with categorized summaries and links.
 
 > 从技术大牛（默认：Andrej Karpathy）的个人平台中挑选最近 24–72 小时的 1–3 条观点/更新，避免刷屏；同主题多平台同步时保留最权威版本。
 
+<a id="guru-01"></a>
 ### Andrej Karpathy（卡帕西）
 
 **观点摘要**： `🧠 L4-大模型` [用 1-2 句中文概括观点/更新内容]
@@ -217,11 +245,18 @@ Quick scan format for users who want just the headlines.
 
 - [🔺 五层架构速览](#-五层架构速览)
 - [🔥 重要发布](#-重要发布)
+  - [（maj-01）Headline 1](#maj-01)
+  - [（maj-02）Headline 2](#maj-02)
 - [🔬 研究与论文](#-研究与论文)
+  - [（res-01）Headline 4](#res-01)
 - [💰 产业与商业](#-产业与商业)
+  - [（biz-01）Headline 6](#biz-01)
 - [🛠️ 工具与应用](#-工具与应用)
+  - [（tool-01）Headline 8](#tool-01)
 - [🌍 政策与伦理](#-政策与伦理)
+  - [（pol-01）Headline 9](#pol-01)
 - [🧠 技术大牛观点速览](#-技术大牛观点速览)
+  - [（guru-01）观点速览 1](#guru-01)
 
 ---
 
@@ -241,9 +276,11 @@ Quick scan format for users who want just the headlines.
 
 ## 🔥 重要发布
 
+<a id="maj-01"></a>
 • `🧠 L4-大模型` [Headline 1] ([Publication])
 🔗 [URL]
 
+<a id="maj-02"></a>
 • `🚀 L5-应用` [Headline 2] ([Publication])
 🔗 [URL]
 
@@ -254,6 +291,7 @@ Quick scan format for users who want just the headlines.
 
 ## 🔬 研究与论文
 
+<a id="res-01"></a>
 • `🧠 L4-大模型` [Headline 4] ([Publication])
 🔗 [URL]
 
@@ -264,6 +302,7 @@ Quick scan format for users who want just the headlines.
 
 ## 💰 产业与商业
 
+<a id="biz-01"></a>
 • `⚡ L1-能源` [Headline 6] ([Publication])
 🔗 [URL]
 
@@ -274,6 +313,7 @@ Quick scan format for users who want just the headlines.
 
 ## 🛠️ 工具与应用
 
+<a id="tool-01"></a>
 • `🚀 L5-应用` [Headline 8] ([Publication])
 🔗 [URL]
 
@@ -281,6 +321,7 @@ Quick scan format for users who want just the headlines.
 
 ## 🌍 政策与伦理
 
+<a id="pol-01"></a>
 • `🔧 L2-芯片` [Headline 9] ([Publication])
 🔗 [URL]
 
@@ -288,6 +329,7 @@ Quick scan format for users who want just the headlines.
 
 ## 🧠 技术大牛观点速览
 
+<a id="guru-01"></a>
 • `🧠 L4-大模型` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
 🔗 [URL]
 
@@ -320,11 +362,18 @@ Comprehensive format with in-depth analysis and implications.
 
 - [🔺 今日新闻五层架构分布（黄仁勋 AI 产业金字塔）](#-今日新闻五层架构分布黄仁勋-ai-产业金字塔)
 - [🔥 重要发布](#-重要发布)
+  - [（maj-01）Headline 1](#maj-01)
+  - [（maj-02）Headline 2](#maj-02)
 - [🔬 研究与论文](#-研究与论文)
+  - [（res-01）论文标题 1](#res-01)
 - [💰 产业与商业](#-产业与商业)
+  - [（biz-01）新闻标题 1](#biz-01)
 - [🛠️ 工具与应用](#-工具与应用)
+  - [（tool-01）工具/产品 1](#tool-01)
 - [🌍 政策与伦理](#-政策与伦理)
+  - [（pol-01）新闻标题 1](#pol-01)
 - [🧠 技术大牛最新观点分享（深度）](#-技术大牛最新观点分享深度)
+  - [（guru-01）观点标题 1](#guru-01)
 - [🎯 分析与洞察](#-分析与洞察)
 - [📊 统计概览](#-统计概览)
 
@@ -356,11 +405,11 @@ Comprehensive format with in-depth analysis and implications.
 
 ### 各层新闻一览
 
-**⚡ L1-能源**：[新闻标题]…
-**🔧 L2-芯片**：[新闻标题]…
-**🏗️ L3-基建**：[新闻标题]…
-**🧠 L4-大模型**：[新闻标题]…
-**🚀 L5-应用**：[新闻标题]…
+**⚡ L1-能源**：[新闻标题](#biz-01)…
+**🔧 L2-芯片**：[新闻标题](#pol-01)…
+**🏗️ L3-基建**：[新闻标题](#res-01)…
+**🧠 L4-大模型**：[新闻标题](#maj-01)、[新闻标题](#maj-02)…
+**🚀 L5-应用**：[新闻标题](#tool-01)…
 
 ### 💡 层级洞察
 
@@ -371,6 +420,7 @@ Comprehensive format with in-depth analysis and implications.
 
 ## 🔥 重要发布
 
+<a id="maj-01"></a>
 ### [Headline 1]
 
 **摘要**： `🧠 L4-大模型` [用 1 句中文概括]
@@ -396,6 +446,7 @@ Comprehensive format with in-depth analysis and implications.
 
 ---
 
+<a id="maj-02"></a>
 ### [Headline 2]
 
 **摘要**： `🚀 L5-应用` [用 1 句中文概括]
@@ -418,6 +469,7 @@ Comprehensive format with in-depth analysis and implications.
 
 ## 🔬 研究与论文
 
+<a id="res-01"></a>
 ### [论文标题（中文，可选附英文原文）]
 
 **摘要**： `🧠 L4-大模型` [这项研究在做什么，用 1-2 句中文概括]
@@ -441,6 +493,7 @@ Comprehensive format with in-depth analysis and implications.
 
 ## 💰 产业与商业
 
+<a id="biz-01"></a>
 ### [新闻标题]
 
 **摘要**： `⚡ L1-能源` [用 1 句中文概括]
@@ -463,6 +516,7 @@ Comprehensive format with in-depth analysis and implications.
 
 ## 🛠️ 工具与应用
 
+<a id="tool-01"></a>
 ### [工具/产品名称]
 
 **摘要**： `🚀 L5-应用` [它做什么，用 1 句中文概括]
@@ -488,6 +542,7 @@ Comprehensive format with in-depth analysis and implications.
 
 ## 🌍 政策与伦理
 
+<a id="pol-01"></a>
 ### [新闻标题]
 
 **摘要**： `🔧 L2-芯片` [发生了什么，用 1 句中文概括]
@@ -512,6 +567,7 @@ Comprehensive format with in-depth analysis and implications.
 
 > 选取 1–3 条”最近 24–72 小时”的观点/更新，给出更偏方法论/实践导向的提炼。
 
+<a id="guru-01"></a>
 ### Andrej Karpathy（卡帕西）
 
 **观点摘要**： `🧠 L4-大模型` [用 2-3 句中文概括观点核心]
@@ -588,8 +644,12 @@ Stories organized by time instead of category.
 
 - [🔺 今日新闻五层架构分布](#-今日新闻五层架构分布)
 - [早间更新](#早间更新)
+  - [（am-01）Headline 1](#am-01)
+  - [（am-02）Headline 2](#am-02)
 - [午后动态](#午后动态)
+  - [（pm-01）Headline 3](#pm-01)
 - [晚间更新](#晚间更新)
+  - [（eve-01）Headline 4](#eve-01)
 - [🎯 今日要点](#-今日要点)
 
 ---
@@ -614,6 +674,7 @@ Stories organized by time instead of category.
 
 ## 早间更新
 
+<a id="am-01"></a>
 ### 🔥 [Headline 1]
 **[时间（若有）]** • [媒体/机构]
 
@@ -627,6 +688,7 @@ Stories organized by time instead of category.
 
 ---
 
+<a id="am-02"></a>
 ### 🔬 [Headline 2]
 **[时间（若有）]** • [媒体/机构]
 
@@ -642,6 +704,7 @@ Stories organized by time instead of category.
 
 ## 午后动态
 
+<a id="pm-01"></a>
 ### 💰 [Headline 3]
 **[时间（若有）]** • [媒体/机构]
 
@@ -657,6 +720,7 @@ Stories organized by time instead of category.
 
 ## 晚间更新
 
+<a id="eve-01"></a>
 ### 🛠️ [Headline 4]
 **[时间（若有）]** • [媒体/机构]
 
@@ -700,12 +764,21 @@ Stories organized by company instead of category.
 
 - [🔺 今日新闻五层架构分布](#-今日新闻五层架构分布)
 - [OpenAI](#openai)
+  - [（openai-01）Headline 1](#openai-01)
+  - [（openai-02）Headline 2](#openai-02)
 - [Google/DeepMind](#googledeepmind)
+  - [（google-01）Headline 3](#google-01)
 - [Anthropic](#anthropic)
+  - [（anthropic-01）Headline 4](#anthropic-01)
 - [Meta](#meta)
+  - [（meta-01）Headline 5](#meta-01)
 - [Microsoft](#microsoft)
+  - [（msft-01）Headline 6](#msft-01)
 - [Other Companies](#other-companies)
+  - [（other-01）Headline 7](#other-01)
+  - [（other-02）Headline 8](#other-02)
 - [🧠 技术大牛最新观点分享](#-技术大牛最新观点分享)
+  - [（guru-01）观点速览 1](#guru-01)
 - [🎯 今日要点](#-今日要点)
 
 ---
@@ -730,10 +803,12 @@ Stories organized by company instead of category.
 
 ## OpenAI
 
+<a id="openai-01"></a>
 ### 🔥 [Headline 1]
 **摘要**： `🧠 L4-大模型` [用 1 句中文概括]
 🔗 **链接**： [URL]
 
+<a id="openai-02"></a>
 ### 🔬 [Headline 2]
 **摘要**： `🚀 L5-应用` [用 1 句中文概括]
 🔗 **链接**： [URL]
@@ -742,6 +817,7 @@ Stories organized by company instead of category.
 
 ## Google/DeepMind
 
+<a id="google-01"></a>
 ### [Headline 3]
 **摘要**： `🧠 L4-大模型` [用 1 句中文概括]
 🔗 **链接**： [URL]
@@ -750,6 +826,7 @@ Stories organized by company instead of category.
 
 ## Anthropic
 
+<a id="anthropic-01"></a>
 ### [Headline 4]
 **摘要**： `🚀 L5-应用` [用 1 句中文概括]
 🔗 **链接**： [URL]
@@ -758,6 +835,7 @@ Stories organized by company instead of category.
 
 ## Meta
 
+<a id="meta-01"></a>
 ### [Headline 5]
 **摘要**： `🧠 L4-大模型` [用 1 句中文概括]
 🔗 **链接**： [URL]
@@ -766,6 +844,7 @@ Stories organized by company instead of category.
 
 ## Microsoft
 
+<a id="msft-01"></a>
 ### [Headline 6]
 **摘要**： `🏗️ L3-基建` [用 1 句中文概括]
 🔗 **链接**： [URL]
@@ -774,10 +853,12 @@ Stories organized by company instead of category.
 
 ## Other Companies
 
+<a id="other-01"></a>
 ### 💰 [Headline 7 - Company Name]
 **摘要**： `⚡ L1-能源` [用 1 句中文概括]
 🔗 **链接**： [URL]
 
+<a id="other-02"></a>
 ### 🛠️ [Headline 8 - Company Name]
 **摘要**： `🚀 L5-应用` [用 1 句中文概括]
 🔗 **链接**： [URL]
@@ -786,6 +867,7 @@ Stories organized by company instead of category.
 
 ## 🧠 技术大牛最新观点分享
 
+<a id="guru-01"></a>
 • `🧠 L4-大模型` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
 🔗 [URL]
 
@@ -824,8 +906,11 @@ Focus exclusively on research papers and academic breakthroughs.
 
 - [🔺 研究论文五层架构分布](#-研究论文五层架构分布)
 - [精选论文](#精选论文)
+  - [（paper-01）论文标题 1](#paper-01)
+  - [（paper-02）论文标题 2](#paper-02)
 - [热门方向](#热门方向)
 - [🧠 技术大牛最新观点分享](#-技术大牛最新观点分享)
+  - [（guru-01）观点速览 1](#guru-01)
 - [🎯 关键洞察](#-关键洞察)
 - [📊 统计概览](#-统计概览)
 
@@ -851,6 +936,7 @@ Focus exclusively on research papers and academic breakthroughs.
 
 ## 精选论文
 
+<a id="paper-01"></a>
 ### 🏆 [论文标题 1（中文，可选附英文原文）]
 **作者**： [作者]
 **机构**： [机构]
@@ -878,6 +964,7 @@ Focus exclusively on research papers and academic breakthroughs.
 
 ---
 
+<a id="paper-02"></a>
 ### 🥈 [论文标题 2（中文，可选附英文原文）]
 **作者**： [作者]
 **机构**： [机构]
@@ -916,6 +1003,7 @@ Focus exclusively on research papers and academic breakthroughs.
 
 > 即便是”仅研究/论文”模板，也保留一个小模块，用于补充高质量方法论或课程/实践更新（默认：Karpathy）。
 
+<a id="guru-01"></a>
 • `🧠 L4-大模型` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
 🔗 [URL]
 

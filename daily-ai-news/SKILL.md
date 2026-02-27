@@ -41,7 +41,7 @@ Phase 3.5: Five-Layer Pyramid Classification (NEW)
   └─ Classify each news item into Huang's 5-layer AI stack
       ↓
 Phase 4: Output Formatting
-  └─ TOC + Pyramid visualization + Layer-tagged news (use the selected template)
+  └─ Per-news TOC index + Pyramid visualization + Layer-tagged news (use the selected template)
       ↓
 Phase 5: Save to Markdown File
   └─ Write the final briefing to `./daily-AI-News/Output/`
@@ -278,6 +278,22 @@ Organize news into 5 categories:
 
 Use the following template for consistent output:
 
+### 目录索引规则（新增 — 必做）
+
+为避免“只有大框架目录”，最终 Markdown 必须包含 **每篇新闻的可点击目录索引**。
+
+**硬性要求**：
+- **目录必须细到每条新闻**：在「📑 目录」下，按分类做**二级嵌套**，列出该分类下每条新闻标题的链接。
+- **每条新闻必须有稳定锚点**：在每条新闻标题上方插入一行 HTML 锚点：`<a id="xxx"></a>`，目录用 `(#xxx)` 进行链接，避免依赖不同渲染器的自动标题锚点规则。
+- **锚点命名规则**：使用“分类缩写 + 两位序号”，同一份简报内唯一且连续。
+  - 重要发布：`maj-01`、`maj-02`…
+  - 研究与论文：`res-01`、`res-02`…
+  - 产业与商业：`biz-01`、`biz-02`…
+  - 工具与应用：`tool-01`、`tool-02`…
+  - 政策与伦理：`pol-01`、`pol-02`…
+  - 技术大牛观点：`guru-01`、`guru-02`…
+- **可选但推荐**：在「🔺 今日新闻五层架构分布」里，“各层新闻一览”也尽量用同样的锚点链接到正文对应新闻条目。
+
 ```markdown
 # 📰 AI 每日资讯简报
 
@@ -291,11 +307,19 @@ Use the following template for consistent output:
 
 - [🔺 今日新闻五层架构分布（黄仁勋 AI 产业金字塔）](#-今日新闻五层架构分布黄仁勋-ai-产业金字塔)
 - [🔥 重要发布](#-重要发布)
+  - [（maj-01）新闻标题 1](#maj-01)
+  - [（maj-02）新闻标题 2](#maj-02)
 - [🔬 研究与论文](#-研究与论文)
+  - [（res-01）论文/新闻标题 1](#res-01)
+  - [（res-02）论文/新闻标题 2](#res-02)
 - [💰 产业与商业](#-产业与商业)
+  - [（biz-01）新闻标题 1](#biz-01)
 - [🛠️ 工具与应用](#-工具与应用)
+  - [（tool-01）新闻标题 1](#tool-01)
 - [🌍 政策与伦理](#-政策与伦理)
+  - [（pol-01）新闻标题 1](#pol-01)
 - [🧠 技术大牛最新观点分享](#-技术大牛最新观点分享)
+  - [（guru-01）观点标题 1](#guru-01)
 - [🎯 今日要点](#-今日要点)
 
 ---
@@ -309,11 +333,11 @@ Use the following template for consistent output:
 
 ### 各层新闻一览
 
-**⚡ L1-能源**：[新闻标题]…
-**🔧 L2-芯片**：[新闻标题]…
-**🏗️ L3-基建**：[新闻标题]…
-**🧠 L4-大模型**：[新闻标题]…
-**🚀 L5-应用**：[新闻标题]…
+**⚡ L1-能源**：[新闻标题](#maj-01)…
+**🔧 L2-芯片**：[新闻标题](#biz-01)…
+**🏗️ L3-基建**：[新闻标题](#res-01)…
+**🧠 L4-大模型**：[新闻标题](#maj-02)…
+**🚀 L5-应用**：[新闻标题](#tool-01)…
 
 ### 💡 层级洞察
 
@@ -323,6 +347,7 @@ Use the following template for consistent output:
 
 ## 🔥 重要发布
 
+<a id="maj-01"></a>
 ### [新闻标题 1（中文，可选附英文原文）]
 
 **摘要**： `🧠 L4-大模型` [用 1 句中文概括]
@@ -339,6 +364,7 @@ Use the following template for consistent output:
 
 ---
 
+<a id="maj-02"></a>
 ### [新闻标题 2]
 
 [Same format as above, with layer tag before summary text]
@@ -347,6 +373,7 @@ Use the following template for consistent output:
 
 ## 🔬 研究与论文
 
+<a id="res-01"></a>
 ### [新闻标题 3 / 论文标题]
 
 [Same format as above, with layer tag before summary text]
@@ -355,6 +382,7 @@ Use the following template for consistent output:
 
 ## 💰 产业与商业
 
+<a id="biz-01"></a>
 ### [新闻标题 4]
 
 [Same format as above, with layer tag before summary text]
@@ -363,6 +391,7 @@ Use the following template for consistent output:
 
 ## 🛠️ 工具与应用
 
+<a id="tool-01"></a>
 ### [新闻标题 5]
 
 [Same format as above, with layer tag before summary text]
@@ -371,9 +400,26 @@ Use the following template for consistent output:
 
 ## 🌍 政策与伦理
 
+<a id="pol-01"></a>
 ### [新闻标题 6]
 
 [Same format as above, with layer tag before summary text]
+
+---
+
+## 🧠 技术大牛最新观点分享
+
+<a id="guru-01"></a>
+### [观点标题 1（例如：Karpathy 最新文章/推文主题）]
+
+**摘要**： `🧠 L4-大模型` [用 1 句中文概括]
+
+**要点**：
+- [要点 1]
+- [要点 2]
+
+📅 **来源**： [作者/平台] • [发布日期]
+🔗 **链接**： [原文 URL]
 
 ---
 
