@@ -1,6 +1,6 @@
-# AI News Sources Database
+# AI News Sources Database — International Edition
 
-Comprehensive list of AI news sources organized by tier and focus area.
+Comprehensive list of international AI news sources organized by tier and focus area.
 
 ## Tier 1: Primary Sources (Check Daily)
 
@@ -75,33 +75,29 @@ Official blogs from major AI companies. Best for official announcements and prod
 - **Best For**: Cutting-edge AI research
 - **Key Content**: AlphaFold, RL advances, scientific applications
 
-### 4. Anthropic News
+### 4. Anthropic Engineering
 - **URL**: https://www.anthropic.com/engineering
 - **Update Frequency**: Weekly
-- **Focus Areas**: Claude updates, safety research, constitutional AI
-- **Best For**: Anthropic product and research updates
-- **Key Content**: Claude features, safety research, company news
+- **Focus Areas**: Claude updates, engineering practices
+- **Best For**: Anthropic engineering and product updates
 
 ### 5. Anthropic News
 - **URL**: https://www.anthropic.com/news
 - **Update Frequency**: Weekly
 - **Focus Areas**: Claude updates, safety research, constitutional AI
 - **Best For**: Anthropic product and research updates
-- **Key Content**: Claude features, safety research, company news
 
 ### 6. Microsoft AI Blog
 - **URL**: https://blogs.microsoft.com/ai/
 - **Update Frequency**: Weekly
 - **Focus Areas**: Azure AI, Copilot updates, enterprise AI
 - **Best For**: Microsoft's AI products and integrations
-- **Key Content**: Copilot features, Azure AI services, partnerships
 
 ### 7. Meta AI Blog
 - **URL**: https://ai.meta.com/blog/
 - **Update Frequency**: Weekly
 - **Focus Areas**: LLaMA, open source, research releases
 - **Best For**: Meta's open source AI initiatives
-- **Key Content**: LLaMA releases, research papers, AI infrastructure
 
 ---
 
@@ -114,32 +110,24 @@ Academic and research-focused sources for the latest AI research papers and brea
 - **Update Frequency**: Daily
 - **Focus Areas**: Preprint research papers
 - **Best For**: Latest research before publication
-- **Key Categories**:
-  - cs.AI: Artificial Intelligence
-  - cs.LG: Machine Learning
-  - cs.CL: Computation and Language (NLP)
-  - cs.CV: Computer Vision
+- **Key Categories**: cs.AI, cs.LG, cs.CL, cs.CV
 
 ### 2. Hugging Face
 - **URL**: https://huggingface.co/blog
 - **Update Frequency**: Weekly
 - **Focus Areas**: Model releases, open source, NLP, computer vision
 - **Best For**: Open source models and tools
-- **Key Content**: New model releases, framework updates, tutorials
 
 ### 3. Papers with Code
 - **URL**: https://paperswithcode.com/
 - **Update Frequency**: Daily
 - **Focus Areas**: Research papers with implementations
 - **Best For**: Finding practical implementations of research
-- **Key Content**: Trending papers, benchmarks, state-of-the-art results
 
 ### 4. Google DeepMind Publications
 - **URL**: https://deepmind.google/research/publications/
 - **Update Frequency**: Weekly
 - **Focus Areas**: Peer-reviewed research papers
-- **Best For**: Official DeepMind research publications
-- **Key Content**: Published papers, conference presentations
 
 ---
 
@@ -149,101 +137,76 @@ Specialized publications focusing on specific aspects of AI.
 
 ### 1. AI Ethics Newsletter
 - **URL**: https://aiethicsnewsletter.com/
-- **Update Frequency**: Weekly
 - **Focus Areas**: AI ethics, policy, societal impact
-- **Best For**: Ethics and policy discussions
-- **Strength**: Curated content on responsible AI
 
 ### 2. Synced Review
 - **URL**: https://syncedreview.com/
-- **Update Frequency**: Daily
 - **Focus Areas**: China AI news, technical deep dives
-- **Best For**: Chinese AI industry coverage
-- **Strength**: Unique perspective on China's AI ecosystem
 
 ### 3. KDnuggets
 - **URL**: https://www.kdnuggets.com/
-- **Update Frequency**: Daily
 - **Focus Areas**: Data science, machine learning tutorials, industry news
-- **Best For**: Technical tutorials and educational content
-- **Strength**: Practical guides and learning resources
 
 ### 4. VentureBeat AI Beat
 - **URL**: https://venturebeat.com/category/ai/
-- **Update Frequency**: Daily
 - **Focus Areas**: In-depth AI industry reporting
-- **Best For**: Detailed business analysis
-- **Strength**: Exclusive interviews and industry insights
 
 ### 5. Towards Data Science
 - **URL**: https://towardsdatascience.com/
-- **Update Frequency**: Daily
 - **Focus Areas**: Data science tutorials, ML techniques
-- **Best For**: Learning and technical deep dives
-- **Strength**: Community-contributed technical content
 
 ---
 
-## Tier 5: Expert Voices / 技术大牛观点（建议每日/隔日检查）
+## Tier 5: Expert Voices / Karpathy (Check Daily/Every Other Day)
 
-这类信息源以“个人观点/知识分享/课程更新”为主，适合为日报增加高信噪比的观察与方法论。
+### Andrej Karpathy — All Platforms
 
-### Andrej Karpathy（卡帕西）- 官方/本人账号为主
+**Blogs / Personal Sites**
+- **Personal Homepage**: https://karpathy.ai/
+- **Old Blog (Jekyll)**: http://karpathy.github.io/
+- **Bear Blog**: https://karpathy.bearblog.dev/
+- **Medium**: https://karpathy.medium.com/
 
-**博客 / 个人网站**
-- **个人主页**：https://karpathy.ai/
-- **旧博客（Jekyll）**：http://karpathy.github.io/
-- **Bear Blog（短文/随笔）**：https://karpathy.bearblog.dev/
-- **Medium**：https://karpathy.medium.com/
+**Social Media**
+- **X (Twitter)**: https://x.com/karpathy
 
-**推特 / X**
-- **X（Twitter）**：https://x.com/karpathy
+**Video**
+- **YouTube**: https://www.youtube.com/andrejkarpathy
 
-**油管 / YouTube**
-- **YouTube 频道**：https://www.youtube.com/andrejkarpathy
+**Courses**
+- **Neural Networks: Zero To Hero**: https://karpathy.ai/zero-to-hero.html
 
-**课程 / 系列分享**
-- **Neural Networks: Zero To Hero**：https://karpathy.ai/zero-to-hero.html
+**Code/Notes**
+- **GitHub**: https://github.com/karpathy
+- **GitHub Gist**: https://gist.github.com/karpathy
 
-**代码/笔记（也常发观点与实现）**
-- **GitHub**：https://github.com/karpathy
-- **GitHub Gist**：https://gist.github.com/karpathy
-
-**其他（文章型分享）**
-- **Stanford（建议/文章页之一）**：https://cs.stanford.edu/people/karpathy/advice.html
+**Other**
+- **Stanford**: https://cs.stanford.edu/people/karpathy/advice.html
 
 ---
 
 ## Usage Guidelines
 
-### Daily News Gathering
-For daily briefings, focus on:
+### Daily News Gathering (International)
 1. Choose 3-5 sources from **Tier 1**
 2. Add 1-2 sources from **Tier 2** (check for major announcements)
 3. Use web search to discover breaking news
-4. 从 **Tier 5**（技术大牛观点）挑选 1-3 条“最近 24–72 小时”的观点/分享，加入日报的独立模块中
+4. Check **Tier 5** (Karpathy) for 1-3 recent insights (last 24-72 hours)
 
 ### Weekly Research Roundup
-For research-focused updates:
 1. Check **Tier 3** sources (arXiv, Hugging Face)
 2. Review recent papers from major company blogs (**Tier 2**)
 3. Focus on breakthrough papers and trending research
 
-### Specialized Coverage
-For specific topics:
-- **Ethics/Policy**: Tier 4 sources (AI Ethics Newsletter)
-- **China AI**: Synced Review
-- **Technical Tutorials**: KDnuggets, Towards Data Science
-- **Open Source**: Hugging Face, Meta AI Blog
-
 ### Source Selection Strategy
+
 **For comprehensive coverage**:
 - Mix 3 Tier 1 sources (different strengths)
 - Add 2 Tier 2 sources (major companies)
 - Include 1 Tier 3 source (research)
 
 **For quick updates**:
-- Focus on AI News (aggregator) and AI Hub Today (https://ai.hubtoday.app/)
+- Focus on AI News (aggregator) and AI Hub Today
 - Add TechCrunch AI (fast-breaking news)
 - Check Twitter/X for real-time updates
 

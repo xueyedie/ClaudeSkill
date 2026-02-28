@@ -1,29 +1,27 @@
-# 输出格式模板（默认中文输出）
+# 输出格式模板 — 国际版（默认中文输出）
 
 这些模板用于不同的输出风格与详略程度。**无论选择哪种模板，最终呈现给用户的内容必须为简体中文**（链接保持原样；专有名词可保留英文/缩写）。
 
 ## 通用：每条新闻目录索引（必做）
 
-为避免“只有大框架目录”，**无论选择哪种模板**，最终 Markdown 都必须包含 **每篇新闻/条目的可点击目录索引**。
+为避免"只有大框架目录"，**无论选择哪种模板**，最终 Markdown 都必须包含 **每篇新闻/条目的可点击目录索引**。
 
 **硬性要求**：
 - **目录必须细到每条新闻**：在「📑 目录」下，按模板的组织方式（分类/时间线/公司/论文）做**二级嵌套**，列出该组下每条新闻标题的链接。
-- **每条新闻必须有稳定锚点**：在每条新闻标题（或条目）上方插入一行 HTML 锚点：`<a id="xxx"></a>`，目录用 `(#xxx)` 进行链接，避免依赖不同渲染器的自动标题锚点规则。
+- **每条新闻必须有稳定锚点**：在每条新闻标题（或条目）上方插入一行 HTML 锚点：`<a id="xxx"></a>`，目录用 `(#xxx)` 进行链接。
 
 **推荐锚点命名**（同一份简报内唯一且连续）：
 - Standard / Deep / Brief（按分类）：`maj-01`、`res-01`、`biz-01`、`tool-01`、`pol-01`、`guru-01`…
-- Chronological（按时间段）：`am-01`、`pm-01`、`eve-01`…（早/午/晚各自从 01 开始）
+- Chronological（按时间段）：`am-01`、`pm-01`、`eve-01`…
 - By-Company（按公司）：`openai-01`、`google-01`、`anthropic-01`、`meta-01`、`msft-01`、`other-01`、`guru-01`…
-- Research-Only（论文为主）：`paper-01`、`paper-02`…（热门方向可选：`topic-01`…）
+- Research-Only（论文为主）：`paper-01`、`paper-02`…
 
 ## Standard Format (Default)
-
-The most commonly used format with categorized summaries and links.
 
 ```markdown
 # 📰 AI 每日资讯简报
 
-**日期**： [当前日期，例如 2026-02-23]
+**日期**： [当前日期，例如 2026-02-28]
 **来源**：来自 [Y] 个信息源，共 [X] 篇
 **覆盖范围**：最近 24 小时
 
@@ -210,7 +208,7 @@ The most commonly used format with categorized summaries and links.
 - [要点 2]
 - [要点 3（可选）]
 
-📅 **来源**： [平台/站点，例如 karpathy.ai / Bear Blog / X / YouTube / GitHub] • [发布日期]
+📅 **来源**： [平台/站点] • [发布日期]
 🔗 **链接**： [URL]
 
 ---
@@ -230,8 +228,6 @@ The most commonly used format with categorized summaries and links.
 ---
 
 ## Brief Format (Headlines Only)
-
-Quick scan format for users who want just the headlines.
 
 ```markdown
 # 📰 AI 资讯标题速览
@@ -284,9 +280,6 @@ Quick scan format for users who want just the headlines.
 • `🚀 L5-应用` [Headline 2] ([Publication])
 🔗 [URL]
 
-• `🔧 L2-芯片` [Headline 3] ([Publication])
-🔗 [URL]
-
 ---
 
 ## 🔬 研究与论文
@@ -295,18 +288,12 @@ Quick scan format for users who want just the headlines.
 • `🧠 L4-大模型` [Headline 4] ([Publication])
 🔗 [URL]
 
-• `🧠 L4-大模型` [Headline 5] ([Publication])
-🔗 [URL]
-
 ---
 
 ## 💰 产业与商业
 
 <a id="biz-01"></a>
 • `⚡ L1-能源` [Headline 6] ([Publication])
-🔗 [URL]
-
-• `🚀 L5-应用` [Headline 7] ([Publication])
 🔗 [URL]
 
 ---
@@ -333,9 +320,6 @@ Quick scan format for users who want just the headlines.
 • `🧠 L4-大模型` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
 🔗 [URL]
 
-• `🚀 L5-应用` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
-🔗 [URL]
-
 ---
 
 **快速总结**： [用 2-3 句中文概括今天最重要的动态]
@@ -346,8 +330,6 @@ Quick scan format for users who want just the headlines.
 ---
 
 ## Deep Format (With Analysis)
-
-Comprehensive format with in-depth analysis and implications.
 
 ```markdown
 # 📊 深度版：AI 资讯分析
@@ -565,7 +547,7 @@ Comprehensive format with in-depth analysis and implications.
 
 ## 🧠 技术大牛最新观点分享（深度）
 
-> 选取 1–3 条”最近 24–72 小时”的观点/更新，给出更偏方法论/实践导向的提炼。
+> 选取 1–3 条"最近 24–72 小时"的观点/更新，给出更偏方法论/实践导向的提炼。
 
 <a id="guru-01"></a>
 ### Andrej Karpathy（卡帕西）
@@ -628,8 +610,6 @@ Comprehensive format with in-depth analysis and implications.
 ---
 
 ## Chronological Format
-
-Stories organized by time instead of category.
 
 ```markdown
 # 📰 AI 资讯时间线
@@ -749,8 +729,6 @@ Stories organized by time instead of category.
 
 ## By-Company Format
 
-Stories organized by company instead of category.
-
 ```markdown
 # 📰 按公司整理的 AI 资讯
 
@@ -776,7 +754,6 @@ Stories organized by company instead of category.
   - [（msft-01）Headline 6](#msft-01)
 - [Other Companies](#other-companies)
   - [（other-01）Headline 7](#other-01)
-  - [（other-02）Headline 8](#other-02)
 - [🧠 技术大牛最新观点分享](#-技术大牛最新观点分享)
   - [（guru-01）观点速览 1](#guru-01)
 - [🎯 今日要点](#-今日要点)
@@ -858,20 +835,12 @@ Stories organized by company instead of category.
 **摘要**： `⚡ L1-能源` [用 1 句中文概括]
 🔗 **链接**： [URL]
 
-<a id="other-02"></a>
-### 🛠️ [Headline 8 - Company Name]
-**摘要**： `🚀 L5-应用` [用 1 句中文概括]
-🔗 **链接**： [URL]
-
 ---
 
 ## 🧠 技术大牛最新观点分享
 
 <a id="guru-01"></a>
 • `🧠 L4-大模型` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
-🔗 [URL]
-
-• `🚀 L5-应用` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
 🔗 [URL]
 
 ---
@@ -890,8 +859,6 @@ Stories organized by company instead of category.
 ---
 
 ## Research-Only Format
-
-Focus exclusively on research papers and academic breakthroughs.
 
 ```markdown
 # 🔬 AI 研究周报（仅研究/论文）
@@ -1001,13 +968,10 @@ Focus exclusively on research papers and academic breakthroughs.
 
 ## 🧠 技术大牛最新观点分享
 
-> 即便是”仅研究/论文”模板，也保留一个小模块，用于补充高质量方法论或课程/实践更新（默认：Karpathy）。
+> 即便是"仅研究/论文"模板，也保留一个小模块，用于补充高质量方法论或课程/实践更新（默认：Karpathy）。
 
 <a id="guru-01"></a>
 • `🧠 L4-大模型` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
-🔗 [URL]
-
-• `🚀 L5-应用` [观点/更新一句话摘要]（Andrej Karpathy / 平台）
 🔗 [URL]
 
 ---
@@ -1044,42 +1008,3 @@ Focus exclusively on research papers and academic breakthroughs.
 | **Chronological** | Tracking developments over time | Medium | Time-organized |
 | **By-Company** | Tracking specific companies | Medium | Company-organized |
 | **Research-Only** | Academic focus, researchers | Medium | Papers-focused |
-
----
-
-## Customization Guidelines
-
-### Adapting Templates
-
-1. **Mix and match**: Combine elements from different templates
-2. **Adjust depth**: Add/remove sections based on user preference
-3. **Flexible categorization**: Use different category names if needed
-4. **Localized content**: Translate category names for different languages
-
-### Template Elements
-
-These elements can be added to any template:
-
-**Section: Quick Stats**
-```markdown
-## 📊 Quick Stats
-- **Total stories**: [X]
-- **Most active companies**: [List]
-- **Trending topics**: [List]
-- **Sentiment**: [Positive/Neutral/Mixed]
-```
-
-**Section: Reading Time**
-```markdown
-**Estimated reading time**: [X] minutes
-```
-
-**Section: Related Stories**
-```markdown
-**Related**: [Link to related story]
-```
-
-**Section: Tags/Keywords**
-```markdown
-**Tags**: [#tag1] [#tag2] [#tag3]
-```

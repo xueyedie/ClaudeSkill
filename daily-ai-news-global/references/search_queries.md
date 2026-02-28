@@ -1,14 +1,14 @@
-# Search Query Templates
+# Search Query Templates — International Edition
 
-Pre-defined search query templates for discovering AI news across different categories and timeframes.
+Pre-defined search query templates for discovering international AI news across different categories and timeframes.
 
 ## Date Format
 
 Use dynamic date insertion based on current date:
-- **Today**: `[current_date]` (e.g., 2025-12-24)
-- **Yesterday**: `[current_date - 1 day]` (e.g., 2025-12-23)
-- **This week**: `[current_date - 7 days]` (e.g., 2025-12-17)
-- **This month**: `[current_date - 30 days]` (e.g., 2025-11-24)
+- **Today**: `[current_date]` (e.g., 2026-02-28)
+- **Yesterday**: `[current_date - 1 day]`
+- **This week**: `[current_date - 7 days]`
+- **This month**: `[current_date - 30 days]`
 
 ---
 
@@ -57,7 +57,7 @@ arXiv "cs.AI" OR "cs.LG" OR "artificial intelligence" paper after:[yesterday]
 
 #### Conference Papers
 ```
-"NeurIPS 2025" OR "ICML 2025" OR "ACL 2025" AI paper
+"NeurIPS 2026" OR "ICML 2026" OR "ACL 2026" AI paper
 ```
 
 ---
@@ -119,7 +119,7 @@ arXiv "cs.AI" OR "cs.LG" OR "artificial intelligence" paper after:[yesterday]
 
 #### Google
 ```
-"Google AI announcement" OR "Gemini update" OR "Bard news" after:[yesterday]
+"Google AI announcement" OR "Gemini update" after:[yesterday]
 ```
 
 #### Anthropic
@@ -150,7 +150,7 @@ arXiv "cs.AI" OR "cs.LG" OR "artificial intelligence" paper after:[yesterday]
 
 #### AND (Both terms must be present)
 ```
-"AI" AND "breakthrough" AND "2025"
+"AI" AND "breakthrough" AND "2026"
 ```
 
 #### OR (At least one term must be present)
@@ -183,11 +183,6 @@ after:[3 days ago]
 #### Last Week
 ```
 after:[7 days ago]
-```
-
-#### Last Month
-```
-after:[30 days ago]
 ```
 
 ### Source Filters
@@ -234,35 +229,21 @@ site:openai.com/blog OR site:blog.google/technology/ai
 ## Query Optimization Tips
 
 ### 1. Start Broad, Then Refine
-Begin with general queries, then narrow down based on results:
 1. `"AI news today"` → broad overview
 2. `"AI product launch"` → specific focus
 3. `"OpenAI product launch"` → very specific
 
 ### 2. Use Date Filters Consistently
-Always include date filters to ensure fresh content:
 - Daily briefings: `after:[yesterday]`
 - Weekly summaries: `after:[week_ago]`
 
 ### 3. Combine Categories for Comprehensive Results
-Mix queries from different categories:
 - 1-2 general queries
 - 1-2 research queries
 - 1-2 industry queries
 - 1-2 product queries
 
-### 4. Avoid Redundant Terms
-Don't combine similar terms:
-- ❌ `"AI" AND "artificial intelligence"` (redundant)
-- ✅ `"AI" OR "machine learning" OR "deep learning"` (complementary)
-
-### 5. Use Quotes for Exact Phrases
-Use quotes when searching for specific phrases:
-- ✅ `"large language model"`
-- ❌ `large language model` (may return broader results)
-
-### 6. Exclude Irrelevant Topics
-Use NOT to filter out unrelated content:
+### 4. Exclude Irrelevant Topics
 ```
 "AI news" NOT "crypto" NOT "web3" NOT "blockchain"
 ```
@@ -306,7 +287,7 @@ Query 3: "GPT update" OR "Claude update" OR "Gemini update" after:[yesterday]
 
 1. **Limit Results**: Most search tools return 10-15 results by default, which is usually sufficient
 2. **Prioritize Recent**: Always use date filters to ensure fresh content
-3. **Diversify Sources**: Use queries that return results from different types of sources (news sites, blogs, academic)
+3. **Diversify Sources**: Use queries that return results from different types of sources
 4. **Adjust Scope**: If too few results, expand date range or use broader terms
 5. **Refine Relevance**: If too many results, add more specific terms or reduce date range
 6. **Validate Results**: Always check publication dates to ensure content is truly recent
