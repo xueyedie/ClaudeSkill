@@ -164,8 +164,6 @@
 **博客 / 个人网站**
 - **个人主页**：https://karpathy.ai/
 - **旧博客（Jekyll）**：http://karpathy.github.io/
-- **Bear Blog**：https://karpathy.bearblog.dev/
-- **Medium**：https://karpathy.medium.com/
 
 **社交媒体**
 - **X（Twitter）**：https://x.com/karpathy
