@@ -1,5 +1,6 @@
 ---
 name: youtube-analyzer
+user-invocable: true
 description: |
   Analyze YouTube video content using Gemini's native video understanding.
   Use when: (1) Understanding what a YouTube video is about,

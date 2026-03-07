@@ -1,5 +1,6 @@
 ---
 name: daily-ai-news-cn
+user-invocable: true
 description: "Aggregates and summarizes the latest Chinese domestic AI news. Single-agent architecture with game/art vertical coverage. Activates on '国内AI新闻', '中国AI动态', '国内AI资讯', '国产大模型'."
 ---
 

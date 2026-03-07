@@ -1,5 +1,6 @@
 ---
 name: brainstorming
+user-invocable: true
 description: 在进行任何创造性工作前——包括创建功能、构建组件、增加特性或修改行为时，都必须先执行此步骤。应在实施前充分探讨用户意图、需求与设计。
 ---
 

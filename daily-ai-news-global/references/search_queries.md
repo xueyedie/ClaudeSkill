@@ -1,293 +1,83 @@
-# Search Query Templates — International Edition
+# 搜索查询模板 — 国际版
 
-Pre-defined search query templates for discovering international AI news across different categories and timeframes.
+预定义的搜索查询模板，用于发现国际 AI 新闻。执行时根据当前日期动态替换日期占位符。
 
-## Date Format
+## 日期占位符
 
-Use dynamic date insertion based on current date:
-- **Today**: `[current_date]` (e.g., 2026-02-28)
-- **Yesterday**: `[current_date - 1 day]`
-- **This week**: `[current_date - 7 days]`
-- **This month**: `[current_date - 30 days]`
+- `[yesterday]`：当前日期 - 1 天
+- `[week_ago]`：当前日期 - 7 天
 
 ---
 
-## General AI News
+## 核心查询（每日必用，选 3-4 条）
 
-### Daily Updates (Last 24 hours)
 ```
+# 综合新闻
 "AI news today" OR "artificial intelligence breakthrough" after:[yesterday]
-```
 
-### This Week's Developments
-```
-"AI news this week" OR "artificial intelligence announcement" after:[week_ago]
-```
-
-### Latest AI Developments
-```
-"latest AI developments" OR "AI advancement" after:[yesterday]
-```
-
-### AI Industry News
-```
-"AI industry news" OR "artificial intelligence market" after:[yesterday]
-```
-
----
-
-## Category-Specific Queries
-
-### Research & Papers
-
-#### Recent AI Research Papers
-```
+# 研究突破
 "AI research paper" OR "machine learning breakthrough" after:[yesterday]
-```
 
-#### arXiv AI Papers
-```
-arXiv "cs.AI" OR "cs.LG" OR "artificial intelligence" paper after:[yesterday]
-```
+# 产业动态
+"AI startup funding" OR "AI company news" OR "new AI tool" after:[yesterday]
 
-#### Academic AI Breakthroughs
-```
-"AI breakthrough" OR "machine learning research" after:[yesterday]
-```
-
-#### Conference Papers
-```
-"NeurIPS 2026" OR "ICML 2026" OR "ACL 2026" AI paper
+# 主要公司（可选）
+"OpenAI" OR "Google AI" OR "Anthropic" OR "Meta AI" announcement after:[yesterday]
 ```
 
 ---
 
-### Industry & Business
+## 公司专项查询（按需选用）
 
-#### AI Funding & Investment
-```
-"AI startup funding" OR "artificial intelligence investment" after:[week_ago]
-```
-
-#### AI Company News
-```
-"AI company news" OR "OpenAI news" OR "Google AI" after:[yesterday]
-```
-
-#### AI Partnerships & Acquisitions
-```
-"AI acquisition" OR "AI partnership" OR "artificial intelligence deal" after:[week_ago]
-```
-
-#### AI Market Trends
-```
-"AI market trends" OR "artificial intelligence industry analysis" after:[week_ago]
-```
-
----
-
-### Products & Tools
-
-#### New AI Tools
-```
-"AI application launch" OR "new AI tool" after:[yesterday]
-```
-
-#### AI Product Releases
-```
-"AI product release" OR "artificial intelligence software launch" after:[yesterday]
-```
-
-#### Open Source AI
-```
-"open source AI" OR "AI model release" OR "LLM release" after:[yesterday]
-```
-
-#### AI Framework Updates
-```
-"PyTorch update" OR "TensorFlow update" OR "AI framework" after:[week_ago]
-```
-
----
-
-### Company-Specific Queries
-
-#### OpenAI
 ```
 "OpenAI announcement" OR "GPT update" OR "ChatGPT news" after:[yesterday]
-```
-
-#### Google
-```
 "Google AI announcement" OR "Gemini update" after:[yesterday]
-```
-
-#### Anthropic
-```
-"Anthropic news" OR "Claude update" OR "constitutional AI" after:[yesterday]
-```
-
-#### Meta
-```
-"Meta AI announcement" OR "LLaMA update" OR "Facebook AI" after:[yesterday]
-```
-
-#### Microsoft
-```
+"Anthropic news" OR "Claude update" after:[yesterday]
+"Meta AI announcement" OR "LLaMA update" after:[yesterday]
 "Microsoft AI" OR "Copilot update" OR "Azure AI news" after:[yesterday]
-```
-
-#### DeepMind
-```
-"DeepMind research" OR "AlphaFold update" OR "Google DeepMind" after:[week_ago]
+"DeepMind research" OR "Google DeepMind" after:[week_ago]
 ```
 
 ---
 
-## Advanced Search Techniques
+## 扩展查询（结果不足时补充）
 
-### Boolean Operators
+```
+# 开源与工具
+"open source AI" OR "AI model release" OR "LLM release" after:[yesterday]
 
-#### AND (Both terms must be present)
-```
-"AI" AND "breakthrough" AND "2026"
-```
+# 学术论文
+arXiv "cs.AI" OR "cs.LG" paper after:[yesterday]
 
-#### OR (At least one term must be present)
-```
-"artificial intelligence" OR "machine learning" OR "deep learning"
-```
+# 会议论文（会议季重点使用）
+"NeurIPS" OR "ICML" OR "ACL" OR "ICLR" AI paper after:[week_ago]
 
-#### NOT (Exclude terms)
-```
-"AI" AND "news" NOT "cryptocurrency" NOT "blockchain"
-```
+# 行业投融资
+"AI acquisition" OR "AI partnership" OR "artificial intelligence investment" after:[week_ago]
 
-#### Exact Phrases
-```
-"large language model" OR "LLM"
-```
+# 政策监管
+"AI regulation" OR "AI policy" OR "AI ethics" after:[week_ago]
 
-### Date Filters
-
-#### Last 24 Hours
-```
-after:[yesterday's date]
-```
-
-#### Last 3 Days
-```
-after:[3 days ago]
-```
-
-#### Last Week
-```
-after:[7 days ago]
-```
-
-### Source Filters
-
-#### News Sites Only
-```
-site:venturebeat.com AI OR site:techcrunch.com AI
-```
-
-#### Academic Sources
-```
-site:arxiv.org "artificial intelligence"
-```
-
-#### Company Blogs
-```
-site:openai.com/blog OR site:blog.google/technology/ai
-```
-
-### Topic Combinations
-
-#### AI + Healthcare
-```
+# 垂直领域
 "AI" AND "healthcare" OR "medical AI" after:[week_ago]
-```
-
-#### AI + Finance
-```
 "AI" AND "finance" OR "fintech AI" after:[week_ago]
-```
-
-#### AI + Ethics
-```
-"AI ethics" OR "artificial intelligence safety" after:[week_ago]
-```
-
-#### AI + Regulation
-```
-"AI regulation" OR "AI policy" after:[week_ago]
+"AI" AND "robotics" OR "embodied AI" after:[week_ago]
 ```
 
 ---
 
-## Query Optimization Tips
+## 排除噪音
 
-### 1. Start Broad, Then Refine
-1. `"AI news today"` → broad overview
-2. `"AI product launch"` → specific focus
-3. `"OpenAI product launch"` → very specific
-
-### 2. Use Date Filters Consistently
-- Daily briefings: `after:[yesterday]`
-- Weekly summaries: `after:[week_ago]`
-
-### 3. Combine Categories for Comprehensive Results
-- 1-2 general queries
-- 1-2 research queries
-- 1-2 industry queries
-- 1-2 product queries
-
-### 4. Exclude Irrelevant Topics
+在任何查询后可追加排除项：
 ```
-"AI news" NOT "crypto" NOT "web3" NOT "blockchain"
+NOT "cryptocurrency" NOT "blockchain" NOT "web3"
 ```
 
 ---
 
-## Example Query Combinations
+## 使用策略
 
-### Daily Briefing (Comprehensive)
-```
-Query 1: "AI news today" OR "artificial intelligence breakthrough" after:[yesterday]
-Query 2: "AI research paper" OR "machine learning breakthrough" after:[yesterday]
-Query 3: "AI startup funding" OR "AI company news" after:[week_ago]
-Query 4: "AI product release" OR "new AI tool" after:[yesterday]
-```
-
-### Research-Focused
-```
-Query 1: "AI research paper" OR "machine learning breakthrough" after:[yesterday]
-Query 2: arXiv "cs.AI" OR "cs.LG" paper after:[yesterday]
-Query 3: "AI breakthrough" OR "research advancement" after:[yesterday]
-```
-
-### Industry-Focused
-```
-Query 1: "AI startup funding" OR "artificial intelligence investment" after:[week_ago]
-Query 2: "AI company news" OR "OpenAI news" OR "Google AI" after:[yesterday]
-Query 3: "AI acquisition" OR "AI partnership" after:[week_ago]
-```
-
-### Product-Focused
-```
-Query 1: "AI product release" OR "new AI tool" after:[yesterday]
-Query 2: "open source AI" OR "AI model release" after:[yesterday]
-Query 3: "GPT update" OR "Claude update" OR "Gemini update" after:[yesterday]
-```
-
----
-
-## Query Performance Tips
-
-1. **Limit Results**: Most search tools return 10-15 results by default, which is usually sufficient
-2. **Prioritize Recent**: Always use date filters to ensure fresh content
-3. **Diversify Sources**: Use queries that return results from different types of sources
-4. **Adjust Scope**: If too few results, expand date range or use broader terms
-5. **Refine Relevance**: If too many results, add more specific terms or reduce date range
-6. **Validate Results**: Always check publication dates to ensure content is truly recent
+1. 每日简报先跑"核心查询"4 条，覆盖综合/研究/产业/公司
+2. 如果某类别结果不足，从"扩展查询"中补充对应类别
+3. 如果结果过多，缩短日期范围（`after:[yesterday]`）或添加更具体的关键词
+4. 始终检查返回结果的发布日期，确保内容是最新的

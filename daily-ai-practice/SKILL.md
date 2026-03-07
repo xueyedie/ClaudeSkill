@@ -1,5 +1,6 @@
 ---
 name: daily-ai-practice
+user-invocable: true
 description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用'的 AI 技巧。聚焦 AI 编程、AI 美术工作流、AI 提效工具和 GitHub 热门。Activates on 'AI实战', 'AI技巧', 'AI practice', 'AI编程技巧', 'ComfyUI教程', 'AI工具推荐'."
 ---
 

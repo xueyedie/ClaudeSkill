@@ -1,5 +1,6 @@
 ---
 name: url-reader
+user-invocable: true
 description: >
   Multi-platform URL content fetcher with automatic fallback strategies.
   Use when user shares a URL or asks to read/fetch/extract web content.

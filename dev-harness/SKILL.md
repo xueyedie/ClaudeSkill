@@ -1,5 +1,6 @@
 ---
 name: dev-harness
+user-invocable: true
 description: 通用项目跨 Session Agent 工作流脚手架，支持 Python/Node.js/Unity/Godot/Rust/Go/Flutter/微信小程序等。
 argument-hint: [todo-id | replan | init]
 disable-model-invocation: true
