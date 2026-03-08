@@ -5,15 +5,16 @@ YouTube 视频分析器 - 使用 Gemini 原生视频理解能力分析 YouTube �
 
 用法：
     python analyze_youtube.py <youtube_url> <提示词> [--format text|json] [--model MODEL]
-    python analyze_youtube.py <youtube_url> --subtitles [--lang zh-Hans,en] [--format text|json]
+    python analyze_youtube.py <youtube_url> --subtitles [--lang en] [--browser BROWSER] [--format text|json]
 
 示例：
     python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" "描述视频内容"
-    python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" --subtitles
-    python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" --subtitles --lang "en,ja"
+    python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" --subtitles --browser chrome
+    python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" --subtitles --lang "en,zh-Hans" --browser "chrome:/path/to/profile"
 
 环境变量：
-    GEMINI_API_KEY - 视频分析模式必填。从 https://aistudio.google.com/apikey 获取
+    GEMINI_API_KEY       - 视频分析模式必填。从 https://aistudio.google.com/apikey 获取
+    YT_COOKIES_BROWSER   - yt-dlp --cookies-from-browser 的值（如 chrome、edge、"chrome:/path/to/profile"）
 """
 
 import os
@@ -21,6 +22,8 @@ import sys
 import argparse
 import json
 import re
+import subprocess
+from pathlib import Path
 
 # Set UTF-8 encoding
 sys.stdout.reconfigure(encoding='utf-8')
@@ -31,6 +34,9 @@ for key in ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'ALL_PROXY
     os.environ.pop(key, None)
 
 DEFAULT_MODEL = "gemini-3-pro-preview"
+DEFAULT_BROWSER = "chrome:C:/Users/bot/.openclaw/browser/openclaw/user-data"
+SKILL_DIR = Path(__file__).resolve().parent.parent
+SUBTITLES_DIR = SKILL_DIR / "subtitles"
 
 
 def get_api_key(provided_key: str = None) -> str:
@@ -64,46 +70,132 @@ def normalize_youtube_url(url: str) -> str:
     return f"https://www.youtube.com/watch?v={video_id}"
 
 
-def fetch_subtitles(video_id: str, languages: list[str] = None) -> dict:
+def fetch_subtitles(url: str, video_id: str, languages: list[str],
+                    browser: str = None, output_dir: Path = None) -> dict:
     """
-    Fetch original subtitles/captions from YouTube.
+    Fetch subtitles using yt-dlp with optional browser cookie support.
 
     Args:
+        url: YouTube video URL
         video_id: YouTube video ID
-        languages: Language priority list (default: ['zh-Hans', 'en'])
+        languages: Language codes (e.g. ['en', 'zh-Hans'])
+        browser: yt-dlp --cookies-from-browser value (e.g. 'chrome', 'chrome:/path/to/profile')
+        output_dir: Directory to save subtitle files (default: SUBTITLES_DIR)
 
     Returns:
-        dict with 'success', 'subtitles' or 'error'
+        dict with 'success', 'subtitles', 'files', or 'error'
     """
+    if output_dir is None:
+        output_dir = SUBTITLES_DIR
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    cmd = [
+        'yt-dlp',
+        '--write-sub', '--write-auto-sub',
+        '--sub-lang', ','.join(languages),
+        '--sub-format', 'vtt',
+        '--skip-download',
+        '-o', str(output_dir / '%(id)s.%(ext)s'),
+        url,
+    ]
+    if browser:
+        cmd.extend(['--cookies-from-browser', browser])
+
     try:
-        from youtube_transcript_api import YouTubeTranscriptApi
-    except ImportError:
+        proc = subprocess.run(
+            cmd, capture_output=True, text=True, encoding='utf-8', timeout=60,
+        )
+    except FileNotFoundError:
+        return {'success': False, 'error': 'yt-dlp not installed. Run: pip install yt-dlp'}
+    except subprocess.TimeoutExpired:
+        return {'success': False, 'error': 'yt-dlp timed out after 60s'}
+
+    # Find downloaded VTT files for this video
+    vtt_files = sorted(output_dir.glob(f'{video_id}*.vtt'))
+    if not vtt_files:
+        stderr = proc.stderr.strip() if proc.stderr else ''
         return {
             'success': False,
-            'error': 'youtube-transcript-api not installed. Run: pip install youtube-transcript-api'
-        }
-
-    if languages is None:
-        languages = ['zh-Hans', 'en']
-
-    try:
-        transcript = YouTubeTranscriptApi().fetch(video_id, languages=languages)
-        subtitles = [{'text': s.text, 'start': s.start, 'duration': s.duration} for s in transcript]
-        return {
-            'success': True,
-            'subtitles': subtitles,
+            'error': f'No subtitle files downloaded.\nyt-dlp stderr: {stderr}',
             'video_id': video_id,
-            'count': len(subtitles),
         }
-    except Exception as e:
-        error_msg = str(e)
-        if 'No transcripts were found' in error_msg or 'Could not retrieve' in error_msg:
-            error_msg = f"No subtitles found for this video (may not have captions).\nOriginal: {e}"
+
+    # Parse all downloaded VTT files
+    all_subtitles = {}
+    saved_files = []
+    for vtt_path in vtt_files:
+        # Extract language from filename: VIDEO_ID.LANG.vtt
+        lang = vtt_path.stem.replace(f'{video_id}.', '', 1)
+        entries = parse_vtt(vtt_path)
+        if entries:
+            all_subtitles[lang] = entries
+            saved_files.append(str(vtt_path))
+
+    if not all_subtitles:
         return {
             'success': False,
-            'error': error_msg,
+            'error': 'Downloaded subtitle files were empty or unparseable.',
             'video_id': video_id,
+            'files': [str(f) for f in vtt_files],
         }
+
+    # Pick the first matching language for primary output
+    primary_lang = None
+    for lang in languages:
+        if lang in all_subtitles:
+            primary_lang = lang
+            break
+    if primary_lang is None:
+        primary_lang = next(iter(all_subtitles))
+
+    return {
+        'success': True,
+        'subtitles': all_subtitles[primary_lang],
+        'language': primary_lang,
+        'all_languages': list(all_subtitles.keys()),
+        'files': saved_files,
+        'video_id': video_id,
+        'count': len(all_subtitles[primary_lang]),
+    }
+
+
+def parse_vtt(vtt_path: Path) -> list[dict]:
+    """Parse a VTT subtitle file into structured data."""
+    try:
+        content = vtt_path.read_text(encoding='utf-8')
+    except Exception:
+        return []
+
+    entries = []
+    blocks = re.split(r'\n\s*\n', content)
+
+    for block in blocks:
+        lines = block.strip().split('\n')
+        for i, line in enumerate(lines):
+            match = re.match(
+                r'(\d{2}:\d{2}:\d{2}\.\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}\.\d{3})', line
+            )
+            if match:
+                start_s = _parse_vtt_ts(match.group(1))
+                text = '\n'.join(lines[i + 1:])
+                text = re.sub(r'<[^>]+>', '', text).strip()
+                if text:
+                    entries.append({'text': text, 'start': start_s})
+                break
+
+    # Deduplicate consecutive identical texts (common in auto-generated subs)
+    deduped = []
+    for entry in entries:
+        if not deduped or entry['text'] != deduped[-1]['text']:
+            deduped.append(entry)
+    return deduped
+
+
+def _parse_vtt_ts(ts: str) -> float:
+    """Convert VTT timestamp HH:MM:SS.mmm to seconds."""
+    h, m, rest = ts.split(':')
+    s = float(rest)
+    return int(h) * 3600 + int(m) * 60 + s
 
 
 def format_timestamp(seconds: float) -> str:
@@ -183,17 +275,17 @@ def analyze_video(url: str, prompt: str, model: str = DEFAULT_MODEL, api_key: st
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Analyze YouTube videos using Gemini, or extract subtitles',
+        description='Analyze YouTube videos using Gemini, or extract subtitles via yt-dlp',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   %(prog)s "https://www.youtube.com/watch?v=xxx" "描述这个视频的内容"
-  %(prog)s "https://youtu.be/xxx" "分析游戏玩法机制" --format json
-  %(prog)s "https://youtu.be/xxx" --subtitles
-  %(prog)s "https://youtu.be/xxx" --subtitles --lang "en,ja" --format json
+  %(prog)s "https://youtu.be/xxx" --subtitles --browser chrome
+  %(prog)s "https://youtu.be/xxx" --subtitles --lang "en,zh-Hans" --browser "chrome:/path/to/profile"
 
 Environment:
-  GEMINI_API_KEY    Required for video analysis. Get from https://aistudio.google.com/apikey
+  GEMINI_API_KEY       Required for video analysis. Get from https://aistudio.google.com/apikey
+  YT_COOKIES_BROWSER   Default value for --browser (e.g. chrome, edge, "chrome:/path/to/profile")
         """
     )
 
@@ -201,9 +293,12 @@ Environment:
     parser.add_argument('prompt', nargs='?', default=None,
                        help='Analysis prompt/question (not needed with --subtitles)')
     parser.add_argument('--subtitles', action='store_true',
-                       help='Extract original subtitles instead of Gemini analysis')
-    parser.add_argument('--lang', default='zh-Hans,en',
-                       help='Subtitle language priority, comma-separated (default: zh-Hans,en)')
+                       help='Extract subtitles via yt-dlp instead of Gemini analysis')
+    parser.add_argument('--browser',
+                       default=os.environ.get('YT_COOKIES_BROWSER', DEFAULT_BROWSER),
+                       help=f'yt-dlp --cookies-from-browser value (default: {DEFAULT_BROWSER})')
+    parser.add_argument('--lang', default='en',
+                       help='Subtitle language codes, comma-separated (default: en)')
     parser.add_argument('--format', choices=['text', 'json'], default='text',
                        help='Output format (default: text)')
     parser.add_argument('--model', default=DEFAULT_MODEL,
@@ -217,8 +312,19 @@ Environment:
         languages = [lang.strip() for lang in args.lang.split(',')]
         print(f"[YouTube Analyzer] Subtitles: {video_id}", file=sys.stderr)
         print(f"[YouTube Analyzer] Languages: {languages}", file=sys.stderr)
+        if args.browser:
+            print(f"[YouTube Analyzer] Browser cookies: {args.browser}", file=sys.stderr)
 
-        result = fetch_subtitles(video_id, languages)
+        result = fetch_subtitles(
+            url=normalize_youtube_url(args.url),
+            video_id=video_id,
+            languages=languages,
+            browser=args.browser,
+        )
+
+        if result.get('files'):
+            for f in result['files']:
+                print(f"[YouTube Analyzer] Saved: {f}", file=sys.stderr)
 
         if args.format == 'json':
             print(json.dumps(result, ensure_ascii=False, indent=2))
