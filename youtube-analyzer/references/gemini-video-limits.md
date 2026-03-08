@@ -1,76 +1,76 @@
-# Gemini Video Understanding - Limits & Optimization
+# Gemini 视频理解 - 限制与优化
 
-## API Limits
+## API 限制
 
-### Video Duration
-| Model | Max Duration | Notes |
-|-------|--------------|-------|
-| gemini-3-pro-preview | ~1 hour | Best quality |
-| gemini-3-flash | ~1 hour | Faster, cheaper |
-| gemini-2.5-flash | ~1 hour | Alternative |
+### 视频时长
+| 模型 | 最大时长 | 备注 |
+|------|----------|------|
+| gemini-3-pro-preview | 约 1 小时 | 质量最佳 |
+| gemini-3-flash | 约 1 小时 | 更快、更便宜 |
+| gemini-2.5-flash | 约 1 小时 | 备选方案 |
 
-### Rate Limits (Free Tier)
-- **RPM (Requests Per Minute)**: 15
-- **TPM (Tokens Per Minute)**: 1,000,000
-- **RPD (Requests Per Day)**: 1,500
+### 速率限制（免费套餐）
+- **RPM（每分钟请求数）**：15
+- **TPM（每分钟 Token 数）**：1,000,000
+- **RPD（每日请求数）**：1,500
 
-### Token Costs
-Video processing consumes significant tokens:
-- Short video (~1 min): ~1,000-2,000 tokens
-- Medium video (~10 min): ~10,000-20,000 tokens
-- Long video (~30+ min): ~50,000+ tokens
+### Token 消耗
+视频处理会消耗大量 Token：
+- 短视频（约 1 分钟）：约 1,000–2,000 tokens
+- 中等视频（约 10 分钟）：约 10,000–20,000 tokens
+- 长视频（30 分钟以上）：约 50,000+ tokens
 
-## Supported URL Formats
+## 支持的 URL 格式
 
 ```
-✅ Supported:
+✅ 支持：
 - https://www.youtube.com/watch?v=VIDEO_ID
 - https://youtu.be/VIDEO_ID
 - https://www.youtube.com/embed/VIDEO_ID
 - https://www.youtube.com/shorts/VIDEO_ID
 - https://www.youtube.com/v/VIDEO_ID
 
-❌ Not Supported:
+❌ 不支持：
 - https://vimeo.com/...
 - https://www.tiktok.com/...
 - https://example.com/video.mp4
-- Any non-YouTube URL
+- 任何非 YouTube 链接
 ```
 
-## Video Access Requirements
+## 视频访问要求
 
-| Video Type | Supported | Notes |
-|------------|-----------|-------|
-| Public | ✅ | Works |
-| Unlisted | ✅ | Works (if you have the URL) |
-| Private | ❌ | Cannot access |
-| Age-restricted | ❌ | Requires login |
-| Members-only | ❌ | Requires subscription |
-| Geo-blocked | ⚠️ | May fail depending on Google's servers |
-| Deleted | ❌ | Cannot access |
+| 视频类型 | 是否支持 | 备注 |
+|----------|----------|------|
+| 公开视频 | ✅ | 正常使用 |
+| 不公开列出 | ✅ | 有链接即可访问 |
+| 私密视频 | ❌ | 无法访问 |
+| 年龄限制 | ❌ | 需要登录 |
+| 会员专属 | ❌ | 需要订阅 |
+| 地区限制 | ⚠️ | 取决于 Google 服务器，可能失败 |
+| 已删除 | ❌ | 无法访问 |
 
-## Optimization Strategies
+## 优化策略
 
-### For Long Videos
-1. **Ask for specific timestamps**: "What happens in the first 5 minutes?"
-2. **Request summaries**: "Summarize in bullet points"
-3. **Chunked analysis**: Make multiple requests for different time ranges
+### 针对长视频
+1. **指定时间段**："前 5 分钟发生了什么？"
+2. **请求摘要**："用要点形式总结"
+3. **分段分析**：针对不同时间段发起多次请求
 
-### For Rate Limits
-1. Add delays between requests: `time.sleep(4)` for free tier
-2. Batch prompts in single request when possible
-3. Use flash model for less critical analysis
+### 针对速率限制
+1. 请求之间加延迟：免费套餐使用 `time.sleep(4)`
+2. 尽量在单次请求中合并多个提示词
+3. 对非关键分析使用 flash 模型
 
-### For Better Results
-1. **Be specific**: "Describe the gameplay mechanics" > "What's in the video"
-2. **Ask for structure**: "List the main topics covered"
-3. **Include context**: "As a game analyst, evaluate..."
+### 提升结果质量
+1. **具体描述需求**："描述游戏机制" 优于 "视频里有什么"
+2. **要求结构化输出**："列出涵盖的主要话题"
+3. **提供背景信息**："作为游戏分析师，评估……"
 
-## Alternative Approaches
+## 替代方案
 
-When Gemini YouTube analysis doesn't work:
+当 Gemini YouTube 分析不可用时：
 
-### 1. Transcript Extraction (Text Only)
+### 1. 字幕提取（仅文本）
 ```bash
 pip install youtube-transcript-api
 ```
@@ -79,16 +79,16 @@ from youtube_transcript_api import YouTubeTranscriptApi
 transcript = YouTubeTranscriptApi.get_transcript('VIDEO_ID')
 ```
 
-### 2. Download + Frame Extraction (Visual)
+### 2. 下载 + 帧提取（视觉内容）
 ```bash
-# Download
+# 下载视频
 yt-dlp -f "best[height<=720]" "URL" -o video.mp4
 
-# Extract frames
+# 提取帧
 ffmpeg -i video.mp4 -vf "fps=0.1" frames/frame_%04d.jpg
 ```
 
-### 3. File API Upload (Non-YouTube)
+### 3. File API 上传（非 YouTube 视频）
 ```python
 from google import genai
 
@@ -96,25 +96,25 @@ client = genai.Client(api_key=API_KEY)
 video_file = client.files.upload(file="video.mp4")
 response = client.models.generate_content(
     model="gemini-3-pro-preview",
-    contents=[video_file, "Describe this video"]
+    contents=[video_file, "描述这个视频"]
 )
 ```
 
-## Error Handling
+## 错误处理
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| `Cannot fetch content from URL` | Private/restricted video | Use public video |
-| `RESOURCE_EXHAUSTED` | Rate limit hit | Wait and retry |
-| `INVALID_ARGUMENT` | Bad URL format | Check URL validity |
-| `DEADLINE_EXCEEDED` | Video too long/timeout | Try shorter video |
-| `NoneType object` | API response issue | Retry or check SDK version |
+| 错误 | 原因 | 解决方案 |
+|------|------|----------|
+| `Cannot fetch content from URL` | 视频私密或受限 | 改用公开视频 |
+| `RESOURCE_EXHAUSTED` | 触发速率限制 | 等待后重试 |
+| `INVALID_ARGUMENT` | URL 格式错误 | 检查 URL 有效性 |
+| `DEADLINE_EXCEEDED` | 视频过长或超时 | 尝试更短的视频 |
+| `NoneType object` | API 响应异常 | 重试或检查 SDK 版本 |
 
-## Model Comparison for Video
+## 视频分析模型对比
 
-| Model | Speed | Quality | Cost | Best For |
-|-------|-------|---------|------|----------|
-| gemini-3-pro-preview | Slow | Best | High | Deep analysis |
-| gemini-3-flash | Fast | Good | Low | Quick summaries |
-| gemini-2.5-pro | Medium | Excellent | Medium | Balanced |
-| gemini-2.5-flash | Fastest | Good | Lowest | Bulk processing |
+| 模型 | 速度 | 质量 | 成本 | 适用场景 |
+|------|------|------|------|----------|
+| gemini-3-pro-preview | 慢 | 最佳 | 高 | 深度分析 |
+| gemini-3-flash | 快 | 良好 | 低 | 快速摘要 |
+| gemini-2.5-pro | 中等 | 优秀 | 中等 | 均衡使用 |
+| gemini-2.5-flash | 最快 | 良好 | 最低 | 批量处理 |

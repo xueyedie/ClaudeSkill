@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-YouTube Video Analyzer - Analyze YouTube videos using Gemini's native video understanding.
+YouTube 视频分析器 - 使用 Gemini 原生视频理解能力分析 YouTube 视频。
 
-Usage:
-    python analyze_youtube.py <youtube_url> <prompt> [--format text|json] [--model MODEL]
+用法：
+    python analyze_youtube.py <youtube_url> <提示词> [--format text|json] [--model MODEL]
 
-Examples:
+示例：
     python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" "描述视频内容"
     python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" "分析游戏玩法" --format json
 
-Environment:
-    GEMINI_API_KEY - Required. Get from https://aistudio.google.com/apikey
+环境变量：
+    GEMINI_API_KEY - 必填。从 https://aistudio.google.com/apikey 获取
 """
 
 import os

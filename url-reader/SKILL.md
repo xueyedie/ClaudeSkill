@@ -2,14 +2,12 @@
 name: url-reader
 user-invocable: true
 description: >
-  Multi-platform URL content fetcher with automatic fallback strategies.
-  Use when user shares a URL or asks to read/fetch/extract web content.
-  Supports: WeChat (微信公众号), Xiaohongshu (小红书), Twitter/X, Zhihu (知乎),
-  Douyin (抖音), Bilibili (B站), Weibo (微博), Taobao, JD, Feishu (飞书),
-  and any general webpage. Triggers: URL, 网页, 链接, read this page, fetch url,
-  抓取, 读取网页, 打开链接, 公众号文章, 帮我看看这个链接.
-  Three-layer strategy: Markdown Direct -> Firecrawl -> Jina -> Playwright (auto fallback).
-  Outputs Markdown + HTML with embedded images.
+  多平台 URL 内容抓取工具，支持自动降级策略。
+  当用户分享 URL 或要求读取/抓取/提取网页内容时使用。
+  支持平台：微信公众号、小红书、Twitter/X、知乎、抖音、B站、微博、淘宝、京东、飞书及任意普通网页。
+  触发词：URL、网页、链接、read this page、fetch url、抓取、读取网页、打开链接、公众号文章、帮我看看这个链接。
+  四层策略：Markdown Direct -> Firecrawl -> Jina -> Playwright（自动降级）。
+  输出 Markdown + 内嵌图片的 HTML。
 ---
 
 # URL Reader Skill
