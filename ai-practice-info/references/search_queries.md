@@ -67,6 +67,46 @@
 "LangChain" OR "LlamaIndex" tutorial OR guide after:[week_ago]
 ```
 
+### 开源 AI Agent 框架
+```
+"OpenClaw" agent tutorial OR deployment OR use case after:[week_ago]
+```
+```
+"AutoGen" OR "AG2" agent workflow OR tutorial OR best practices after:[week_ago]
+```
+```
+"CrewAI" tutorial OR production OR deployment after:[week_ago]
+```
+```
+"LangGraph" agent OR workflow tutorial OR guide after:[week_ago]
+```
+```
+"open source AI agent" framework comparison OR tutorial 2026
+```
+```
+"multi-agent" system tutorial OR architecture OR production after:[week_ago]
+```
+```
+"AI agent" deployment OR production OR "real world" use case after:[yesterday]
+```
+
+### 中文 Agent 实战
+```
+"AI Agent" 落地 OR 实战 OR 部署 OR 案例 after:[yesterday]
+```
+```
+"开源 Agent" OR "AutoGen" OR "CrewAI" 教程 OR 实战 after:[week_ago]
+```
+```
+"多智能体" 系统 OR 框架 OR 实战 after:[week_ago]
+```
+```
+site:mp.weixin.qq.com "AI Agent" 落地 OR 实战 after:[yesterday]
+```
+```
+site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
+```
+
 ### 中文编程实战
 ```
 "Claude Code" 教程 OR 技巧 OR 工作流 after:[yesterday]
@@ -87,20 +127,6 @@
 ---
 
 ## AI 美术工作流查询
-
-### ComfyUI
-```
-"ComfyUI" workflow OR tutorial OR new node after:[yesterday]
-```
-```
-"ComfyUI" custom node OR extension OR update after:[week_ago]
-```
-```
-"ComfyUI" 工作流 OR 教程 OR 节点 after:[yesterday]
-```
-```
-site:reddit.com/r/comfyui after:[yesterday]
-```
 
 ### Stable Diffusion / Flux
 ```
@@ -146,13 +172,24 @@ site:reddit.com/r/comfyui after:[yesterday]
 
 ### 小红书美术教程
 ```
-site:xiaohongshu.com "ComfyUI" 教程 OR 工作流 after:[yesterday]
-```
-```
 site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程 after:[yesterday]
 ```
 ```
 site:xiaohongshu.com "AI视频" OR "AI 3D" 教程 after:[yesterday]
+```
+
+### B站 AI 视频搜索
+```
+site:bilibili.com "AI编程" OR "Claude Code" OR "Cursor" 教程 after:[week_ago]
+```
+```
+site:bilibili.com "AI Agent" OR "AutoGen" OR "CrewAI" 实战 after:[week_ago]
+```
+```
+site:bilibili.com "AI工具" OR "AI提效" 教程 OR 实战 after:[week_ago]
+```
+```
+site:bilibili.com "AI绘画" OR "Flux" OR "SD" 教程 after:[week_ago]
 ```
 
 ---
@@ -208,9 +245,6 @@ GitHub trending "artificial intelligence" OR "deep learning" this week
 ```
 GitHub "AI tool" OR "LLM" OR "agent" stars new repository 2026
 ```
-```
-GitHub "ComfyUI" node OR extension new after:[week_ago]
-```
 
 ### 中文 GitHub 查询
 ```
@@ -265,10 +299,9 @@ Query 4: "AI编程" 技巧 OR 实战 after:[yesterday]
 
 ### 美术工作流聚焦
 ```
-Query 1: "ComfyUI" workflow OR tutorial after:[yesterday]
-Query 2: "Stable Diffusion" OR "Flux" tips OR tricks after:[yesterday]
-Query 3: "AI video" OR "AI 3D" tutorial after:[week_ago]
-Query 4: site:xiaohongshu.com "ComfyUI" OR "AI绘画" 教程 after:[yesterday]
+Query 1: "Stable Diffusion" OR "Flux" tips OR tricks after:[yesterday]
+Query 2: "AI video" OR "AI 3D" tutorial after:[week_ago]
+Query 3: site:xiaohongshu.com "AI绘画" OR "Flux" 教程 after:[yesterday]
 ```
 
 ### 工具发现聚焦
@@ -279,13 +312,22 @@ Query 3: GitHub trending AI OR LLM today
 Query 4: "AI工具" 推荐 OR 新上线 after:[yesterday]
 ```
 
+### Agent 实战聚焦
+```
+Query 1: "AutoGen" OR "CrewAI" OR "LangGraph" tutorial OR production after:[week_ago]
+Query 2: "AI agent" deployment OR "real world" use case after:[yesterday]
+Query 3: "AI Agent" 落地 OR 实战 OR 案例 after:[yesterday]
+Query 4: "open source AI agent" framework comparison 2026
+```
+
 ### 全方位（默认）
 ```
 Query 1: "Claude Code" OR "Cursor" OR "AI coding" tips after:[yesterday]
-Query 2: "ComfyUI" OR "Stable Diffusion" workflow tutorial after:[yesterday]
-Query 3: "AI tool" new OR launch 2026 after:[yesterday]
-Query 4: GitHub trending AI today
-Query 5: "AI实战" OR "AI技巧" OR "AI工具" 推荐 after:[yesterday]
+Query 2: "AutoGen" OR "CrewAI" OR "AI agent" tutorial OR production after:[week_ago]
+Query 3: "Stable Diffusion" OR "Flux" workflow tutorial after:[yesterday]
+Query 4: "AI tool" new OR launch 2026 after:[yesterday]
+Query 5: GitHub trending AI today
+Query 6: "AI实战" OR "AI技巧" OR "AI Agent" 落地 after:[yesterday]
 ```
 
 ---

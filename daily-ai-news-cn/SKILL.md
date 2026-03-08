@@ -1,90 +1,95 @@
 ---
 name: daily-ai-news-cn
 user-invocable: true
-description: "Aggregates and summarizes the latest Chinese domestic AI news. Single-agent architecture with game/art vertical coverage. Activates on '国内AI新闻', '中国AI动态', '国内AI资讯', '国产大模型'."
+description: "聚合并总结中国国内最新 AI 新闻。单智能体架构，含游戏/美术垂直专区。触发词：'国内AI新闻'、'中国AI动态'、'国内AI资讯'、'国产大模型'。"
 ---
 
 # AI 每日资讯简报 — 国内版
 
-> Single-Agent architecture: no sub-agent dispatch. All web fetching, searching, filtering, categorization, and formatting happen in the main conversation.
+> 单智能体架构：不使用子智能体调度。所有网页抓取、搜索、过滤、分类和格式化均在主对话中完成。
 
-## When to Use This Skill
+## 何时使用此技能
 
-Activate this skill when the user:
-- Says: "国内AI新闻" / "中国AI动态" / "国内AI资讯"
-- Says: "国产大模型有什么新消息"
-- Says: "国内AI公司最近有什么动态"
-- Asks about Chinese domestic AI developments
-- Asks about Chinese LLMs (DeepSeek, Qwen, GLM, Kimi, etc.)
-- Asks about AI+游戏 or AI美术 in Chinese context
+当用户出现以下情况时激活此技能：
+- 说出："国内AI新闻" / "中国AI动态" / "国内AI资讯"
+- 说出："国产大模型有什么新消息"
+- 说出："国内AI公司最近有什么动态"
+- 询问中国国内 AI 发展动态
+- 询问国产大模型（DeepSeek、通义千问、GLM、Kimi 等）
+- 询问国内 AI+游戏 或 AI 美术相关内容
 
-**Do NOT activate** for international AI news (use `daily-ai-news-global`) or AI practice tips (use `daily-ai-practice`).
+**不要激活**：当用户请求国际 AI 新闻时（请使用 `daily-ai-news-global`），或请求 AI 实战技巧时（请使用 `daily-ai-practice`）。
 
-## Output Language Requirements (Must Follow)
+## 输出语言与格式要求（必须遵守）
 
-- **Final output must be in Simplified Chinese**
-- Proper nouns (company/product/model names) may remain in English
-- URLs must be kept as-is
-
----
-
-## Phase 0: Template Selection (Must Ask)
-
-Before fetching, ask the user which template to use. Default: **Standard**.
-
-**Prompt**: "你希望用哪个模板输出今天的国内 AI 日报？回复编号即可（默认：1 标准）。"
-
-**Available Templates** (see `references/output_templates.md`):
-
-1. **Standard** — categorized with summaries + key points (default)
-2. **Brief** — headlines + short summary only
-3. **Deep** — includes in-depth analysis and implications
-
-**Shortcut**: If user already specified a style, select directly without asking.
+- **最终面向用户的输出必须为简体中文**（标题、摘要、要点、总结和结尾文字）。
+- 专有名词（公司/产品/模型/论文名称）可保留英文；如有帮助，首次出现时可附简短中文说明。
+- URL 必须保持原样。
+- **输出必须是格式排版清晰的中文 Markdown 文档**：
+  - 使用清晰的标题层级（`#`、`##`、`###`）组织内容结构
+  - 合理使用分隔线 `---` 区分板块
+  - 列表、表格、引用块等 Markdown 元素使用规范，确保渲染后美观易读
+  - 段落间留有适当空行，避免内容拥挤
+  - 锚点链接、目录索引完整可跳转
 
 ---
 
-## Phase 1: Domestic Media Fetching
+## 阶段 0：输出目录（固定）
 
-Fetch latest content from domestic AI media using **WebFetch**:
+日报文件固定保存到 skills 公共输出目录 `<skills根目录>/output/`，无需询问用户。如目录不存在，自动创建。
 
-**Required (at least 3)**:
-- 36氪 AI: https://36kr.com/information/AI/
-- 机器之心: https://www.jiqizhixin.com/
-- 量子位: https://www.qbitai.com/
-
-**Optional (1-2 more)**:
-- 新智元: https://www.ai-era.com/
-- InfoQ AI 前线: https://www.infoq.cn/topic/AI
-- AI科技评论（雷锋网）: https://www.leiphone.com/category/ai
-
-If a site fails, skip and continue.
+**输出模板**：固定使用深度版模板（详见 `references/output_templates.md`）。
 
 ---
 
-## Phase 2: Chinese Web Search
+## 阶段 0.5：历史日报去重（必须执行）
 
-Execute 3-4 Chinese search queries using **WebSearch**:
+在开始抓取新闻之前，先读取近三天的历史日报，构建"已报道主题清单"，避免重复内容。
 
-1. `"AI 新闻" OR "人工智能" OR "大模型" 最新动态`
-2. `"百度AI" OR "通义千问" OR "智谱AI" OR "DeepSeek" OR "豆包" OR "Kimi"`
-3. `"国产大模型" OR "国内AI" OR "中国AI"`
-4. (Optional) `"AI监管" OR "开源大模型"`
+### 执行步骤
 
-Also try site-specific searches:
-- `site:36kr.com AI OR 大模型`
-- `site:jiqizhixin.com 最新`
-- `site:qbitai.com 最新`
+1. **扫描输出目录**：从 `<skills根目录>/output/` 中，查找最近 3 天的日报文件（`daily-ai-news-cn-YYYYMMDD.md`）
+2. **提取已报道主题**：读取找到的日报文件，提取每条新闻的标题、来源 URL、核心主题关键词，汇总为"已报道清单"
+3. **后续阶段引用**：在阶段 5（过滤与去重）中，将新抓取的新闻与此清单比对
 
-Refer to `references/search_queries.md` for more templates.
+### 去重规则
+
+- **完全相同的事件**（标题相似或 URL 相同）→ 直接跳过，不纳入今日日报
+- **同一主题有新进展**（如：前天报道了某公司融资消息，今天该公司公布了具体金额或新合作方）→ 保留，但在摘要中注明"📌 此前已报道，今日有新进展"并简述增量信息
+- **无历史日报可读时**（首次运行或目录为空）→ 跳过此阶段，正常执行后续流程
 
 ---
 
-## Phase 3: Game & Art Vertical Search (Dedicated Phase — Higher Priority)
+## 阶段 1：国内新闻采集
 
-This is a **dedicated phase** to ensure game/art content is not overlooked.
+从以下两个渠道并行采集，总计控制在 5-8 次网络请求以内：
 
-### 3.1 Game + AI Search
+### 1.1 一级媒体抓取（选 2-3 个）
+- 36氪 AI：https://36kr.com/information/AI/
+- 机器之心：https://www.jiqizhixin.com/
+- 量子位：https://www.qbitai.com/
+
+**可选来源**（淡日时可纳入）：
+- 新智元：https://www.ai-era.com/
+- InfoQ AI 前线：https://www.infoq.cn/topic/AI
+- AI科技评论（雷锋网）：https://www.leiphone.com/category/ai
+
+如果某个站点抓取失败，跳过并继续。
+
+### 1.2 搜索查询（2-3 条）
+1. `"AI 新闻" OR "人工智能" OR "大模型" 最新动态`（最近 24 小时）
+2. `"百度AI" OR "通义千问" OR "智谱AI" OR "DeepSeek" OR "豆包" OR "Kimi"`（最近 24 小时）
+3. （可选）`"AI监管" OR "开源大模型" OR "国产大模型"`（最近 24 小时）
+
+更多查询模板请参考 `references/search_queries.md`。
+
+---
+
+## 阶段 2：游戏与美术垂直搜索（专项阶段 — 高优先级）
+
+这是一个**专项阶段**，确保游戏/美术内容不被遗漏。
+
+### 2.1 AI+游戏搜索
 ```
 "AI游戏" OR "AI+游戏" OR "游戏AI" OR "AI NPC" OR "AI辅助游戏开发"
 ```
@@ -92,7 +97,7 @@ This is a **dedicated phase** to ensure game/art content is not overlooked.
 site:youxiputao.com AI OR 人工智能
 ```
 
-### 3.2 AI Art Search
+### 2.2 AI 美术搜索
 ```
 "AI绘画" OR "AI美术" OR "AIGC美术" OR "AI生成资产" OR "AI美术资产"
 ```
@@ -103,151 +108,242 @@ site:youxiputao.com AI OR 人工智能
 "AI视频生成" OR "AI动画" OR "Sora" OR "可灵" OR "Kling" OR "Runway"
 ```
 
-### 3.3 Vertical Source WebFetch (at least 1)
-- 游戏葡萄: https://youxiputao.com/
-- LiblibAI: https://www.liblib.art/
-- 站酷 ZCOOL: https://www.zcool.com.cn/
+### 2.3 垂直来源抓取（至少 1 个）
+- 游戏葡萄：https://youxiputao.com/
+- LiblibAI：https://www.liblib.art/
+- 站酷 ZCOOL：https://www.zcool.com.cn/
 
 ---
 
-## Phase 4: Full-Text Fetching
+## 阶段 3：国内 AI 圈热议（轻量采集）
 
-From Phase 1-3 results, select the **10-15 most important articles** and use **WebFetch** to get full text for accurate summarization.
+搜索国内 AI 社区近 24-72 小时的高热度讨论，提炼有价值的观点和趋势。
 
----
+### 搜索查询（1-2 条）
+```
+site:zhihu.com AI OR 大模型 热门 OR 讨论
+```
+```
+site:mp.weixin.qq.com AI 深度 OR 观点 OR 思考
+```
 
-## Phase 5: Filter, Deduplicate & Tag
+### 筛选标准
+- 优先选择：有独立观点的深度分析、行业从业者的一线体感、引发广泛讨论的话题
+- 移除：纯转载、标题党、营销号内容
+- 选出 1-3 条最有价值的观点/讨论
 
-### 5.1 Keep
-- News from last 24-48 hours (prefer today)
-- Chinese LLM releases/updates (DeepSeek, Qwen, GLM, Kimi, etc.)
-- Domestic AI company major moves (funding, products, strategy)
-- Chinese AI policy/regulation updates
-- Chinese research institution papers/results
-- Domestic AI tools/applications launches
-- AI+Game: AI NPC, AI-assisted game dev, game engine AI features
-- AI Art: new models/tools, ComfyUI workflows, AI 3D generation
-- Xiaohongshu/Bilibili AI trending topics
+### 输出位置
+在五大分类之后、游戏美术专区之前，设置"💬 国内 AI 圈热议"板块（详见 `references/output_templates.md`）。
 
-### 5.2 Remove
-- Pure translations of international news (unless with unique domestic perspective)
-- Marketing fluff / content-free articles
-- News older than 3 days
-- Duplicates of international news already covered in global edition
-
-### 5.3 game_art_tag Annotation
-For each news item, assign a tag:
-- `game` — if related to AI + gaming
-- `art` — if related to AI art / painting / 3D / video generation
-- `none` — otherwise
+如 72 小时内无有价值的社区讨论，注明"近期国内 AI 社区无突出热议话题"并省略此板块。
 
 ---
 
-## Phase 6: Categorize + Pyramid + Game/Art Labels
+## 阶段 4：全文抓取
 
-### 6.1 Five Categories
+从阶段 1-3 的结果中，选择**最重要的 10-15 篇文章**，获取全文以确保摘要准确。
 
-- 🔥 **重要发布** (major) — 国产大模型发布/更新、国内 AI 产品上线
-- 🔬 **研究与论文** (research) — 国内高校/研究机构论文、中国团队顶会论文
-- 💰 **产业与商业** (industry) — 国内 AI 融资、BAT/字节等巨头布局
-- 🛠️ **工具与应用** (tools) — 国产 AI 工具、国内开源项目、AI 美术资产生成工具
-- 🌍 **政策与伦理** (policy) — 中国 AI 监管政策、算法备案、数据安全
+---
 
-### 6.2 Five-Layer Pyramid (Same as Global)
+## 阶段 5：过滤、去重与标注
 
-| Layer | Name | Tag | Scope |
-|-------|------|-----|-------|
+### 5.1 与历史日报去重（引用阶段 0.5 的已报道清单）
+
+将新抓取的新闻逐条与"已报道清单"比对：
+- **标题相似或 URL 相同** → 跳过
+- **同一主题有新进展** → 保留，摘要中标注"📌 此前已报道，今日有新进展"并简述增量信息
+- **全新主题** → 正常保留
+
+### 5.2 当日内容过滤
+
+**保留**：
+- 最近 24-48 小时的新闻（优先今天的）
+- 国产大模型发布/更新（DeepSeek、通义千问、GLM、Kimi 等）
+- 国内 AI 公司重大动态（融资、产品、战略）
+- 中国 AI 政策/监管更新
+- 国内研究机构论文/成果
+- 国产 AI 工具/应用上线
+- AI+游戏：AI NPC、AI 辅助游戏开发、游戏引擎 AI 功能
+- AI 美术：新模型/工具、ComfyUI 工作流、AI 3D 生成
+- 小红书/B站 AI 热门话题
+
+**移除**：
+- 纯翻译的国际新闻（除非有独特的国内视角）
+- 营销软文或无实质内容的文章
+- 超过 3 天的旧闻
+- **与国际版交叉去重**：检查同日的国际版日报文件（`<skills根目录>/output/daily-ai-news-global-YYYYMMDD.md`），如存在则读取并提取已报道主题；对于国际版已覆盖的同一事件，国内版仅保留有独特国内视角或补充信息的报道，纯重复则跳过。如国际版日报不存在，跳过此规则。
+
+### 5.3 游戏/美术标注
+
+为每条新闻分配标签：
+- `game` — 与 AI+游戏相关
+- `art` — 与 AI 美术/绘画/3D/视频生成相关
+- `none` — 其他
+
+### 5.4 淡日策略
+
+如果经过过滤和去重后，剩余有效新闻不足 5 条：
+
+1. **扩大时间范围**：将搜索范围从 24 小时扩展到 72 小时，重新执行阶段 1-3 的搜索查询
+2. **降低来源门槛**：将可选来源（新智元、InfoQ、AI科技评论）也纳入必查范围
+3. **标注说明**：在日报头部注明"📅 今日国内 AI 动态较少，已扩展至近 3 天内容"
+4. **底线原则**：宁可输出 3-4 条高质量内容，也不为凑数纳入低质量或边缘相关的内容。如扩展后仍不足 5 条，按实际数量输出即可
+
+---
+
+## 阶段 6：分类 + 金字塔标注 + 游戏美术标签
+
+### 6.1 五大分类
+
+将每条新闻分配到一个分类：
+
+- 🔥 **重要发布**（major）：国产大模型发布/更新、国内 AI 产品上线
+- 🔬 **研究与论文**（research）：国内高校/研究机构论文、中国团队顶会论文
+- 💰 **产业与商业**（industry）：国内 AI 融资、BAT/字节等巨头布局
+- 🛠️ **工具与应用**（tools）：国产 AI 工具、国内开源项目、AI 美术资产生成工具
+- 🌍 **政策与伦理**（policy）：中国 AI 监管政策、算法备案、数据安全
+
+### 6.2 AI 产业五层架构
+
+> AI 产业自下而上分为五层：能源 → 芯片 → 基建 → 大模型 → 应用。越底层影响越大但变化越慢；越上层迭代越快但更易被替代。
+
+为每条新闻分配一个主要层级：
+
+| 层级 | 名称 | 标签 | 范围 |
+|------|------|------|------|
 | L1 | 能源 | `⚡ L1-能源` | 电力供应、数据中心电力、功耗效率 |
 | L2 | 芯片 | `🔧 L2-芯片` | GPU/TPU/ASIC、芯片性能、HBM、制造工艺 |
 | L3 | 基建 | `🏗️ L3-基建` | 数据中心建设、集群稳定性、云基础设施 |
 | L4 | 大模型 | `🧠 L4-大模型` | 模型发布、训练范式、Scaling Law、架构创新 |
 | L5 | 应用 | `🚀 L5-应用` | AI 产品、Chatbot/Copilot/Agent、商业化 |
 
-### 6.3 Game/Art Labels in Titles
+**规则**：
+1. 每条新闻一个主要层级
+2. 跨层新闻归入其核心贡献所在层级
+3. 政策类新闻按影响层级归类（芯片出口管制 → L2，AI 应用监管 → L5）
+4. 商业类新闻按公司主营业务层级归类
 
-- `game_art_tag: game` → add `🎮 游戏` label in the summary line
-- `game_art_tag: art` → add `🎨 美术` label in the summary line
-- These items also appear in the dedicated "🎮🎨 游戏与美术专区" section
+### 6.3 游戏/美术标签
+
+- `game_art_tag: game` → 在摘要行添加 `🎮 游戏` 标签
+- `game_art_tag: art` → 在摘要行添加 `🎨 美术` 标签
+- 这些条目同时出现在"🎮🎨 游戏与美术专区"中
 
 ---
 
-## Phase 7: Format Output
+## 阶段 7：按深度版模板格式化输出
 
-Use the selected template from Phase 0. See `references/output_templates.md`.
+按 `references/output_templates.md` 中的深度版模板格式化最终输出。
 
-### Header Format
-```markdown
-# 📰 AI 每日资讯简报（国内版）
+### 目录索引规则（必须遵守）
 
-**日期**： [当前日期]
-**来源**：来自 [Y] 个国内信息源，共 [X] 篇
-**覆盖范围**：最近 24 小时（聚焦中国国内 AI 动态）
+- **目录必须列出每条新闻**：在"📑 目录"下，将每条新闻标题作为链接嵌套在其分类下
+- **每条新闻必须有稳定锚点**：在每条新闻上方插入 `<a id="xxx"></a>`
+- **锚点命名**：
+  - 重要发布：`maj-01`、`maj-02`…
+  - 研究：`res-01`、`res-02`…
+  - 产业：`biz-01`、`biz-02`…
+  - 工具：`tool-01`、`tool-02`…
+  - 政策：`pol-01`、`pol-02`…
+  - 热议：`buzz-01`、`buzz-02`…
+
+### 金字塔可视化（目录之后、分类之前）
+
+```
+## 🔺 今日新闻五层架构分布
+
+> AI 产业自下而上分为五层：能源 → 芯片 → 基建 → 大模型 → 应用。
+> 越底层影响越大但变化越慢；越上层迭代越快但更易被替代。
+
+                        ┌─────────┐
+                       │ 🚀 应用  │ ← [N] 条
+                      │  L5-应用  │
+                     ├───────────┤
+                    │ 🧠 大模型   │ ← [N] 条
+                   │  L4-大模型   │
+                  ├─────────────┤
+                 │ 🏗️ 基建       │ ← [N] 条
+                │  L3-基建       │
+               ├───────────────┤
+              │ 🔧 芯片          │ ← [N] 条
+             │  L2-芯片          │
+            ├─────────────────┤
+           │ ⚡ 能源              │ ← [N] 条
+          │  L1-能源              │
+         └───────────────────┘
 ```
 
-### Directory Index Rules (Mandatory)
-- Directory must list every news item
-- Every item must have a stable anchor: `<a id="xxx"></a>`
-- Anchor naming: `maj-01`, `res-01`, `biz-01`, `tool-01`, `pol-01`, `game-01`, `art-01`
+### 每条摘要的层级标签
 
-### Pyramid Visualization (Same as Global)
-Include the full pyramid visualization block after the TOC.
+```
+**摘要**： `🧠 L4-大模型` [用 1 句中文概括]
+```
 
-### Game & Art Section (Dedicated)
-After all 5 category sections, include:
+### 游戏与美术专区（索引式）
+
+在五大分类之后，设置索引式专区（不重复展开内容，仅链接回主分类中的对应条目）：
 
 ```markdown
 ## 🎮🎨 游戏与美术专区
 
-> 聚焦 AI+游戏开发和 AI 美术资产生成领域的最新动态。
+> 以下条目已在上方对应分类中详细展开，此处仅做索引汇总。
 
 ### 🎮 AI+游戏
-
-<a id="game-01"></a>
-#### [游戏相关新闻标题]
-**摘要**： `🚀 L5-应用` 🎮 游戏 [用 1 句中文概括]
-...
+- [游戏新闻标题 1](#maj-01) — `🚀 L5-应用` 一句话摘要
+- [游戏新闻标题 2](#tool-02) — `🚀 L5-应用` 一句话摘要
 
 ### 🎨 AI 美术
+- [美术新闻标题 1](#tool-01) — `🚀 L5-应用` 一句话摘要
 
-<a id="art-01"></a>
-#### [美术相关新闻标题]
-**摘要**： `🚀 L5-应用` 🎨 美术 [用 1 句中文概括]
-...
+> 如本日无游戏/美术相关内容，此专区省略不显示。
 ```
 
-**Note**: Game/art items appear BOTH in their primary category AND in this dedicated section (cross-referenced).
+**注意**：专区不设独立锚点（无 `game-01`、`art-01`），所有链接指向主分类中的对应锚点。
 
 ---
 
-## Phase 8: Save to Disk (Mandatory)
+## 阶段 8：保存到磁盘（必须执行）
 
-- **Output directory**: `./daily-AI-News/Output/`
-- **Filename**: `daily-ai-news-cn-YYYYMMDD.md` (with `-cn` suffix)
-- **Content**: Exact same Markdown as the final output
-- **If file exists**: Overwrite with latest content
+- **输出目录**：`<skills根目录>/output/`
+- **文件名**：`daily-ai-news-cn-YYYYMMDD.md`（YYYYMMDD = 生成日期）
+- **内容**：与最终输出完全相同的 Markdown
+- **如文件已存在**：用最新内容覆盖
+- **如目录不存在**：自动创建
 
 ---
 
-## Quality Standards
+## 阶段 9：可选后续操作
 
-### Validation Checklist
-- All links are valid and accessible
-- No duplicate stories across categories
-- All items have timestamps (preferably today)
-- Summaries are accurate (not hallucinated)
-- Links lead to original sources
-- Mix of sources (not all from one publication)
-- Game/art tagged items appear in both category and dedicated section
-- **Output language is Simplified Chinese**
+保存后，向用户提供以下选项：
 
-### Error Handling
-- If a source fails → Note in final report, proceed with available data
-- If search returns no results → Note "该类别今日无相关新闻"
-- If too many results → Increase significance threshold
-- If content is paywalled → Use available excerpt and note limitation
+1. **关注方向**："你希望我重点关注哪些方向？"（研究/产品/产业/特定公司/游戏美术）
+2. **详细程度**："你希望内容多详细？"（简洁/标准/深度）
+3. **时间范围**："时间范围看多久？"（24小时/3天/1周）
 
-## Additional Resources
+**深入展开**："展开讲讲 [新闻 X]" → 抓取全文 + 详细摘要
 
-- `references/news_sources.md` - Chinese domestic AI news sources
-- `references/search_queries.md` - Chinese search query templates
-- `references/output_templates.md` - 3 output format templates (Standard/Brief/Deep)
+---
+
+## 质量标准
+
+### 验证清单
+- 所有链接有效且可访问
+- 各分类间无重复报道
+- 所有条目有时间戳（最好是今天的）
+- 摘要准确（非虚构）
+- 链接指向原始来源，而非聚合站
+- 来源多样化（不全来自同一媒体）
+- 游戏/美术专区为索引式，链接指向主分类中的对应锚点
+- **输出语言为简体中文（URL 和专有名词除外）**
+
+### 错误处理
+- 如果某来源抓取失败 → 在最终报告中注明，继续使用可用数据
+- 如果搜索无结果 → 注明"该类别今日无相关新闻"
+- 如果结果过多 → 提高重要性阈值
+- 如果内容有付费墙 → 使用可用摘要并注明限制
+
+## 附加资源
+
+- `references/news_sources.md` — 国内 AI 新闻来源（一级至五级）
+- `references/search_queries.md` — 中文搜索查询模板
+- `references/output_templates.md` — 深度版输出格式模板

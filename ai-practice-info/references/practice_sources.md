@@ -46,6 +46,35 @@
 - **侧重**: Agent 架构、RAG 模式
 - **优势**: LLM 应用架构实战
 
+---
+
+## 英文 Tier 4.5: 开源 AI Agent 框架官方资源
+
+### 1. AutoGen / AG2 GitHub
+- **URL**: https://github.com/microsoft/autogen
+- **侧重**: 多智能体对话框架、生产部署
+- **优势**: Microsoft 出品，社区活跃，落地案例多
+
+### 2. CrewAI GitHub & Blog
+- **URL**: https://github.com/crewAIInc/crewAI, https://blog.crewai.com
+- **侧重**: 角色化多 Agent 协作、任务编排
+- **优势**: 上手快，国内外落地案例丰富
+
+### 3. LangGraph Docs
+- **URL**: https://langchain-ai.github.io/langgraph/
+- **侧重**: 有状态 Agent 工作流、循环图架构
+- **优势**: 复杂 Agent 流程的标准方案
+
+### 4. AgentOps Blog
+- **URL**: https://blog.agentops.ai
+- **侧重**: Agent 可观测性、生产监控
+- **优势**: Agent 落地运维视角
+
+### 5. OpenClaw / 类似开源 Agent 项目
+- **方式**: 搜索 `site:github.com "OpenClaw" OR "open-claw" agent`
+- **侧重**: 开源 Coding Agent、自主任务执行
+- **优势**: 追踪最新开源 Agent 实现
+
 ### 9. LlamaIndex Blog
 - **URL**: https://blog.llamaindex.ai
 - **侧重**: RAG 实战、数据索引
@@ -100,7 +129,7 @@
 ## 英文 Tier 3: 开发者社区 + 社媒
 
 ### 1. X/Twitter AI 技术圈
-- **方式**: WebSearch `site:x.com`
+- **方式**: 搜索 `site:x.com`
 - **侧重**: 一线工程师实战分享
 - **优势**: 最新实战技巧的快速传播
 
@@ -119,17 +148,12 @@
 - **侧重**: SD/Flux 技巧
 - **优势**: AI 绘画技巧社区
 
-### 5. Reddit r/comfyui
-- **URL**: https://reddit.com/r/comfyui
-- **侧重**: ComfyUI 工作流分享
-- **优势**: 工作流模板和节点推荐
-
-### 6. Hacker News
+### 5. Hacker News
 - **URL**: https://news.ycombinator.com
 - **侧重**: 技术讨论精华
 - **优势**: 高质量技术讨论
 
-### 7. ProductHunt AI
+### 6. ProductHunt AI
 - **URL**: https://producthunt.com
 - **侧重**: 新 AI 工具发现
 - **优势**: 第一时间发现新工具
@@ -157,11 +181,6 @@
 - **URL**: https://wandb.ai/articles
 - **侧重**: ML 实验管理
 - **优势**: ML 工程化实践
-
-### 5. ComfyUI Releases
-- **URL**: https://github.com/comfyanonymous/ComfyUI
-- **侧重**: 节点/工作流更新
-- **优势**: ComfyUI 官方更新追踪
 
 ---
 
@@ -217,21 +236,26 @@
 ## 中文 Tier 6: 实操社区
 
 ### 1. 小红书 AI 教程
-- **方式**: WebSearch `site:xiaohongshu.com`
-- **侧重**: 图文实操、ComfyUI 工作流
+- **方式**: 搜索 `site:xiaohongshu.com`
+- **侧重**: 图文实操、AI 绘画工作流
 - **优势**: 图文并茂的实操教程
 
 ### 2. B站 AI 教程区
 - **URL**: https://bilibili.com/v/tech/ai
-- **侧重**: 视频教程、工具评测
-- **优势**: 视频化教学
+- **侧重**: 视频教程、工具评测、实操演示
+- **优势**: 视频化教学，字幕可提取核心技术点
+- **访问方式**:
+  - 公开搜索页：WebFetch 直接抓取
+  - 个人关注列表（AI 分组）：**托管浏览器**访问，需登录态
+- **内容提取**：优先抓取字幕文件整理技术要点；无字幕时抓取简介 + 热门评论
+- **重点来源**：用户 B站账号"AI"关注分组下的博主近期视频（7 天内优先，最多 14 天）
 
 ### 3. 即刻 AI 圈子
 - **侧重**: 一线从业者快讯
 - **优势**: 实时实战分享
 
 ### 4. 微信公众号
-- **方式**: WebSearch `site:mp.weixin.qq.com`
+- **方式**: 搜索 `site:mp.weixin.qq.com`
 - **侧重**: 深度技术文章
 - **优势**: 高质量中文技术内容
 
@@ -251,8 +275,8 @@
 
 ### 2. LiblibAI
 - **URL**: https://liblib.art
-- **侧重**: 国内 AI 绘画、ComfyUI
-- **优势**: 国内最大 AI 绘画平台
+- **侧重**: 国内 AI 绘画
+- **优势**: 国内 AI 绘画平台
 
 ### 3. 站酷 ZCOOL
 - **URL**: https://zcool.com.cn
@@ -274,15 +298,20 @@
 3. **Tier 3** 社区发现（Reddit、HN）
 
 ### 美术工作流采集
-1. 优先查 **Tier 7**（Civitai、LiblibAI）+ ComfyUI GitHub
-2. Reddit r/comfyui、r/StableDiffusion
-3. 小红书 ComfyUI 教程
+1. 优先查 **Tier 7**（Civitai、LiblibAI）
+2. Reddit r/StableDiffusion
+3. 小红书 AI 绘画教程
 
 ### 工具发现采集
 1. ProductHunt AI
 2. GitHub Trending
 3. 小红书/即刻 AI 工具分享
 
+### Agent 实战采集
+1. 优先查 **Tier 4.5**（AutoGen、CrewAI、LangGraph 官方资源）
+2. 搜索 "AI Agent 落地" 微信公众号 + 掘金
+3. GitHub Trending 中的 Agent 相关仓库
+
 ### GitHub 热门采集
 1. GitHub Trending 页面
-2. WebSearch "GitHub trending AI"
+2. 搜索 "GitHub trending AI"

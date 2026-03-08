@@ -1,17 +1,25 @@
 # 输出格式模板 — AI 实战技巧（实战清单风格）
 
-仅 1 种模板。聚焦"可操作性"，每条内容必须告诉读者能做什么。最终输出为简体中文。
+最终呈现给用户的内容必须为简体中文（链接保持原样；技术术语/工具名可保留英文）。
 
-## 通用规则
+## 通用：每条内容目录索引（必做）
 
-- **目录必须细到每条内容**
-- **每条内容必须有稳定锚点**：`<a id="xxx"></a>`
-- **锚点命名**：`code-01`、`art-01`、`tool-01`、`gh-01`、`pick-01`…
+**硬性要求**：
+- **目录必须细到每条内容**：在「📑 目录」下，按分类做二级嵌套，列出该组下每条内容标题的链接
+- **每条内容必须有稳定锚点**：在每条内容标题上方插入 `<a id="xxx"></a>`，目录用 `(#xxx)` 链接
 - **无金字塔可视化**（那是新闻框架，不适用于实战内容）
+
+**锚点命名**（同一份日报内唯一且连续）：
+- 今日推荐：`pick-01`、`pick-02`…
+- 编程实战：`code-01`、`code-02`…
+- 开源 Agent：`agent-01`、`agent-02`…
+- 美术工作流：`art-01`、`art-02`…
+- 提效工具：`tool-01`、`tool-02`…
+- GitHub 热门：`gh-01`、`gh-02`…
 
 ---
 
-## Practice Template (唯一模板)
+## 实战清单模板
 
 ```markdown
 # 🎯 AI 实战技巧日报
@@ -30,11 +38,16 @@
 - [🖥️ AI 编程实战](#-ai-编程实战)
   - [（code-01）标题 1](#code-01)
   - [（code-02）标题 2](#code-02)
+- [🤖 开源 Agent 实战](#-开源-agent-实战)
+  - [（agent-01）标题 1](#agent-01)
+  - [（agent-02）标题 2](#agent-02)
 - [🎨 AI 美术工作流](#-ai-美术工作流)
   - [（art-01）标题 1](#art-01)
   - [（art-02）标题 2](#art-02)
 - [🔧 AI 提效工具](#-ai-提效工具)
   - [（tool-01）标题 1](#tool-01)
+- [📺 B站精选](#-b站精选)
+  - [（bili-01）视频标题 1](#bili-01)
 - [🔥 GitHub 热门](#-github-热门)
   - [（gh-01）仓库名 1](#gh-01)
   - [（gh-02）仓库名 2](#gh-02)
@@ -115,9 +128,55 @@
 
 ---
 
+## 🤖 开源 Agent 实战
+
+> OpenClaw / AutoGen / CrewAI / LangGraph 落地分享、多智能体架构、Agent 技术方向
+
+<a id="agent-01"></a>
+### [Agent 实战标题 1]
+
+**框架**： [AutoGen / CrewAI / LangGraph / OpenClaw / 其他] · **难度**： ⭐⭐ 进阶 · **适用**： 💻 日常编码
+
+**一句话**： [这个案例/教程解决了什么问题]
+
+**要点**：
+- [要点 1]
+- [要点 2]
+- [要点 3]
+
+**架构亮点**：
+[简要描述 Agent 的设计思路或关键实现]
+
+**快速上手**：
+[1-2 句话说明怎么复现或参考]
+
+📅 **来源**： [平台/作者] • [日期]
+🔗 **链接**： [URL]
+
+---
+
+<a id="agent-02"></a>
+### [Agent 技术方向观察]
+
+**类型**： 技术趋势 · **难度**： ⭐⭐⭐ 高级 · **适用**： 💻 日常编码 · ⚡ 效率提升
+
+**一句话**： [这个方向/进展意味着什么]
+
+**要点**：
+- [要点 1]
+- [要点 2]
+
+**对实践的影响**：
+[1-2 句话说明开发者现在能做什么不同的事]
+
+📅 **来源**： [平台/作者] • [日期]
+🔗 **链接**： [URL]
+
+---
+
 ## 🎨 AI 美术工作流
 
-> ComfyUI 工作流、SD/Flux 技巧、AI 3D/视频、游戏美术管线
+> SD/Flux 技巧、AI 3D/视频、游戏美术管线
 
 <a id="art-01"></a>
 ### [美术工作流标题 1]
@@ -179,6 +238,34 @@
 
 ---
 
+## 📺 B站精选
+
+> 来自关注列表 AI 分组博主的近期视频，通过字幕提取核心技术点
+
+<a id="bili-01"></a>
+### 📺 [视频标题]
+
+**博主**： [UP主名] · **难度**： ⭐⭐ 进阶 · **适用**： 💻 日常编码
+**内容来源**： 字幕提取 / 简介+评论
+
+**一句话**： [这个视频讲了什么]
+
+**核心技术点**：
+- [技术点 1]
+- [技术点 2]
+- [技术点 3]
+
+**提到的工具/资源**：
+- [工具名 / GitHub 链接 / 文档地址]
+
+**亮点结论**：
+[最值得记住的 1-2 句话]
+
+📅 **发布**： [日期] · **UP主**： [名称]
+🔗 **链接**： [BV号 URL]
+
+---
+
 ## 🔥 GitHub 热门
 
 > 值得试用的 Trending AI 仓库
@@ -232,28 +319,28 @@
 
 ---
 
-## Template Design Principles
+## 模板设计原则
 
-### 1. Actionability First
-Every item must answer: **"What can I DO with this?"**
-- Bad: "OpenAI released GPT-5" (that's news)
-- Good: "Use GPT-5's new structured output mode to build a JSON parser in 3 lines"
+### 1. 可操作性优先
+每条内容必须回答：**"我能用这个做什么？"**
+- 反面示例："OpenAI 发布了 GPT-5"（这是新闻）
+- 正面示例："用 GPT-5 的新结构化输出模式，3 行代码搭建 JSON 解析器"
 
-### 2. Quick-Start Instructions
-The "今日推荐" section includes concrete "怎么开始" steps.
-Regular items include "快速上手" or "工作流概述".
+### 2. 快速上手指引
+"今日推荐"板块包含具体的"怎么开始"步骤。
+普通条目包含"快速上手"或"工作流概述"。
 
-### 3. Difficulty + Applicability
-Every item has:
-- **Difficulty**: ⭐/⭐⭐/⭐⭐⭐ so readers self-select
-- **Applicability tags**: 🎮🎨💻⚡ so readers find what's relevant
+### 3. 难度 + 适用性
+每条内容标注：
+- **难度**：⭐/⭐⭐/⭐⭐⭐，方便读者自选
+- **适用标签**：🎮🎨💻⚡，方便读者找到相关内容
 
-### 4. Today's Action List
-The "今日实战清单" at the bottom gives 3-5 concrete checkbox items.
-These should be specific enough to complete in 15-60 minutes.
+### 4. 今日实战清单
+结尾的"今日实战清单"给出 3-5 个具体的 checkbox 项。
+每项应具体到 15-60 分钟内可完成。
 
-### 5. No News Framework
-- No pyramid visualization (that's for industry analysis)
-- No funding/M&A coverage
-- No "significance" ratings
-- Focus is on: what is it, how to use it, why try it
+### 5. 不使用新闻框架
+- 无金字塔可视化（那是产业分析用的）
+- 不涉及融资/并购报道
+- 不做"重要性"评级
+- 聚焦：这是什么、怎么用、为什么值得试

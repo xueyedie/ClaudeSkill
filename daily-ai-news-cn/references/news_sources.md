@@ -130,12 +130,12 @@
 ### 1. 小红书 AI 技术分享
 - **URL**: https://www.xiaohongshu.com/
 - **搜索关键词**: AI绘画、AI工具、Stable Diffusion、Midjourney、ComfyUI、AI游戏、大模型教程
-- **抓取方式**: WebSearch 搜索 `site:xiaohongshu.com AI OR 大模型 OR AI绘画 OR AI游戏`
+- **抓取方式**: 搜索 `site:xiaohongshu.com AI OR 大模型 OR AI绘画 OR AI游戏`
 - **优势**: 实操内容丰富，AI 美术/设计领域分享活跃
 
 ### 2. 微信公众号
 - **核心账号**: 机器之心、量子位、新智元、AI科技评论、36氪、极客公园、游戏葡萄、GameRes游资网
-- **抓取方式**: WebSearch 搜索 `site:mp.weixin.qq.com [关键词]`
+- **抓取方式**: 搜索 `site:mp.weixin.qq.com [关键词]`
 - **优势**: 国内 AI 内容第一发布平台
 
 ### 3. 知乎 AI 话题
@@ -154,7 +154,7 @@
 
 ### 6. GitHub Trending（中国开发者项目）
 - **URL**: https://github.com/trending
-- **抓取方式**: WebSearch 搜索热门中文 AI 项目
+- **抓取方式**: 搜索热门中文 AI 项目
 - **优势**: 发现一手开源工具和框架
 
 ---
@@ -193,17 +193,17 @@
 
 ### 7. AI+游戏行业报告/会议
 - **关键词**: GDC AI、ChinaJoy AI、AIGC游戏、Unity AI、Unreal AI
-- **抓取方式**: WebSearch 定期查询
+- **抓取方式**: 定期查询
 - **聚焦**: 游戏引擎 AI 功能更新、AI NPC、PCG、AI 美术管线
 
 ---
 
-## Usage Guidelines
+## 使用策略
 
-### Daily News Gathering（国内版）
+### 国内版每日新闻采集
 1. 从 **一级源** 中选 3-5 个综合媒体抓取（36氪、机器之心、量子位必选）
 2. 从 **二级源** 中选 2-3 家重点公司博客（关注近期有大动作的公司）
-3. 使用中文关键词 WebSearch（见 `search_queries.md`）
+3. 使用中文关键词搜索（见 `search_queries.md`）
 4. 从 **四级源** 辅助发现：搜索小红书热门 AI 笔记、微信公众号、知乎最新讨论
 5. 关注国内政策/监管动态（三级源：信通院等）
 6. 重点关注 **五级源**（AI+游戏 & AI 美术资产生成）：游戏葡萄、站酷、LiblibAI 等垂直领域动态
