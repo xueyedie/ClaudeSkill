@@ -5,13 +5,15 @@ YouTube 视频分析器 - 使用 Gemini 原生视频理解能力分析 YouTube �
 
 用法：
     python analyze_youtube.py <youtube_url> <提示词> [--format text|json] [--model MODEL]
+    python analyze_youtube.py <youtube_url> --subtitles [--lang zh-Hans,en] [--format text|json]
 
 示例：
     python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" "描述视频内容"
-    python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" "分析游戏玩法" --format json
+    python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" --subtitles
+    python analyze_youtube.py "https://www.youtube.com/watch?v=xxx" --subtitles --lang "en,ja"
 
 环境变量：
-    GEMINI_API_KEY - 必填。从 https://aistudio.google.com/apikey 获取
+    GEMINI_API_KEY - 视频分析模式必填。从 https://aistudio.google.com/apikey 获取
 """
 
 import os
@@ -60,6 +62,57 @@ def normalize_youtube_url(url: str) -> str:
     """Normalize YouTube URL to standard format."""
     video_id = extract_video_id(url)
     return f"https://www.youtube.com/watch?v={video_id}"
+
+
+def fetch_subtitles(video_id: str, languages: list[str] = None) -> dict:
+    """
+    Fetch original subtitles/captions from YouTube.
+
+    Args:
+        video_id: YouTube video ID
+        languages: Language priority list (default: ['zh-Hans', 'en'])
+
+    Returns:
+        dict with 'success', 'subtitles' or 'error'
+    """
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi
+    except ImportError:
+        return {
+            'success': False,
+            'error': 'youtube-transcript-api not installed. Run: pip install youtube-transcript-api'
+        }
+
+    if languages is None:
+        languages = ['zh-Hans', 'en']
+
+    try:
+        transcript = YouTubeTranscriptApi().fetch(video_id, languages=languages)
+        subtitles = [{'text': s.text, 'start': s.start, 'duration': s.duration} for s in transcript]
+        return {
+            'success': True,
+            'subtitles': subtitles,
+            'video_id': video_id,
+            'count': len(subtitles),
+        }
+    except Exception as e:
+        error_msg = str(e)
+        if 'No transcripts were found' in error_msg or 'Could not retrieve' in error_msg:
+            error_msg = f"No subtitles found for this video (may not have captions).\nOriginal: {e}"
+        return {
+            'success': False,
+            'error': error_msg,
+            'video_id': video_id,
+        }
+
+
+def format_timestamp(seconds: float) -> str:
+    """Format seconds to MM:SS or HH:MM:SS."""
+    h, remainder = divmod(int(seconds), 3600)
+    m, s = divmod(remainder, 60)
+    if h > 0:
+        return f"{h:02d}:{m:02d}:{s:02d}"
+    return f"{m:02d}:{s:02d}"
 
 
 def analyze_video(url: str, prompt: str, model: str = DEFAULT_MODEL, api_key: str = None) -> dict:
@@ -130,49 +183,77 @@ def analyze_video(url: str, prompt: str, model: str = DEFAULT_MODEL, api_key: st
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Analyze YouTube videos using Gemini',
+        description='Analyze YouTube videos using Gemini, or extract subtitles',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   %(prog)s "https://www.youtube.com/watch?v=xxx" "描述这个视频的内容"
   %(prog)s "https://youtu.be/xxx" "分析游戏玩法机制" --format json
+  %(prog)s "https://youtu.be/xxx" --subtitles
+  %(prog)s "https://youtu.be/xxx" --subtitles --lang "en,ja" --format json
 
 Environment:
-  GEMINI_API_KEY    Required. Get from https://aistudio.google.com/apikey
+  GEMINI_API_KEY    Required for video analysis. Get from https://aistudio.google.com/apikey
         """
     )
-    
+
     parser.add_argument('url', help='YouTube video URL')
-    parser.add_argument('prompt', help='Analysis prompt/question')
+    parser.add_argument('prompt', nargs='?', default=None,
+                       help='Analysis prompt/question (not needed with --subtitles)')
+    parser.add_argument('--subtitles', action='store_true',
+                       help='Extract original subtitles instead of Gemini analysis')
+    parser.add_argument('--lang', default='zh-Hans,en',
+                       help='Subtitle language priority, comma-separated (default: zh-Hans,en)')
     parser.add_argument('--format', choices=['text', 'json'], default='text',
                        help='Output format (default: text)')
     parser.add_argument('--model', default=DEFAULT_MODEL,
                        help=f'Gemini model (default: {DEFAULT_MODEL})')
     parser.add_argument('--api-key', help='Gemini API key (or set GEMINI_API_KEY)')
-    
+
     args = parser.parse_args()
-    
-    api_key = get_api_key(args.api_key)
     video_id = extract_video_id(args.url)
-    
-    print(f"[YouTube Analyzer] Video: {video_id}", file=sys.stderr)
-    print(f"[YouTube Analyzer] Model: {args.model}", file=sys.stderr)
-    
-    result = analyze_video(
-        url=args.url,
-        prompt=args.prompt,
-        model=args.model,
-        api_key=api_key,
-    )
-    
-    if args.format == 'json':
-        print(json.dumps(result, ensure_ascii=False, indent=2))
-    else:
-        if result['success']:
-            print(result['result'])
+
+    if args.subtitles:
+        languages = [lang.strip() for lang in args.lang.split(',')]
+        print(f"[YouTube Analyzer] Subtitles: {video_id}", file=sys.stderr)
+        print(f"[YouTube Analyzer] Languages: {languages}", file=sys.stderr)
+
+        result = fetch_subtitles(video_id, languages)
+
+        if args.format == 'json':
+            print(json.dumps(result, ensure_ascii=False, indent=2))
         else:
-            print(f"Error: {result['error']}", file=sys.stderr)
-            sys.exit(1)
+            if result['success']:
+                for entry in result['subtitles']:
+                    ts = format_timestamp(entry['start'])
+                    print(f"[{ts}] {entry['text']}")
+            else:
+                print(f"Error: {result['error']}", file=sys.stderr)
+                sys.exit(1)
+    else:
+        if not args.prompt:
+            parser.error('prompt is required when not using --subtitles')
+
+        api_key = get_api_key(args.api_key)
+
+        print(f"[YouTube Analyzer] Video: {video_id}", file=sys.stderr)
+        print(f"[YouTube Analyzer] Model: {args.model}", file=sys.stderr)
+
+        result = analyze_video(
+            url=args.url,
+            prompt=args.prompt,
+            model=args.model,
+            api_key=api_key,
+        )
+
+        if args.format == 'json':
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            if result['success']:
+                print(result['result'])
+            else:
+                print(f"Error: {result['error']}", file=sys.stderr)
+                sys.exit(1)
 
 
 if __name__ == '__main__':
