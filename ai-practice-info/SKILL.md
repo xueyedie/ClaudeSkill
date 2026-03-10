@@ -8,9 +8,27 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 
 > **核心定位：不追新闻热点，只追"今天能用"的 AI 技巧。**
 > 聚焦可立刻应用到工作中的技术分享：AI 编程实战、AI 美术工作流、AI 提效工具。
-> 单智能体架构：不使用子智能体调度。所有网页抓取、搜索、过滤、分类和格式化均在主对话中完成。
+>
+> **多智能体并行架构**：主智能体作为调度器，通过 Agent tool 并行派发 5 个 Worker 子智能体分别负责不同分类的搜索与抓取，最后由主智能体汇总、去重、过滤、格式化并输出。搜索阶段从串行 ~20 分钟压缩到并行 ~5 分钟。
+>
+> **检查点机制**：每个 Worker 将原始结果写入 `output/.cache/practice-{category}-YYYYMMDD.md`。如果执行中断，再次触发时自动跳过已完成的 Worker，只补跑缺失分类。
 >
 > **内容获取方式**：优先使用 WebFetch 直接抓取页面内容；遇到需要登录或动态渲染的页面（如 B站关注列表、小红书），使用托管浏览器（browser）配合操作。B站视频内容通过抓取字幕文件整理核心技术点，无字幕时抓取视频简介和评论区精华。
+>
+> **架构总览**：
+> ```
+> 主智能体（调度器）
+>   ├─ 阶段 0.5：读历史日报，构建去重清单
+>   ├─ 阶段 A：检查点检测（跳过已有 cache 的分类）
+>   ├─ 阶段 B：并行派发 5 个 Worker（Agent tool）
+>   │   ├─ Worker 1：AI 编程实战（coding）
+>   │   ├─ Worker 2：开源 Agent 实战（agent）
+>   │   ├─ Worker 3：AI 美术工作流（art）
+>   │   ├─ Worker 4：AI 提效工具 + GitHub Trending（tools-github）
+>   │   └─ Worker 5：B站精选（bilibili）
+>   │   → 每个 Worker 写入 output/.cache/practice-{category}-YYYYMMDD.md
+>   └─ 阶段 C：汇总（读 cache → 去重 → 过滤 → 分类 → 格式化 → 保存）
+> ```
 
 ## 何时使用此技能
 
@@ -58,7 +76,7 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 1. **扫描输出目录**：从 `<skills根目录>/output/` 中，列出所有 `ai-practice-info-YYYYMMDD.md` 文件，按日期降序排列
 2. **取最近 1 个文件**：只取最新的那一份（目录为空则跳过）
 3. **提取已收录内容**：读取该文件，提取每条内容的标题、来源 URL、核心主题关键词，汇总为"已收录清单"
-4. **后续阶段引用**：在阶段 5（过滤）中，将新搜索的内容与此清单比对
+4. **后续阶段引用**：在阶段 C（汇总）中，将新搜索的内容与此清单比对
 
 ### 去重规则
 
@@ -68,11 +86,41 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 
 ---
 
-## 阶段 1：AI 编程实战搜索
+## 阶段 A：检查点检测
 
-搜索实用的 AI 编程技巧和最佳实践。
+在派发 Worker 之前，检查 `<skills根目录>/output/.cache/` 目录下是否存在今天日期的 cache 文件。
 
-### 1.1 搜索查询（英文）
+### 检测逻辑
+
+1. **列出 cache 文件**：查找 `output/.cache/practice-{category}-YYYYMMDD.md`，其中 category 为：`coding`、`agent`、`art`、`tools-github`、`bilibili`
+2. **全部存在**（5 个 cache 文件都有）→ 跳过阶段 B，直接进入阶段 C（汇总）
+3. **部分存在** → 只派发缺失分类对应的 Worker
+4. **全部不存在** → 正常派发全部 5 个 Worker
+5. **cache 目录不存在** → 自动创建 `output/.cache/`，然后派发全部 Worker
+
+---
+
+## 阶段 B：并行搜索派发
+
+**使用 Agent tool 同时派发 5 个子智能体**，每个 Worker 独立完成一个分类的搜索、抓取和初筛，将结果写入对应的 cache 文件。
+
+> **关键指令**：必须在一次响应中同时调用 5 个 Agent tool（或根据阶段 A 的检测结果，只调用缺失分类的 Worker），实现真正的并行执行。
+
+### 通用 Worker 规则
+
+- 每个 Worker 的 prompt 中必须包含：该分类的完整搜索查询列表、来源抓取列表、筛选标准
+- 每个 Worker 完成后，将结果写入：`<skills根目录>/output/.cache/practice-{category}-YYYYMMDD.md`
+- 写入格式必须遵循下方"Cache 文件格式规范"
+- 抓取策略：优先 WebFetch 直接抓取；需要登录的页面使用托管浏览器
+- 如果某来源抓取失败 → 跳过并继续，不要中断整个 Worker
+
+---
+
+### Worker 1：AI 编程实战（category: coding）
+
+**写入路径**：`output/.cache/practice-coding-YYYYMMDD.md`
+
+#### 搜索查询（英文）
 ```
 "Claude Code" best practices OR tips OR workflow
 ```
@@ -86,14 +134,14 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 "LLM" integration OR API best practices tutorial
 ```
 
-### 1.2 工程博客抓取（选 2-3 个）
+#### 工程博客抓取（选 2-3 个）
 - Anthropic Engineering：https://www.anthropic.com/engineering
 - OpenAI Cookbook：https://cookbook.openai.com
 - Vercel AI Blog：https://vercel.com/blog
 - LangChain Blog：https://blog.langchain.dev
 - Cursor Blog：https://cursor.com/blog
 
-### 1.3 大牛内容搜索
+#### 大牛内容搜索
 ```
 site:simonwillison.net AI OR LLM
 ```
@@ -108,11 +156,13 @@ site:latent.space AI engineering
 
 ---
 
-## 阶段 1.5：开源 AI Agent 技术追踪
+### Worker 2：开源 Agent 实战（category: agent）
+
+**写入路径**：`output/.cache/practice-agent-YYYYMMDD.md`
 
 搜索 OpenClaw、AutoGen、CrewAI、LangGraph 等开源 AI Agent 框架的技术落地分享和发展动态。
 
-### 1.5.1 搜索查询（英文）
+#### 搜索查询（英文）
 ```
 "OpenClaw" AI agent tutorial OR deployment OR use case
 ```
@@ -135,7 +185,7 @@ site:latent.space AI engineering
 "AI agent" deployment OR production OR "real world" use case after:[yesterday]
 ```
 
-### 1.5.2 中文搜索
+#### 中文搜索
 ```
 "AI Agent" 落地 OR 实战 OR 部署 OR 案例 after:[yesterday]
 ```
@@ -152,13 +202,13 @@ site:mp.weixin.qq.com "AI Agent" 落地 OR 实战 after:[yesterday]
 site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 ```
 
-### 1.5.3 重点来源抓取
+#### 重点来源抓取
 - AutoGen GitHub：https://github.com/microsoft/autogen
 - CrewAI GitHub：https://github.com/crewAIInc/crewAI
 - LangGraph Docs：https://langchain-ai.github.io/langgraph/
 - AgentOps Blog：https://blog.agentops.ai
 
-### 1.5.4 筛选重点
+#### 筛选重点
 - **技术落地**：优先选有实际部署经验、踩坑记录、性能数据的内容
 - **架构演进**：框架版本更新带来的新能力和迁移指南
 - **发展方向**：Agent 记忆、规划、工具调用的新模式
@@ -166,11 +216,13 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 
 ---
 
-## 阶段 2：AI 美术工作流搜索
+### Worker 3：AI 美术工作流（category: art）
+
+**写入路径**：`output/.cache/practice-art-YYYYMMDD.md`
 
 搜索 SD/Flux 和 AI 美术制作技巧。
 
-### 2.1 搜索查询（英文）
+#### 搜索查询（英文）
 ```
 "Stable Diffusion" OR "Flux" tips OR tricks OR workflow
 ```
@@ -181,7 +233,7 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 "AI video" generation OR "Sora" OR "Kling" OR "Runway" tutorial
 ```
 
-### 2.2 中文美术搜索
+#### 中文美术搜索
 ```
 "AI绘画" 技巧 OR 教程 OR 工作流
 ```
@@ -192,17 +244,19 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程
 ```
 
-### 2.3 美术来源抓取（选 1-2 个）
+#### 美术来源抓取（选 1-2 个）
 - Civitai：https://civitai.com/
 - LiblibAI：https://www.liblib.art/
 
 ---
 
-## 阶段 3：AI 提效工具搜索
+### Worker 4：AI 提效工具 + GitHub Trending（category: tools-github）
 
-搜索新的 AI 工具和生产力方案。
+**写入路径**：`output/.cache/practice-tools-github-YYYYMMDD.md`
 
-### 3.1 搜索查询（英文）
+搜索新的 AI 工具、生产力方案，以及 GitHub Trending AI 仓库。
+
+#### 工具搜索查询（英文）
 ```
 "AI tool" new OR launch OR release 2026
 ```
@@ -216,7 +270,7 @@ site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程
 site:producthunt.com AI tool
 ```
 
-### 3.2 中文工具搜索
+#### 中文工具搜索
 ```
 "AI工具" 推荐 OR 新上线 OR 测评
 ```
@@ -227,15 +281,33 @@ site:producthunt.com AI tool
 site:xiaohongshu.com "AI工具" OR "效率工具"
 ```
 
+#### GitHub Trending 抓取
+- https://github.com/trending（今日或本周）
+
+#### GitHub 搜索补充
+```
+GitHub trending AI repository 2026
+```
+```
+GitHub "machine learning" OR "LLM" OR "AI" trending stars
+```
+
+#### GitHub 筛选标准
+- 必须与 AI 相关（LLM、ML、AI 工具、AI 美术等）
+- 优先选择：README 清晰、提交活跃、有实际用途的仓库
+- 选出 3-5 个最相关的仓库
+
 ---
 
-## 阶段 3.5：B站关注博主视频扫描
+### Worker 5：B站精选（category: bilibili）
+
+**写入路径**：`output/.cache/practice-bilibili-YYYYMMDD.md`
 
 扫描用户 B站账号 AI 分组关注列表中博主的近期视频，通过字幕提取核心技术内容。
 
 > **访问方式**：B站关注列表需要登录态，使用**托管浏览器**访问。视频内容通过**字幕抓取**整理，无字幕时抓取简介 + 评论区精华。
 
-### 3.5.1 执行步骤
+#### 执行步骤
 
 1. **获取关注列表**：使用托管浏览器访问 `https://space.bilibili.com/` 我的主页 → 关注 → 找到"AI"分组，获取该分组下的博主列表
 2. **扫描近期视频**：对每位博主，访问其主页视频列表，筛选最近发布的视频（优先 7 天内，最多扩展到 14 天）
@@ -244,7 +316,7 @@ site:xiaohongshu.com "AI工具" OR "效率工具"
    - 无字幕：抓取视频简介 + 置顶评论 + 热门评论，提炼要点
 4. **筛选标准**：只保留与 AI 编程/Agent/工具/美术工作流相关的视频，纯娱乐/vlog 跳过
 
-### 3.5.2 字幕抓取方法
+#### 字幕抓取方法
 
 ```
 步骤 1：获取视频 cid
@@ -260,7 +332,7 @@ WebFetch: {subtitle_url}
 → 提取所有 content 字段，拼接为完整文本
 ```
 
-### 3.5.3 内容整理要求
+#### 内容整理要求
 
 从字幕/简介中提炼：
 - **核心技术点**：视频讲了什么技术/工具/方法
@@ -268,48 +340,54 @@ WebFetch: {subtitle_url}
 - **工具/资源**：提到的工具名、GitHub 链接、文档地址
 - **亮点结论**：最值得记住的 1-2 句话
 
-### 3.5.4 筛选重点
+#### 筛选重点
 - 优先选择有具体操作演示的视频（而非纯讲解）
 - 优先选择近 7 天内发布的内容
 - 每次日报最多收录 3 条 B站视频，避免比例失衡
 
-### 4.1 GitHub Trending 抓取
-- https://github.com/trending（今日或本周）
+---
 
-### 4.2 搜索补充
-```
-GitHub trending AI repository 2026
-```
-```
-GitHub "machine learning" OR "LLM" OR "AI" trending stars
-```
+## Cache 文件格式规范
 
-### 4.3 筛选标准
-- 必须与 AI 相关（LLM、ML、AI 工具、AI 美术等）
-- 优先选择：README 清晰、提交活跃、有实际用途的仓库
-- 选出 3-5 个最相关的仓库
+每个 Worker 写入的 cache 文件必须使用以下 Markdown 格式（方便 LLM 直接读写，减少格式错误）：
+
+```markdown
+# AI Practice Raw Cache — {分类名}
+# Generated: YYYY-MM-DD HH:MM
+# Category: coding | agent | art | tools-github | bilibili
+
+## Item 1
+- **标题**: xxx
+- **URL**: xxx
+- **来源**: xxx
+- **日期**: xxx
+- **摘要**: xxx
+- **要点**:
+  - xxx
+  - xxx
+
+## Item 2
+...
+```
 
 ---
 
-## 阶段 5：全文抓取 + 质量过滤
+## 阶段 C：汇总（主智能体）
 
-### 5.1 全文抓取
+所有 Worker 完成后（或从检查点恢复后），主智能体执行汇总。
 
-> **抓取策略（按优先级）**：
-> 1. **WebFetch 直接抓取**：适用于大多数博客、GitHub、文档页面
-> 2. **托管浏览器（browser）**：适用于需要登录或动态渲染的页面（B站关注列表、小红书、知乎等）
-> 3. **B站视频内容**：优先抓取字幕文件（`https://api.bilibili.com/x/player/wbi/v2?bvid=xxx` 获取 cid，再取字幕）；无字幕时抓取视频简介 + 评论区精华，整理核心技术点
+### C.1 读取 Cache 文件
 
-获取所有阶段中最有价值的 10-15 条结果的全文。
+读取 `output/.cache/` 下所有 5 个分类的 cache 文件，合并为统一的候选内容池。
 
-### 5.2 与历史日报去重（引用阶段 0.5 的已收录清单）
+### C.2 与历史日报去重（引用阶段 0.5 的已收录清单）
 
-将新搜索的内容逐条与"已收录清单"比对：
+将候选内容逐条与"已收录清单"比对：
 - **标题相似或 URL 相同** → 跳过
 - **同一工具/技巧有重大更新** → 保留，摘要中标注"📌 此前已推荐，今日有重大更新"
 - **全新内容** → 正常保留
 
-### 5.3 质量过滤 — 核心标准：**可操作性**
+### C.3 质量过滤 — 核心标准：**可操作性**
 
 **保留**（必须可操作）：
 - 分步教程或指南
@@ -326,11 +404,11 @@ GitHub "machine learning" OR "LLM" OR "AI" trending stars
 - 超过 7 天的旧内容
 - 重复/重叠内容
 
----
+从候选池中选出最有价值的 10-15 条结果。
 
-## 阶段 6：分类 + 评级 + 标签
+### C.4 分类 + 评级 + 标签
 
-### 6.1 四大分类
+#### 六大分类
 
 | 分类 | 锚点 | 内容范围 |
 |------|------|----------|
@@ -341,26 +419,24 @@ GitHub "machine learning" OR "LLM" OR "AI" trending stars
 | 📺 B站精选 | `bili-01` | 关注列表 AI 分组博主近期视频，字幕提取核心技术点 |
 | 🔥 GitHub 热门 | `gh-01` | 值得试用的 Trending AI 仓库 |
 
-### 6.2 难度评级（每条内容）
+#### 难度评级（每条内容）
 
 - ⭐ **入门** — 任何人都能跟着做，无前置要求
 - ⭐⭐ **进阶** — 需要该领域的基础知识
 - ⭐⭐⭐ **高级** — 需要丰富经验，高级技巧
 
-### 6.3 适用标签（每条内容，可多选）
+#### 适用标签（每条内容，可多选）
 
 - 🎮 **游戏开发** — 与游戏开发相关
 - 🎨 **美术创作** — 与美术/设计创作相关
 - 💻 **日常编码** — 与日常编程相关
 - ⚡ **效率提升** — 通用生产力提升
 
----
-
-## 阶段 7：按模板格式化输出
+### C.5 按模板格式化输出
 
 按 `references/output_templates.md` 中的实战清单模板格式化最终输出。
 
-### 目录索引规则（必须遵守）
+#### 目录索引规则（必须遵守）
 
 - **目录必须列出每条内容**：在"📑 目录"下，将每条内容标题作为链接嵌套在其分类下
 - **每条内容必须有稳定锚点**：在每条内容上方插入 `<a id="xxx"></a>`
@@ -373,22 +449,24 @@ GitHub "machine learning" OR "LLM" OR "AI" trending stars
   - B站精选：`bili-01`、`bili-02`…
   - GitHub 热门：`gh-01`、`gh-02`…
 
-### 与新闻 skill 的关键区别
+#### 与新闻 skill 的关键区别
 
 - **无金字塔可视化**（那是新闻框架，不适用于实战内容）
-- **无新闻分类**（使用 4 个实战分类）
+- **无新闻分类**（使用实战分类）
 - **可操作性为王** — 每条内容必须告诉读者能做什么
 - **今日实战清单** — 结尾 3-5 个 checkbox 项，读者今天就能动手试
 
----
-
-## 阶段 8：保存到磁盘（必须执行）
+### C.6 保存到磁盘（必须执行）
 
 - **输出目录**：`<skills根目录>/output/`
 - **文件名**：`ai-practice-info-YYYYMMDD.md`（YYYYMMDD = 生成日期）
 - **内容**：与最终输出完全相同的 Markdown
 - **如文件已存在**：用最新内容覆盖
 - **如目录不存在**：自动创建
+
+### C.7 清理 Cache（可选）
+
+日报保存成功后，可删除 `output/.cache/practice-*-YYYYMMDD.md` 文件以节省空间。也可保留用于调试。
 
 ---
 
