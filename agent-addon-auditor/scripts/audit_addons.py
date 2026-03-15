@@ -7,7 +7,7 @@ import re
 import sys
 import tempfile
 import zipfile
-from collections import Counter, defaultdict
+from collections import Counter
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable
@@ -62,7 +62,7 @@ LINE_RULES = [
         "base64 解码后管道给 shell",
         "critical",
         "obfuscation",
-        "base64 解码再交给 shell 经常用于隐藏恶意安装器。",
+        "base64 解码再交给 shell，常用于隐藏恶意安装器。",
         r"base64\s+(?:-d|--decode|-D)[^\n|]*\|\s*(?:bash|sh|zsh)\b",
     ),
     Rule(
@@ -110,7 +110,7 @@ LINE_RULES = [
         "临时目录执行",
         "medium",
         "execution-evasion",
-        "将可执行内容放到临时目录再运行，是常见的落地执行手法。",
+        "将可执行内容放到临时目录再运行，是常见落地执行手法。",
         r"\$(?:TMPDIR|TEMP)|/tmp/|mktemp\b",
     ),
     Rule(
@@ -118,7 +118,7 @@ LINE_RULES = [
         "赋予执行权限",
         "medium",
         "execution-evasion",
-        "对下载文件执行 chmod +x 需要结合上下文复核。",
+        "对文件执行 chmod +x 需要结合上下文复核。",
         r"chmod\s+\+x\b",
     ),
     Rule(
@@ -134,7 +134,7 @@ LINE_RULES = [
         "敏感环境文件访问",
         "high",
         "secret-access",
-        "读取 .env 等环境文件可能暴露 API key、token 和其他密钥。",
+        "读取 .env 等环境文件可能暴露 API key、token 等敏感信息。",
         r"(?:^|[\s'\"/])(?:\.env|\.clawdbot/\.env|\.claude/\.env)(?:$|[\s'\"/])",
     ),
     Rule(
@@ -151,7 +151,7 @@ LINE_RULES = [
         "high",
         "secret-access",
         "浏览器 Cookie、配置和本地数据都属于高敏感信息。",
-        r"Cookies\b|Login Data\b|Web Data\b|BraveSoftware|Chrome/User Data|Firefox/Profiles|浏览器(?:Cookie|配置|资料|用户数据)",
+        r"Cookies\b|Login Data\b|Web Data\b|BraveSoftware|Chrome/User Data|Firefox/Profiles|浏览器.{0,10}(?:Cookie|配置|资料|用户数据)",
     ),
     Rule(
         "wallet-access",
@@ -166,7 +166,7 @@ LINE_RULES = [
         "Python shell 执行入口",
         "medium",
         "code-exec",
-        "当输入不可信或数据来自网络时，这类 shell 执行入口需要重点复核。",
+        "当输入不可信或来自网络时，这类 shell 执行入口需要重点复核。",
         r"subprocess\.(?:run|Popen|call)\([^\n]{0,160}shell\s*=\s*True|os\.system\(|eval\(|exec\(",
     ),
     Rule(
@@ -285,86 +285,117 @@ def match_line_rules(addon_name: str, rel_path: str, text: str) -> list[Finding]
     return findings
 
 
+def find_window(lines: list[str], patterns: list[str], window_size: int = 6) -> tuple[int | None, str]:
+    compiled = [re.compile(pattern, re.IGNORECASE) for pattern in patterns]
+    for start in range(len(lines)):
+        end = min(len(lines), start + window_size)
+        window = lines[start:end]
+        if all(any(pattern.search(line) for line in window) for pattern in compiled):
+            excerpt = " ".join(line.strip() for line in window if line.strip())[:240]
+            return start + 1, excerpt or "文件级启发式命中"
+    return None, "文件级启发式命中"
+
+
 def match_file_heuristics(addon_name: str, rel_path: str, text: str) -> list[Finding]:
     findings: list[Finding] = []
     lower = text.lower()
     lines = text.splitlines()
-
-    def excerpt_for(*tokens: str) -> tuple[int | None, str]:
-        for idx, line in enumerate(lines, start=1):
-            ll = line.lower()
-            if all(token.lower() in ll for token in tokens):
-                return idx, line.strip()[:240]
-        for idx, line in enumerate(lines, start=1):
-            ll = line.lower()
-            if any(token.lower() in ll for token in tokens):
-                return idx, line.strip()[:240]
-        return None, "文件级启发式命中"
-
     exec_hint = re.search(r"(?:\./\S+|bash\s+\S+|sh\s+\S+|zsh\s+\S+)", text)
+
     if ("curl" in lower or "wget" in lower) and ("chmod +x" in lower) and exec_hint:
-        line, excerpt = excerpt_for("chmod +x")
-        findings.append(
-            Finding(
-                addon=addon_name,
-                source=rel_path,
-                rule_id="download-execute-chain",
-                title="下载后赋权并执行",
-                severity="critical",
-                category="remote-exec",
-                rationale="联网下载后 chmod +x 并直接执行，是常见恶意安装链。",
-                line=line,
-                excerpt=excerpt,
-            )
+        line, excerpt = find_window(
+            lines,
+            [
+                r"\b(?:curl|wget)\b",
+                r"chmod\s+\+x\b",
+                r"(?:\./\S+|bash\s+\S+|sh\s+\S+|zsh\s+\S+)",
+            ],
         )
+        if line is not None:
+            findings.append(
+                Finding(
+                    addon=addon_name,
+                    source=rel_path,
+                    rule_id="download-execute-chain",
+                    title="下载后赋权并执行",
+                    severity="critical",
+                    category="remote-exec",
+                    rationale="联网下载后 chmod +x 并直接执行，是常见恶意安装链。",
+                    line=line,
+                    excerpt=excerpt,
+                )
+            )
 
     if ("base64" in lower) and ("curl" in lower or "wget" in lower) and ("bash" in lower or "sh" in lower or "zsh" in lower):
-        line, excerpt = excerpt_for("base64")
-        findings.append(
-            Finding(
-                addon=addon_name,
-                source=rel_path,
-                rule_id="obfuscated-network-exec-chain",
-                title="混淆后的联网执行链",
-                severity="critical",
-                category="obfuscation",
-                rationale="混淆、联网获取和 shell 执行同时出现，是高置信度恶意信号。",
-                line=line,
-                excerpt=excerpt,
-            )
+        line, excerpt = find_window(
+            lines,
+            [
+                r"base64\s+(?:-d|--decode|-D)\b",
+                r"\b(?:curl|wget)\b",
+                r"\b(?:bash|sh|zsh)\b",
+            ],
         )
+        if line is not None:
+            findings.append(
+                Finding(
+                    addon=addon_name,
+                    source=rel_path,
+                    rule_id="obfuscated-network-exec-chain",
+                    title="混淆后的联网执行链",
+                    severity="critical",
+                    category="obfuscation",
+                    rationale="混淆、联网获取和 shell 执行同时出现，是高置信度恶意信号。",
+                    line=line,
+                    excerpt=excerpt,
+                )
+            )
 
     if (("prereq" in lower) or ("prerequisites" in lower) or ("前置" in text) or ("先决条件" in text)) and (("terminal" in lower) or ("shell" in lower) or ("终端" in text)) and (("curl" in lower) or ("wget" in lower)):
-        line, excerpt = excerpt_for("prereq")
-        findings.append(
-            Finding(
-                addon=addon_name,
-                source=rel_path,
-                rule_id="prereq-terminal-fetch",
-                title="前置步骤要求用户在终端下载远程内容",
-                severity="high",
-                category="social-engineering",
-                rationale="将远程获取命令伪装成 prerequisite，是已知社工安装手法。",
-                line=line,
-                excerpt=excerpt,
-            )
+        line, excerpt = find_window(
+            lines,
+            [
+                r"\b(?:prereq|prerequisites)\b|前置|先决条件",
+                r"\b(?:terminal|shell)\b|终端",
+                r"\b(?:curl|wget)\b",
+            ],
         )
+        if line is not None:
+            findings.append(
+                Finding(
+                    addon=addon_name,
+                    source=rel_path,
+                    rule_id="prereq-terminal-fetch",
+                    title="前置步骤要求用户在终端下载远程内容",
+                    severity="high",
+                    category="social-engineering",
+                    rationale="将远程获取命令伪装成 prerequisite，是已知社工安装手法。",
+                    line=line,
+                    excerpt=excerpt,
+                )
+            )
 
     if ((".env" in lower) or (".ssh" in lower) or ("id_rsa" in lower) or ("cookie" in lower) or ("钱包" in text)) and (("curl" in lower) or ("requests.post" in lower) or ("webhook.site" in lower) or ("--data" in lower)):
-        line, excerpt = excerpt_for(".env")
-        findings.append(
-            Finding(
-                addon=addon_name,
-                source=rel_path,
-                rule_id="secret-exfil-chain",
-                title="疑似敏感数据收集并外传",
-                severity="critical",
-                category="exfiltration",
-                rationale="访问敏感文件再发起外联上传，强烈指向数据外传。",
-                line=line,
-                excerpt=excerpt,
-            )
+        line, excerpt = find_window(
+            lines,
+            [
+                r"(?:^|[\s'\"/])(?:\.env|\.clawdbot/\.env|\.claude/\.env)(?:$|[\s'\"/])|\.ssh/|id_(?:rsa|dsa|ecdsa|ed25519)|cookie|钱包",
+                r"requests\.post\(|webhook\.site|--data(?:-binary)?\b|\bcurl\b[^\n]{0,120}\s(?:-d|--data|--data-binary|--upload-file)\b",
+            ],
         )
+        if line is not None:
+            findings.append(
+                Finding(
+                    addon=addon_name,
+                    source=rel_path,
+                    rule_id="secret-exfil-chain",
+                    title="疑似敏感数据收集并外传",
+                    severity="critical",
+                    category="exfiltration",
+                    rationale="访问敏感文件再发起外联上传，强烈指向数据外传。",
+                    line=line,
+                    excerpt=excerpt,
+                )
+            )
 
     return findings
 
@@ -464,13 +495,6 @@ def reports_to_json(targets: list[str], reports: list[AddonReport]) -> str:
     return json.dumps(payload, ensure_ascii=False, indent=2)
 
 
-def grouped_findings(report: AddonReport) -> dict[str, list[Finding]]:
-    grouped: dict[str, list[Finding]] = defaultdict(list)
-    for finding in report.findings:
-        grouped[finding.severity].append(finding)
-    return grouped
-
-
 def top_findings(report: AddonReport, limit: int = 8) -> list[Finding]:
     ordered = sorted(report.findings, key=lambda f: (-SEVERITY_ORDER[f.severity], f.source, f.line or 0, f.rule_id))
     return ordered[:limit]
@@ -500,7 +524,10 @@ def reports_to_markdown(targets: list[str], reports: list[AddonReport]) -> str:
             f"- 跳过或不支持的文件：{report.unsupported_files}",
         ])
         if report.summary:
-            summary_text = "，".join(f"{SEVERITY_LABELS[k]} {v} 条" for k, v in sorted(report.summary.items(), key=lambda item: -SEVERITY_ORDER[item[0]]))
+            summary_text = "，".join(
+                f"{SEVERITY_LABELS[k]} {v} 条"
+                for k, v in sorted(report.summary.items(), key=lambda item: -SEVERITY_ORDER[item[0]])
+            )
             lines.append(f"- 命中分布：{summary_text}")
         for note in report.notes:
             lines.append(f"- 备注：{note}")
