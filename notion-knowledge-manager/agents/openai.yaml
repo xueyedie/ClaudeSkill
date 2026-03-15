@@ -1,3 +1,4 @@
-﻿interface:
+interface:
   display_name: "Notion 知识库管理"
   short_description: "管理 Notion 知识库的新增、索引、检索、重组、删除清理与 AI 协同流程"
+  default_prompt: "Use the notion-knowledge-manager skill to manage this Notion knowledge base. Start with the smallest context-loading level that can solve the request, then handle ingestion, indexing, search, restructuring, hygiene inspection, or deletion cleanup as needed. If the user invoked /notion-knowledge-manager without details, ask what they want to do in the knowledge base."
