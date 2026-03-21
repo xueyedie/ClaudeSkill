@@ -74,60 +74,266 @@ def notion_request(method: str, path: str, payload: dict[str, Any] | None = None
     return json.loads(body)
 
 
+import re as _re
+
+
+def _parse_inline(text: str) -> list[dict[str, Any]]:
+    """Parse inline Markdown (bold, italic, code, links, strikethrough) into Notion rich_text segments."""
+    segments: list[dict[str, Any]] = []
+    # Pattern order matters: bold+italic first, then bold, italic, code, links, strikethrough
+    inline_pattern = _re.compile(
+        r'(\*\*\*(.+?)\*\*\*)'        # ***bold italic***
+        r'|(\*\*(.+?)\*\*)'           # **bold**
+        r'|(\*(.+?)\*)'               # *italic*
+        r'|(`(.+?)`)'                 # `code`
+        r'|(~~(.+?)~~)'               # ~~strikethrough~~
+        r'|(\[([^\]]+)\]\(([^)]+)\))' # [text](url)
+    )
+    pos = 0
+    for m in inline_pattern.finditer(text):
+        # Add plain text before this match
+        if m.start() > pos:
+            plain = text[pos:m.start()]
+            if plain:
+                segments.append({"type": "text", "text": {"content": plain}})
+
+        if m.group(2) is not None:  # bold+italic
+            segments.append({
+                "type": "text",
+                "text": {"content": m.group(2)},
+                "annotations": {"bold": True, "italic": True},
+            })
+        elif m.group(4) is not None:  # bold
+            segments.append({
+                "type": "text",
+                "text": {"content": m.group(4)},
+                "annotations": {"bold": True},
+            })
+        elif m.group(6) is not None:  # italic
+            segments.append({
+                "type": "text",
+                "text": {"content": m.group(6)},
+                "annotations": {"italic": True},
+            })
+        elif m.group(8) is not None:  # code
+            segments.append({
+                "type": "text",
+                "text": {"content": m.group(8)},
+                "annotations": {"code": True},
+            })
+        elif m.group(10) is not None:  # strikethrough
+            segments.append({
+                "type": "text",
+                "text": {"content": m.group(10)},
+                "annotations": {"strikethrough": True},
+            })
+        elif m.group(12) is not None:  # link
+            link_text = m.group(12)
+            link_url = m.group(13)
+            # Notion API only accepts http/https URLs; skip anchors, relative paths, etc.
+            if link_url.startswith("http://") or link_url.startswith("https://"):
+                segments.append({
+                    "type": "text",
+                    "text": {"content": link_text, "link": {"url": link_url}},
+                })
+            else:
+                # Degrade to plain text
+                segments.append({
+                    "type": "text",
+                    "text": {"content": link_text},
+                })
+        pos = m.end()
+
+    # Remaining plain text
+    if pos < len(text):
+        remaining = text[pos:]
+        if remaining:
+            segments.append({"type": "text", "text": {"content": remaining}})
+
+    if not segments:
+        segments.append({"type": "text", "text": {"content": text}})
+    return segments
+
+
 def rich_text(text: str) -> list[dict[str, Any]]:
+    return _parse_inline(text)
+
+
+def rich_text_plain(text: str) -> list[dict[str, Any]]:
+    """Plain rich_text without inline parsing (for code blocks, etc.)."""
     return [{"type": "text", "text": {"content": text}}]
 
 
 def title_property(text: str) -> dict[str, Any]:
-    return {"title": rich_text(text)}
+    return {"title": rich_text_plain(text)}
+
+
+def _make_block(block_type: str, rt: list[dict[str, Any]], **extra: Any) -> dict[str, Any]:
+    payload: dict[str, Any] = {"rich_text": rt}
+    payload.update(extra)
+    return {"object": "block", "type": block_type, block_type: payload}
 
 
 def paragraph_block(text: str) -> dict[str, Any]:
-    return {
-        "object": "block",
-        "type": "paragraph",
-        "paragraph": {"rich_text": rich_text(text)},
-    }
+    return _make_block("paragraph", rich_text(text))
 
 
 def bulleted_block(text: str) -> dict[str, Any]:
-    return {
-        "object": "block",
-        "type": "bulleted_list_item",
-        "bulleted_list_item": {"rich_text": rich_text(text)},
-    }
+    return _make_block("bulleted_list_item", rich_text(text))
 
 
 def numbered_block(text: str) -> dict[str, Any]:
-    return {
-        "object": "block",
-        "type": "numbered_list_item",
-        "numbered_list_item": {"rich_text": rich_text(text)},
-    }
+    return _make_block("numbered_list_item", rich_text(text))
 
 
 def quote_block(text: str) -> dict[str, Any]:
+    return _make_block("quote", rich_text(text))
+
+
+def heading_block(text: str, level: int) -> dict[str, Any]:
+    htype = f"heading_{min(level, 3)}"
+    return _make_block(htype, rich_text(text))
+
+
+def divider_block() -> dict[str, Any]:
+    return {"object": "block", "type": "divider", "divider": {}}
+
+
+def code_block(code: str, language: str = "plain text") -> dict[str, Any]:
     return {
         "object": "block",
-        "type": "quote",
-        "quote": {"rich_text": rich_text(text)},
+        "type": "code",
+        "code": {
+            "rich_text": rich_text_plain(code),
+            "language": language,
+        },
+    }
+
+
+def table_block(header: list[str], rows: list[list[str]]) -> dict[str, Any]:
+    """Build a Notion table block from header + rows."""
+    col_count = len(header)
+
+    def make_row(cells: list[str], is_header: bool = False) -> dict[str, Any]:
+        row_cells = []
+        for cell in cells:
+            row_cells.append(rich_text(cell.strip()))
+        # Pad if needed
+        while len(row_cells) < col_count:
+            row_cells.append(rich_text_plain(""))
+        return {
+            "object": "block",
+            "type": "table_row",
+            "table_row": {"cells": row_cells},
+        }
+
+    children = [make_row(header, is_header=True)]
+    for row in rows:
+        children.append(make_row(row))
+
+    return {
+        "object": "block",
+        "type": "table",
+        "table": {
+            "table_width": col_count,
+            "has_column_header": True,
+            "has_row_header": False,
+            "children": children,
+        },
     }
 
 
 def blocks_from_text(text: str) -> list[dict[str, Any]]:
     blocks: list[dict[str, Any]] = []
-    for raw_line in text.splitlines():
+    lines = text.splitlines()
+    i = 0
+    while i < len(lines):
+        raw_line = lines[i]
         line = raw_line.rstrip()
-        if not line.strip():
+        stripped = line.strip()
+
+        # Skip empty lines
+        if not stripped:
+            i += 1
             continue
-        if line.startswith("- "):
-            blocks.append(bulleted_block(line[2:].strip()))
-        elif line[:2].isdigit() and line[1:3] == ". ":
-            blocks.append(numbered_block(line[3:].strip()))
-        elif line.startswith("> "):
-            blocks.append(quote_block(line[2:].strip()))
-        else:
-            blocks.append(paragraph_block(line.strip()))
+
+        # Code block (fenced)
+        if stripped.startswith("```"):
+            lang = stripped[3:].strip() or "plain text"
+            code_lines: list[str] = []
+            i += 1
+            while i < len(lines):
+                if lines[i].rstrip().strip().startswith("```"):
+                    i += 1
+                    break
+                code_lines.append(lines[i].rstrip())
+                i += 1
+            code_content = "\n".join(code_lines)
+            if code_content:
+                blocks.append(code_block(code_content, lang))
+            continue
+
+        # Divider / horizontal rule
+        if _re.match(r'^[-*_]{3,}\s*$', stripped):
+            blocks.append(divider_block())
+            i += 1
+            continue
+
+        # Headings
+        heading_match = _re.match(r'^(#{1,3})\s+(.+)$', stripped)
+        if heading_match:
+            level = len(heading_match.group(1))
+            blocks.append(heading_block(heading_match.group(2), level))
+            i += 1
+            continue
+
+        # Table detection: | col1 | col2 | ...
+        if stripped.startswith("|") and stripped.endswith("|"):
+            table_lines: list[str] = []
+            while i < len(lines) and lines[i].strip().startswith("|") and lines[i].strip().endswith("|"):
+                table_lines.append(lines[i].strip())
+                i += 1
+            if len(table_lines) >= 2:
+                # Parse header
+                header_cells = [c.strip() for c in table_lines[0].strip("|").split("|")]
+                # Skip separator row (|---|---|)
+                data_start = 1
+                if len(table_lines) > 1 and _re.match(r'^[\s|:-]+$', table_lines[1]):
+                    data_start = 2
+                data_rows = []
+                for tl in table_lines[data_start:]:
+                    row_cells = [c.strip() for c in tl.strip("|").split("|")]
+                    data_rows.append(row_cells)
+                blocks.append(table_block(header_cells, data_rows))
+            else:
+                # Single pipe line, treat as paragraph
+                blocks.append(paragraph_block(stripped))
+            continue
+
+        # Bulleted list
+        if _re.match(r'^[-*+]\s+', stripped):
+            content = _re.sub(r'^[-*+]\s+', '', stripped)
+            blocks.append(bulleted_block(content))
+            i += 1
+            continue
+
+        # Numbered list (1. or 1) style)
+        num_match = _re.match(r'^\d+[.)]\s+(.+)$', stripped)
+        if num_match:
+            blocks.append(numbered_block(num_match.group(1)))
+            i += 1
+            continue
+
+        # Blockquote
+        if stripped.startswith("> "):
+            blocks.append(quote_block(stripped[2:]))
+            i += 1
+            continue
+
+        # Default: paragraph
+        blocks.append(paragraph_block(stripped))
+        i += 1
+
     return blocks
 
 
@@ -166,6 +372,9 @@ def list_block_text(blocks: list[dict[str, Any]]) -> list[dict[str, Any]]:
         block_type = block.get("type", "")
         payload = block.get(block_type, {})
         text = extract_plain_text(payload.get("rich_text"))
+        # Notion child pages expose their title on child_page.title, not rich_text.
+        if not text and block_type == "child_page":
+            text = payload.get("title", "")
         lines.append({"type": block_type, "text": text})
     return lines
 
