@@ -1,0 +1,23 @@
+{
+  "title": "【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）",
+  "url": "https://www.bilibili.com/video/BV19nwxzQEdw/?vd_source=c010ec3a11358871f587630413675faf",
+  "platform": "bilibili",
+  "video_file": "/Users/bot/.openclaw/workspace/skills/stream-grab-pro/output/bilibili-【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）-20260321-192353/video/video.mp4",
+  "auth_sources": [
+    "managed-browser:openclaw"
+  ],
+  "subtitles": {
+    "raw_file": "/Users/bot/.openclaw/workspace/skills/stream-grab-pro/output/bilibili-【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）-20260321-192353/subtitles/subtitle-ai-zh.json",
+    "txt_file": "/Users/bot/.openclaw/workspace/skills/stream-grab-pro/output/bilibili-【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）-20260321-192353/subtitles/subtitle-中文.txt",
+    "srt_file": "/Users/bot/.openclaw/workspace/skills/stream-grab-pro/output/bilibili-【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）-20260321-192353/subtitles/subtitle-中文.srt",
+    "language": "中文",
+    "source": "browser-fallback",
+    "count": 164,
+    "title": "【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）"
+  },
+  "subtitle_error": null,
+  "whisper_fallback_used": false,
+  "whisper_model": "small",
+  "whisper_error": null,
+  "created_at": "20260321-192353"
+}

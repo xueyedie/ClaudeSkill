@@ -1,0 +1,4 @@
+interface:
+  display_name: "StreamGrabPro"
+  short_description: "后台下载视频并回发 IM；无字幕时先询问再 Whisper"
+  default_prompt: "Use $stream-grab-pro to start a persistent background download job for this link, deliver the video and subtitles back to IM when ready, and only start Whisper if the user later confirms they want transcription."

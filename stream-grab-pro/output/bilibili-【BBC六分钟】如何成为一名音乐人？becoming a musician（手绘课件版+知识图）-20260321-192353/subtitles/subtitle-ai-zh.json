@@ -1,0 +1,1396 @@
+{
+  "font_size": 0.4,
+  "font_color": "#FFFFFF",
+  "background_alpha": 0.5,
+  "background_color": "#9C27B0",
+  "Stroke": "none",
+  "type": "AIsubtitle",
+  "lang": "zh",
+  "version": "eng-1.2.0-Index-johns-pen-lite",
+  "body": [
+    {
+      "content": "BBC六分钟英语",
+      "from": 0.66,
+      "location": 2,
+      "music": 0.20909089958677726,
+      "sid": 1,
+      "to": 3.32
+    },
+    {
+      "content": "学习英语点播站 你好",
+      "from": 3.32,
+      "location": 2,
+      "music": 0.0,
+      "sid": 2,
+      "to": 6.169
+    },
+    {
+      "content": "这里是BBC六分钟英语",
+      "from": 6.169,
+      "location": 2,
+      "music": 0.0,
+      "sid": 3,
+      "to": 8.849
+    },
+    {
+      "content": "学习英语",
+      "from": 8.849,
+      "location": 2,
+      "music": 0.0,
+      "sid": 4,
+      "to": 9.609
+    },
+    {
+      "content": "我是皮帕，我是尼尔",
+      "from": 9.609,
+      "location": 2,
+      "music": 0.0,
+      "sid": 5,
+      "to": 11.469
+    },
+    {
+      "content": "现在",
+      "from": 11.469,
+      "location": 2,
+      "music": 0.0,
+      "sid": 6,
+      "to": 11.949
+    },
+    {
+      "content": "尼尔",
+      "from": 11.949,
+      "location": 2,
+      "music": 0.0,
+      "sid": 7,
+      "to": 12.329
+    },
+    {
+      "content": "你有没有想过成为音乐人",
+      "from": 12.329,
+      "location": 2,
+      "music": 0.0,
+      "sid": 8,
+      "to": 14.749
+    },
+    {
+      "content": "哦是的",
+      "from": 14.749,
+      "location": 2,
+      "music": 0.0,
+      "sid": 9,
+      "to": 15.609
+    },
+    {
+      "content": "皮帕",
+      "from": 15.609,
+      "location": 2,
+      "music": 0.0,
+      "sid": 10,
+      "to": 16.029
+    },
+    {
+      "content": "我仍然想成为音乐人",
+      "from": 16.029,
+      "location": 2,
+      "music": 0.0,
+      "sid": 11,
+      "to": 18.119
+    },
+    {
+      "content": "我从14岁就开始弹吉他",
+      "from": 18.119,
+      "location": 2,
+      "music": 0.0,
+      "sid": 12,
+      "to": 20.799
+    },
+    {
+      "content": "哇",
+      "from": 20.799,
+      "location": 2,
+      "music": 0.0,
+      "sid": 13,
+      "to": 21.299
+    },
+    {
+      "content": "或许有一天你能实现",
+      "from": 21.299,
+      "location": 2,
+      "music": 0.0,
+      "sid": 14,
+      "to": 23.699
+    },
+    {
+      "content": "谁知道你的情况呢",
+      "from": 23.699,
+      "location": 2,
+      "music": 0.0,
+      "sid": 15,
+      "to": 26.27
+    },
+    {
+      "content": "我不觉得想成为音乐人",
+      "from": 26.27,
+      "location": 2,
+      "music": 0.0,
+      "sid": 16,
+      "to": 28.49
+    },
+    {
+      "content": "我觉得这会有点压力",
+      "from": 28.49,
+      "location": 2,
+      "music": 0.0,
+      "sid": 17,
+      "to": 30.04
+    },
+    {
+      "content": "尤其是有很多粉丝且非常成功的话",
+      "from": 30.04,
+      "location": 2,
+      "music": 0.0,
+      "sid": 18,
+      "to": 32.56
+    },
+    {
+      "content": "嗯 是啊",
+      "from": 32.56,
+      "location": 2,
+      "music": 0.0,
+      "sid": 19,
+      "to": 33.54
+    },
+    {
+      "content": "我想知道音乐人的生活到底什么样",
+      "from": 33.54,
+      "location": 2,
+      "music": 0.0,
+      "sid": 20,
+      "to": 36.66
+    },
+    {
+      "content": "在这期节目中我们将揭晓答案",
+      "from": 36.66,
+      "location": 2,
+      "music": 0.0,
+      "sid": 21,
+      "to": 39.06
+    },
+    {
+      "content": "通过来自英国各地的声音",
+      "from": 39.06,
+      "location": 2,
+      "music": 0.0,
+      "sid": 22,
+      "to": 41.48
+    },
+    {
+      "content": "那些想成为成功音乐人并会听他们音乐的人",
+      "from": 41.48,
+      "location": 2,
+      "music": 0.0,
+      "sid": 23,
+      "to": 46.74
+    },
+    {
+      "content": "也",
+      "from": 46.74,
+      "location": 2,
+      "music": 0.0,
+      "sid": 24,
+      "to": 47.08
+    },
+    {
+      "content": "尼尔",
+      "from": 47.08,
+      "location": 2,
+      "music": 0.0,
+      "sid": 25,
+      "to": 48.02
+    },
+    {
+      "content": "但首先",
+      "from": 48.02,
+      "location": 2,
+      "music": 0.0,
+      "sid": 26,
+      "to": 48.7
+    },
+    {
+      "content": "我有个问题要问你",
+      "from": 48.7,
+      "location": 2,
+      "music": 0.0,
+      "sid": 27,
+      "to": 50.18
+    },
+    {
+      "content": "尼尔在英国",
+      "from": 50.18,
+      "location": 2,
+      "music": 0.0,
+      "sid": 28,
+      "to": 51.85
+    },
+    {
+      "content": "我们每周都有国家最畅销歌曲排行榜",
+      "from": 51.85,
+      "location": 2,
+      "music": 0.0,
+      "sid": 29,
+      "to": 55.45
+    },
+    {
+      "content": "本周冠军单曲叫《第一名》",
+      "from": 55.45,
+      "location": 2,
+      "music": 0.0,
+      "sid": 30,
+      "to": 58.66
+    },
+    {
+      "content": "但你觉得哪位音乐人拥有最多",
+      "from": 58.66,
+      "location": 2,
+      "music": 0.0,
+      "sid": 31,
+      "to": 62.36
+    },
+    {
+      "content": "英国",
+      "from": 62.36,
+      "location": 2,
+      "music": 0.0,
+      "sid": 32,
+      "to": 63.04
+    },
+    {
+      "content": "冠军单曲",
+      "from": 63.04,
+      "location": 2,
+      "music": 0.0,
+      "sid": 33,
+      "to": 64.44
+    },
+    {
+      "content": "是A",
+      "from": 64.44,
+      "location": 2,
+      "music": 0.0,
+      "sid": 34,
+      "to": 65.74
+    },
+    {
+      "content": "披头士乐队",
+      "from": 65.74,
+      "location": 2,
+      "music": 0.0,
+      "sid": 35,
+      "to": 66.74
+    },
+    {
+      "content": "B艾德·希兰还是C埃尔维斯·普雷斯利",
+      "from": 66.74,
+      "location": 2,
+      "music": 0.0,
+      "sid": 36,
+      "to": 70.42
+    },
+    {
+      "content": "哦 嗯",
+      "from": 70.42,
+      "location": 2,
+      "music": 0.0,
+      "sid": 37,
+      "to": 71.789
+    },
+    {
+      "content": "我觉得这很简单",
+      "from": 71.789,
+      "location": 2,
+      "music": 0.0,
+      "sid": 38,
+      "to": 73.609
+    },
+    {
+      "content": "肯定是披头士乐队",
+      "from": 73.609,
+      "location": 2,
+      "music": 0.0,
+      "sid": 39,
+      "to": 76.58
+    },
+    {
+      "content": "嗯",
+      "from": 76.58,
+      "location": 2,
+      "music": 0.0,
+      "sid": 40,
+      "to": 77.22
+    },
+    {
+      "content": "现在节目结尾我会揭晓答案",
+      "from": 77.22,
+      "location": 2,
+      "music": 0.0,
+      "sid": 41,
+      "to": 80.96
+    },
+    {
+      "content": "获得冠军单曲是许多音乐人的梦想",
+      "from": 80.96,
+      "location": 2,
+      "music": 0.0,
+      "sid": 42,
+      "to": 84.68
+    },
+    {
+      "content": "但如果你想成为音乐人",
+      "from": 84.68,
+      "location": 2,
+      "music": 0.0,
+      "sid": 43,
+      "to": 86.78
+    },
+    {
+      "content": "该从哪里开始",
+      "from": 86.78,
+      "location": 2,
+      "music": 0.0,
+      "sid": 44,
+      "to": 88.33
+    },
+    {
+      "content": "我在圣伊夫斯长大，那里音乐氛围浓厚",
+      "from": 88.33,
+      "location": 2,
+      "music": 0.0,
+      "sid": 45,
+      "to": 91.23
+    },
+    {
+      "content": "我大概11岁就开始参加开放麦活动",
+      "from": 91.23,
+      "location": 2,
+      "music": 0.0,
+      "sid": 46,
+      "to": 95.259
+    },
+    {
+      "content": "这是贝利",
+      "from": 95.259,
+      "location": 2,
+      "music": 0.0,
+      "sid": 47,
+      "to": 96.659
+    },
+    {
+      "content": "她住在英格兰西南部的康沃尔圣伊夫斯",
+      "from": 96.659,
+      "location": 2,
+      "music": 0.0,
+      "sid": 48,
+      "to": 100.579
+    },
+    {
+      "content": "她说从小就开始参加开放麦之夜",
+      "from": 100.579,
+      "location": 2,
+      "music": 0.0,
+      "sid": 49,
+      "to": 104.44
+    },
+    {
+      "content": "开放麦之夜是任何人都可唱歌或演奏音乐的活动",
+      "from": 104.44,
+      "location": 2,
+      "music": 0.0,
+      "sid": 50,
+      "to": 108.88
+    },
+    {
+      "content": "贝利向BBC讲述了她作为音乐人的生活",
+      "from": 108.88,
+      "location": 2,
+      "music": 0.0,
+      "sid": 51,
+      "to": 112.18
+    },
+    {
+      "content": "英语学习节目",
+      "from": 112.18,
+      "location": 2,
+      "music": 0.0,
+      "sid": 52,
+      "to": 113.38
+    },
+    {
+      "content": "我的歌曲",
+      "from": 113.38,
+      "location": 2,
+      "music": 0.0,
+      "sid": 53,
+      "to": 114.02
+    },
+    {
+      "content": "我的家",
+      "from": 114.02,
+      "location": 2,
+      "music": 0.0,
+      "sid": 54,
+      "to": 114.83
+    },
+    {
+      "content": "我会去茶壶和眨眼咖啡馆的作曲人圈子",
+      "from": 114.83,
+      "location": 2,
+      "music": 0.0,
+      "sid": 55,
+      "to": 118.57
+    },
+    {
+      "content": "就像放学后的周五夜晚",
+      "from": 118.57,
+      "location": 2,
+      "music": 0.0,
+      "sid": 56,
+      "to": 121.2
+    },
+    {
+      "content": "那里我可能是最年轻的人，足足大五十岁",
+      "from": 121.2,
+      "location": 2,
+      "music": 0.0,
+      "sid": 57,
+      "to": 124.14
+    },
+    {
+      "content": "但我还是会和一群老人围坐一圈",
+      "from": 124.14,
+      "location": 2,
+      "music": 0.0,
+      "sid": 58,
+      "to": 127.36
+    },
+    {
+      "content": "他们会演奏詹姆斯的歌曲",
+      "from": 127.36,
+      "location": 2,
+      "music": 0.0,
+      "sid": 59,
+      "to": 128.62
+    },
+    {
+      "content": "泰勒和卡罗尔",
+      "from": 128.62,
+      "location": 2,
+      "music": 0.0,
+      "sid": 60,
+      "to": 130.35
+    },
+    {
+      "content": "金和老鹰乐队以及大量七十年代音乐",
+      "from": 130.35,
+      "location": 2,
+      "music": 0.0,
+      "sid": 61,
+      "to": 133.7
+    },
+    {
+      "content": "我想这对我影响巨大",
+      "from": 133.7,
+      "location": 2,
+      "music": 0.0,
+      "sid": 62,
+      "to": 136.1
+    },
+    {
+      "content": "但我想大家都会照顾我",
+      "from": 136.1,
+      "location": 2,
+      "music": 0.0,
+      "sid": 63,
+      "to": 138.8
+    },
+    {
+      "content": "她年轻时的成长经历",
+      "from": 138.8,
+      "location": 2,
+      "music": 0.0,
+      "sid": 64,
+      "to": 141.31
+    },
+    {
+      "content": "贝利参加了作曲人圈子",
+      "from": 141.31,
+      "location": 2,
+      "music": 0.0,
+      "sid": 65,
+      "to": 144.01
+    },
+    {
+      "content": "这是为音乐创作爱好者举办的聚会",
+      "from": 144.01,
+      "location": 2,
+      "music": 0.0,
+      "sid": 66,
+      "to": 148.01
+    },
+    {
+      "content": "贝利回忆起与一群老人围坐",
+      "from": 148.01,
+      "location": 2,
+      "music": 0.0,
+      "sid": 67,
+      "to": 151.12
+    },
+    {
+      "content": "\"一群\"是形容人群的非正式说法",
+      "from": 151.12,
+      "location": 2,
+      "music": 0.0,
+      "sid": 68,
+      "to": 154.84
+    },
+    {
+      "content": "圈子里的老人会演奏七十年代的音乐",
+      "from": 154.84,
+      "location": 2,
+      "music": 0.0,
+      "sid": 69,
+      "to": 158.67
+    },
+    {
+      "content": "贝利说他们收留了我",
+      "from": 158.67,
+      "location": 2,
+      "music": 0.0,
+      "sid": 70,
+      "to": 161.45
+    },
+    {
+      "content": "如果你收留某人",
+      "from": 161.45,
+      "location": 2,
+      "music": 0.0,
+      "sid": 71,
+      "to": 163.77
+    },
+    {
+      "content": "意味着保护或引导他们成长",
+      "from": 163.77,
+      "location": 2,
+      "music": 0.0,
+      "sid": 72,
+      "to": 166.57
+    },
+    {
+      "content": "让我们认识另一位音乐人",
+      "from": 166.57,
+      "location": 2,
+      "music": 0.0,
+      "sid": 73,
+      "to": 168.51
+    },
+    {
+      "content": "乔什",
+      "from": 168.51,
+      "location": 2,
+      "music": 0.0,
+      "sid": 74,
+      "to": 169.99
+    },
+    {
+      "content": "我第一次在吉他上学会完整歌曲",
+      "from": 170.11,
+      "location": 2,
+      "music": 0.0,
+      "sid": 75,
+      "to": 173.39
+    },
+    {
+      "content": "大约十三岁那会",
+      "from": 173.39,
+      "location": 2,
+      "music": 0.0,
+      "sid": 76,
+      "to": 175.93
+    },
+    {
+      "content": "我几乎立刻开始街头表演",
+      "from": 176.05,
+      "location": 2,
+      "music": 0.0,
+      "sid": 77,
+      "to": 178.05
+    },
+    {
+      "content": "当我能胜任时",
+      "from": 178.05,
+      "location": 2,
+      "music": 0.0,
+      "sid": 78,
+      "to": 179.68
+    },
+    {
+      "content": "乔什住在伦敦，是一名街头艺人",
+      "from": 179.68,
+      "location": 2,
+      "music": 0.0,
+      "sid": 79,
+      "to": 182.26
+    },
+    {
+      "content": "这意味着他在街头或公共场所演出",
+      "from": 182.26,
+      "location": 2,
+      "music": 0.0,
+      "sid": 80,
+      "to": 185.54
+    },
+    {
+      "content": "为了赚钱",
+      "from": 185.54,
+      "location": 2,
+      "music": 0.0,
+      "sid": 81,
+      "to": 186.65
+    },
+    {
+      "content": "街头表演是音乐人创收和接触更多观众的常见方式",
+      "from": 186.65,
+      "location": 2,
+      "music": 0.0,
+      "sid": 82,
+      "to": 191.4
+    },
+    {
+      "content": "正如乔什告诉BBC",
+      "from": 191.4,
+      "location": 2,
+      "music": 0.0,
+      "sid": 83,
+      "to": 193.12
+    },
+    {
+      "content": "英语学习节目",
+      "from": 193.12,
+      "location": 2,
+      "music": 0.0,
+      "sid": 84,
+      "to": 194.2
+    },
+    {
+      "content": "我的歌曲",
+      "from": 194.2,
+      "location": 2,
+      "music": 0.0,
+      "sid": 85,
+      "to": 194.76
+    },
+    {
+      "content": "我的家",
+      "from": 194.76,
+      "location": 2,
+      "music": 0.0,
+      "sid": 86,
+      "to": 195.54
+    },
+    {
+      "content": "这能帮助音乐人获得新机会",
+      "from": 195.54,
+      "location": 2,
+      "music": 0.0,
+      "sid": 87,
+      "to": 199.16
+    },
+    {
+      "content": "这成了我主要的收入来源",
+      "from": 199.25,
+      "location": 2,
+      "music": 0.0,
+      "sid": 88,
+      "to": 201.79
+    },
+    {
+      "content": "支撑我度过了过去十年",
+      "from": 201.79,
+      "location": 2,
+      "music": 0.0,
+      "sid": 89,
+      "to": 204.83
+    },
+    {
+      "content": "从那时起",
+      "from": 204.83,
+      "location": 2,
+      "music": 0.0,
+      "sid": 90,
+      "to": 205.65
+    },
+    {
+      "content": "这为我带来了各种机会",
+      "from": 205.65,
+      "location": 2,
+      "music": 0.0,
+      "sid": 91,
+      "to": 208.65
+    },
+    {
+      "content": "带来了所有演出机会",
+      "from": 208.65,
+      "location": 2,
+      "music": 0.0,
+      "sid": 92,
+      "to": 210.05
+    },
+    {
+      "content": "建立了所有人脉",
+      "from": 210.05,
+      "location": 2,
+      "music": 0.0,
+      "sid": 93,
+      "to": 211.33
+    },
+    {
+      "content": "所以我有很多收获",
+      "from": 211.33,
+      "location": 2,
+      "music": 0.0,
+      "sid": 94,
+      "to": 213.42
+    },
+    {
+      "content": "街头表演",
+      "from": 213.42,
+      "location": 2,
+      "music": 0.0,
+      "sid": 95,
+      "to": 214.14
+    },
+    {
+      "content": "乔什的主要收入来源",
+      "from": 214.14,
+      "location": 2,
+      "music": 0.0,
+      "sid": 96,
+      "to": 216.02
+    },
+    {
+      "content": "这是他的主要经济来源",
+      "from": 216.02,
+      "location": 2,
+      "music": 0.0,
+      "sid": 97,
+      "to": 217.82
+    },
+    {
+      "content": "尼尔",
+      "from": 217.82,
+      "location": 2,
+      "music": 0.0,
+      "sid": 98,
+      "to": 218.22
+    },
+    {
+      "content": "他说街头表演带来了所有演出和人脉",
+      "from": 218.22,
+      "location": 2,
+      "music": 0.0,
+      "sid": 99,
+      "to": 222.38
+    },
+    {
+      "content": "演出指音乐现场",
+      "from": 222.38,
+      "location": 2,
+      "music": 0.0,
+      "sid": 100,
+      "to": 224.36
+    },
+    {
+      "content": "这是一个非正式俚语",
+      "from": 224.36,
+      "location": 2,
+      "music": 0.0,
+      "sid": 101,
+      "to": 226.65
+    },
+    {
+      "content": "乔什说他很感谢街头表演",
+      "from": 226.65,
+      "location": 2,
+      "music": 0.0,
+      "sid": 102,
+      "to": 229.33
+    },
+    {
+      "content": "如果你欠某人或某物很多",
+      "from": 229.33,
+      "location": 2,
+      "music": 0.0,
+      "sid": 103,
+      "to": 231.91
+    },
+    {
+      "content": "你就会获得成功或幸福",
+      "from": 231.91,
+      "location": 2,
+      "music": 0.0,
+      "sid": 104,
+      "to": 233.95
+    },
+    {
+      "content": "因为那个个人因素",
+      "from": 233.95,
+      "location": 2,
+      "music": 0.0,
+      "sid": 105,
+      "to": 236.04
+    },
+    {
+      "content": "那你愿意听一听乔什的音乐吗尼尔",
+      "from": 236.04,
+      "location": 2,
+      "music": 0.0,
+      "sid": 106,
+      "to": 239.76
+    },
+    {
+      "content": "当然愿意啊",
+      "from": 239.76,
+      "location": 2,
+      "music": 0.0,
+      "sid": 107,
+      "to": 241.22
+    },
+    {
+      "content": "这是他的一段歌曲",
+      "from": 241.22,
+      "location": 2,
+      "music": 0.0,
+      "sid": 108,
+      "to": 242.68
+    },
+    {
+      "content": "那面墙那边",
+      "from": 242.68,
+      "location": 2,
+      "music": 0.0,
+      "sid": 109,
+      "to": 244.04
+    },
+    {
+      "content": "他在BBC表演过",
+      "from": 244.04,
+      "location": 2,
+      "music": 0.0,
+      "sid": 110,
+      "to": 245.72
+    },
+    {
+      "content": "英语学习节目",
+      "from": 245.72,
+      "location": 2,
+      "music": 0.0,
+      "sid": 111,
+      "to": 246.94
+    },
+    {
+      "content": "我的歌曲",
+      "from": 246.94,
+      "location": 2,
+      "music": 0.0,
+      "sid": 112,
+      "to": 247.58
+    },
+    {
+      "content": "我的家",
+      "from": 247.58,
+      "location": 2,
+      "music": 0.0,
+      "sid": 113,
+      "to": 248.37
+    },
+    {
+      "content": "音乐",
+      "from": 248.37,
+      "location": 2,
+      "music": 0.9999999509803946,
+      "sid": 114,
+      "to": 251.21
+    },
+    {
+      "content": "音乐",
+      "from": 252.52,
+      "location": 2,
+      "music": 0.9999999411764741,
+      "sid": 115,
+      "to": 255.94
+    },
+    {
+      "content": "音乐",
+      "from": 256.46,
+      "location": 2,
+      "music": 0.9999999180327935,
+      "sid": 116,
+      "to": 258.38
+    },
+    {
+      "content": "音乐",
+      "from": 259.58,
+      "location": 2,
+      "music": 0.9999998148148492,
+      "sid": 117,
+      "to": 260.88
+    },
+    {
+      "content": "音乐",
+      "from": 261.4,
+      "location": 2,
+      "music": 0.9999999673202625,
+      "sid": 118,
+      "to": 267.32
+    },
+    {
+      "content": "音乐",
+      "from": 268.32,
+      "location": 2,
+      "music": 0.9999999489795944,
+      "sid": 119,
+      "to": 271.32
+    },
+    {
+      "content": "音乐",
+      "from": 272.64,
+      "location": 2,
+      "music": 0.9999999431818214,
+      "sid": 120,
+      "to": 275.24
+    },
+    {
+      "content": "音乐",
+      "from": 275.24,
+      "location": 2,
+      "music": 0.9999998148148492,
+      "sid": 121,
+      "to": 276.92
+    },
+    {
+      "content": "音乐",
+      "from": 277.32,
+      "location": 2,
+      "music": 0.9999999242424299,
+      "sid": 122,
+      "to": 279.78
+    },
+    {
+      "content": "哇",
+      "from": 279.78,
+      "location": 2,
+      "music": 0.0,
+      "sid": 123,
+      "to": 280.52
+    },
+    {
+      "content": "乔什挺厉害的",
+      "from": 280.52,
+      "location": 2,
+      "music": 0.0,
+      "sid": 124,
+      "to": 281.32
+    },
+    {
+      "content": "不是吗",
+      "from": 281.32,
+      "location": 2,
+      "music": 0.0,
+      "sid": 125,
+      "to": 281.68
+    },
+    {
+      "content": "我很想多听一些啊",
+      "from": 281.68,
+      "location": 2,
+      "music": 0.0,
+      "sid": 126,
+      "to": 283.5
+    },
+    {
+      "content": "你可以在我们网站上找到系列音乐人的表演",
+      "from": 283.5,
+      "location": 2,
+      "music": 0.0,
+      "sid": 127,
+      "to": 287.32
+    },
+    {
+      "content": "BBC",
+      "from": 287.32,
+      "location": 2,
+      "music": 0.0,
+      "sid": 128,
+      "to": 287.94
+    },
+    {
+      "content": "英语学习.com",
+      "from": 287.94,
+      "location": 2,
+      "music": 0.0,
+      "sid": 129,
+      "to": 289.32
+    },
+    {
+      "content": "我们也会在本期下方留言中添加链接",
+      "from": 289.32,
+      "location": 2,
+      "music": 0.0,
+      "sid": 130,
+      "to": 292.85
+    },
+    {
+      "content": "好的",
+      "from": 292.85,
+      "location": 2,
+      "music": 0.0,
+      "sid": 131,
+      "to": 293.53
+    },
+    {
+      "content": "那你的问题呢",
+      "from": 293.53,
+      "location": 2,
+      "music": 0.0,
+      "sid": 132,
+      "to": 295.07
+    },
+    {
+      "content": "皮帕",
+      "from": 295.07,
+      "location": 2,
+      "music": 0.0,
+      "sid": 133,
+      "to": 295.89
+    },
+    {
+      "content": "是的",
+      "from": 295.89,
+      "location": 2,
+      "music": 0.0,
+      "sid": 134,
+      "to": 296.43
+    },
+    {
+      "content": "我问过",
+      "from": 296.43,
+      "location": 2,
+      "music": 0.0,
+      "sid": 135,
+      "to": 297.23
+    },
+    {
+      "content": "哪位歌手在英国榜单上夺冠次数最多",
+      "from": 297.23,
+      "location": 2,
+      "music": 0.0,
+      "sid": 136,
+      "to": 301.48
+    },
+    {
+      "content": "披头士乐队",
+      "from": 301.48,
+      "location": 2,
+      "music": 0.0,
+      "sid": 137,
+      "to": 302.4
+    },
+    {
+      "content": "艾德·希兰还是埃尔维斯·普雷斯利",
+      "from": 302.4,
+      "location": 2,
+      "music": 0.0,
+      "sid": 138,
+      "to": 304.4
+    },
+    {
+      "content": "你说是披头士乐队尼尔",
+      "from": 304.4,
+      "location": 2,
+      "music": 0.0,
+      "sid": 139,
+      "to": 306.48
+    },
+    {
+      "content": "但正确答案其实是",
+      "from": 306.48,
+      "location": 2,
+      "music": 0.0,
+      "sid": 140,
+      "to": 308.1
+    },
+    {
+      "content": "埃尔维斯·普雷斯利",
+      "from": 308.1,
+      "location": 2,
+      "music": 0.0,
+      "sid": 141,
+      "to": 309.3
+    },
+    {
+      "content": "他拥有两首冠军单曲",
+      "from": 309.3,
+      "location": 2,
+      "music": 0.0,
+      "sid": 142,
+      "to": 311.78
+    },
+    {
+      "content": "而披头士乐队确实很出色",
+      "from": 311.78,
+      "location": 2,
+      "music": 0.0,
+      "sid": 143,
+      "to": 315.28
+    },
+    {
+      "content": "没关系",
+      "from": 315.28,
+      "location": 2,
+      "music": 0.0,
+      "sid": 144,
+      "to": 315.92
+    },
+    {
+      "content": "我也很爱这位国王",
+      "from": 315.92,
+      "location": 2,
+      "music": 0.0,
+      "sid": 145,
+      "to": 317.02
+    },
+    {
+      "content": "好的",
+      "from": 317.02,
+      "location": 2,
+      "music": 0.0,
+      "sid": 146,
+      "to": 317.76
+    },
+    {
+      "content": "好的",
+      "from": 317.76,
+      "location": 2,
+      "music": 0.0,
+      "sid": 147,
+      "to": 318.3
+    },
+    {
+      "content": "让我们回顾本期音乐单元学到的词汇",
+      "from": 318.3,
+      "location": 2,
+      "music": 0.0,
+      "sid": 148,
+      "to": 321.84
+    },
+    {
+      "content": "从开放麦之夜开始",
+      "from": 321.84,
+      "location": 2,
+      "music": 0.0,
+      "sid": 149,
+      "to": 323.82
+    },
+    {
+      "content": "任何人都可以唱歌或演奏音乐的活动",
+      "from": 323.82,
+      "location": 2,
+      "music": 0.0,
+      "sid": 150,
+      "to": 327.51
+    },
+    {
+      "content": "词曲作者",
+      "from": 327.51,
+      "location": 2,
+      "music": 0.0,
+      "sid": 151,
+      "to": 328.51
+    },
+    {
+      "content": "创作圈是音乐人交流的聚会",
+      "from": 328.51,
+      "location": 2,
+      "music": 0.0,
+      "sid": 152,
+      "to": 332.43
+    },
+    {
+      "content": "一群人指一群人的集合",
+      "from": 332.43,
+      "location": 2,
+      "music": 0.0,
+      "sid": 153,
+      "to": 335.06
+    },
+    {
+      "content": "短语'收留某人'",
+      "from": 335.06,
+      "location": 2,
+      "music": 0.0,
+      "sid": 154,
+      "to": 337.48
+    },
+    {
+      "content": "意为保护或引导",
+      "from": 337.48,
+      "location": 2,
+      "music": 0.0,
+      "sid": 155,
+      "to": 338.96
+    },
+    {
+      "content": "街头表演者是为赚钱在公共场所演出",
+      "from": 338.96,
+      "location": 2,
+      "music": 0.0,
+      "sid": 156,
+      "to": 342.69
+    },
+    {
+      "content": "而街头艺人是街头赚钱表演者",
+      "from": 342.69,
+      "location": 2,
+      "music": 0.0,
+      "sid": 157,
+      "to": 346.85
+    },
+    {
+      "content": "主要收入来源是主要经济来源",
+      "from": 346.85,
+      "location": 2,
+      "music": 0.0,
+      "sid": 158,
+      "to": 350.01
+    },
+    {
+      "content": "演出是音乐演唱会",
+      "from": 350.01,
+      "location": 2,
+      "music": 0.0,
+      "sid": 159,
+      "to": 351.97
+    },
+    {
+      "content": "‘对某人或某事感激不尽’的意思是获得成功或幸福",
+      "from": 351.97,
+      "location": 2,
+      "music": 0.0,
+      "sid": 160,
+      "to": 357.64
+    },
+    {
+      "content": "因为那个个人原因",
+      "from": 357.64,
+      "location": 2,
+      "music": 0.0,
+      "sid": 161,
+      "to": 359.47
+    },
+    {
+      "content": "再一次",
+      "from": 359.47,
+      "location": 2,
+      "music": 0.0,
+      "sid": 162,
+      "to": 360.25
+    },
+    {
+      "content": "我们的六分钟时间到了",
+      "from": 360.25,
+      "location": 2,
+      "music": 0.0,
+      "sid": 163,
+      "to": 361.43
+    },
+    {
+      "content": "你可以在我网站上找到我的歌曲",
+      "from": 361.43,
+      "location": 2,
+      "music": 0.0,
+      "sid": 164,
+      "to": 363.01
+    },
+    {
+      "content": "BBC学习英语",
+      "from": 364.73,
+      "location": 2,
+      "music": 0.0,
+      "sid": 165,
+      "to": 366.35
+    },
+    {
+      "content": "Com",
+      "from": 366.35,
+      "location": 2,
+      "music": 0.0,
+      "sid": 166,
+      "to": 367.14
+    },
+    {
+      "content": "观看歌曲并跟唱，学习更多词汇和歌词",
+      "from": 367.14,
+      "location": 2,
+      "music": 0.0,
+      "sid": 167,
+      "to": 371.65
+    },
+    {
+      "content": "我们很快再见",
+      "from": 371.65,
+      "location": 2,
+      "music": 0.0,
+      "sid": 168,
+      "to": 373.21
+    },
+    {
+      "content": "获取更多热门话题和实用词汇",
+      "from": 373.21,
+      "location": 2,
+      "music": 0.0,
+      "sid": 169,
+      "to": 376.27
+    },
+    {
+      "content": "现在再见",
+      "from": 376.27,
+      "location": 2,
+      "music": 0.0,
+      "sid": 170,
+      "to": 377.11
+    },
+    {
+      "content": "再见",
+      "from": 377.11,
+      "location": 2,
+      "music": 0.0,
+      "sid": 171,
+      "to": 378.38
+    },
+    {
+      "content": "来自BBC学习英语的六分钟英语",
+      "from": 378.78,
+      "location": 2,
+      "music": 0.22033897682657713,
+      "sid": 172,
+      "to": 382.84
+    },
+    {
+      "content": "Com",
+      "from": 382.84,
+      "location": 2,
+      "music": 0.0,
+      "sid": 173,
+      "to": 383.7
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "raw_file": "/Users/bot/.openclaw/workspace/skills/stream-grab-pro/output/bilibili-【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）-20260321-193213/subtitles/whisper-small/video.json",
+  "txt_file": "/Users/bot/.openclaw/workspace/skills/stream-grab-pro/output/bilibili-【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）-20260321-193213/subtitles/whisper-small/video.txt",
+  "srt_file": "/Users/bot/.openclaw/workspace/skills/stream-grab-pro/output/bilibili-【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）-20260321-193213/subtitles/whisper-small/video.srt",
+  "language": "en",
+  "source": "whisper:small",
+  "count": 91,
+  "engine": "whisper",
+  "whisper_model": "small",
+  "generated_dir": "/Users/bot/.openclaw/workspace/skills/stream-grab-pro/output/bilibili-【BBC六分钟】如何成为一名音乐人？becoming a musician（手绘课件版+知识图）-20260321-193213/subtitles/whisper-small"
+}
