@@ -77,6 +77,21 @@ def notion_request(method: str, path: str, payload: dict[str, Any] | None = None
 import re as _re
 
 
+_STANDALONE_HTML_ANCHOR_RE = _re.compile(
+    r'^\s*<a\s+id=["\'][^"\']+["\']\s*>\s*</a>\s*$',
+    _re.IGNORECASE,
+)
+_HEADING_ANCHOR_SUFFIX_RE = _re.compile(r'\s*\{#[^}]+\}\s*$')
+
+
+def _is_standalone_html_anchor(text: str) -> bool:
+    return bool(_STANDALONE_HTML_ANCHOR_RE.match(text))
+
+
+def _strip_heading_anchor_suffix(text: str) -> str:
+    return _HEADING_ANCHOR_SUFFIX_RE.sub("", text).rstrip()
+
+
 def _parse_inline(text: str) -> list[dict[str, Any]]:
     """Parse inline Markdown (bold, italic, code, links, strikethrough) into Notion rich_text segments."""
     segments: list[dict[str, Any]] = []
@@ -257,6 +272,11 @@ def blocks_from_text(text: str) -> list[dict[str, Any]]:
             i += 1
             continue
 
+        # Skip standalone HTML anchor tags used only for local Markdown navigation.
+        if _is_standalone_html_anchor(stripped):
+            i += 1
+            continue
+
         # Code block (fenced)
         if stripped.startswith("```"):
             lang = stripped[3:].strip() or "plain text"
@@ -283,7 +303,9 @@ def blocks_from_text(text: str) -> list[dict[str, Any]]:
         heading_match = _re.match(r'^(#{1,3})\s+(.+)$', stripped)
         if heading_match:
             level = len(heading_match.group(1))
-            blocks.append(heading_block(heading_match.group(2), level))
+            heading_text = _strip_heading_anchor_suffix(heading_match.group(2))
+            if heading_text:
+                blocks.append(heading_block(heading_text, level))
             i += 1
             continue
 
