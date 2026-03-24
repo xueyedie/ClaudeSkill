@@ -124,6 +124,23 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 "LLM" 开发 OR 集成 OR 实战 教程 after:[week_ago]
 ```
 
+### Unity / Unreal AI 编程
+```
+"Unity" AI plugin OR "AI Shader" OR "procedural generation" tutorial after:[week_ago]
+```
+```
+"Unreal Engine" AI plugin OR "AI NPC" OR "behavior tree" AI integration after:[week_ago]
+```
+```
+"Unity" OR "Unreal" "AI coding" OR "AI scripting" OR "AI automation" after:[week_ago]
+```
+```
+"游戏AI编程" OR "Unity AI插件" OR "Unreal AI插件" 教程 OR 实战 after:[week_ago]
+```
+```
+"AI Shader" OR "程序化生成" OR "AI NPC" Unity OR Unreal 教程 after:[week_ago]
+```
+
 ---
 
 ## AI 美术工作流查询
@@ -170,6 +187,45 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 "AI游戏美术" OR "AI概念设计" 实战 OR 管线 after:[week_ago]
 ```
 
+### GDC / SIGGRAPH 游戏美术
+```
+GDC "art pipeline" OR "technical art" OR "rendering" OR "shader" AI 2025 2026
+```
+```
+SIGGRAPH "game art" OR "real-time rendering" OR "procedural" AI 2025 2026
+```
+```
+GDC OR SIGGRAPH "concept art" OR "3D modeling" OR "animation" OR "VFX" AI after:[week_ago]
+```
+```
+GDC OR SIGGRAPH "level design" OR "UI" OR "environment art" AI workflow after:[week_ago]
+```
+
+### Unity / Unreal 美术管线
+```
+"Unity" "AI terrain" OR "AI texture" OR "AI animation" OR "AI VFX" tutorial after:[week_ago]
+```
+```
+"Unreal Engine" "AI art pipeline" OR "AI texture" OR "procedural" OR "AI animation" after:[week_ago]
+```
+```
+"Unity" OR "Unreal" "AI shader" OR "AI rendering" OR "technical art" workflow after:[week_ago]
+```
+
+### AI 游戏美术应用（中文）
+```
+"游戏美术" AI OR "AI美术管线" OR "AI原画" OR "AI建模" 实战 OR 教程 after:[week_ago]
+```
+```
+"技术美术" OR "TA" AI OR "AI Shader" OR "AI渲染" 实战 OR 教程 after:[week_ago]
+```
+```
+"Unity" OR "Unreal" AI美术 OR AI动画 OR AI特效 教程 OR 实战 after:[week_ago]
+```
+```
+"AI地编" OR "AI关卡" OR "AI UI" 游戏 OR Unity OR Unreal after:[week_ago]
+```
+
 ### 小红书美术教程
 ```
 site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程 after:[yesterday]
@@ -190,6 +246,35 @@ site:bilibili.com "AI工具" OR "AI提效" 教程 OR 实战 after:[week_ago]
 ```
 ```
 site:bilibili.com "AI绘画" OR "Flux" OR "SD" 教程 after:[week_ago]
+```
+
+---
+
+## 知乎精选查询
+
+### 关注动态（通过 opencli 访问）
+```
+opencli: 知乎首页 → 关注时间线 → 筛选近 7 天文章/回答
+```
+```
+opencli: 知乎收藏夹列表 → 扫描近期收藏内容
+```
+
+### 站内搜索补充（opencli 不可用时降级）
+```
+site:zhihu.com "AI实战" OR "AI工作流" OR "AI编程" 教程 OR 实战 after:[week_ago]
+```
+```
+site:zhihu.com "游戏美术" AI OR "技术美术" AI OR "TA" AI Shader after:[week_ago]
+```
+```
+site:zhihu.com "Unity" OR "Unreal" AI 工具 OR 插件 OR 工作流 after:[week_ago]
+```
+```
+site:zhihu.com "AI绘画" OR "AI建模" OR "AI动画" 实战 OR 教程 after:[week_ago]
+```
+```
+site:zhihu.com "Stable Diffusion" OR "Flux" OR "ComfyUI" 教程 OR 工作流 after:[week_ago]
 ```
 
 ---
@@ -227,6 +312,20 @@ site:xiaohongshu.com "AI工具" OR "效率工具" 推荐 after:[yesterday]
 ```
 ```
 site:mp.weixin.qq.com "AI工具" OR "AI效率" 推荐 after:[yesterday]
+```
+
+### 游戏开发 AI 工具
+```
+"Unity" AI tool OR plugin OR asset 2026 after:[week_ago]
+```
+```
+"Unreal Engine" AI plugin OR tool OR marketplace 2026 after:[week_ago]
+```
+```
+"Unity AI插件" OR "Unreal AI插件" 推荐 OR 测评 after:[week_ago]
+```
+```
+"游戏开发" AI工具 OR AI插件 推荐 OR 实战 after:[week_ago]
 ```
 
 ---
@@ -304,6 +403,14 @@ Query 2: "AI video" OR "AI 3D" tutorial after:[week_ago]
 Query 3: site:xiaohongshu.com "AI绘画" OR "Flux" 教程 after:[yesterday]
 ```
 
+### 游戏美术管线聚焦
+```
+Query 1: GDC OR SIGGRAPH "art pipeline" OR "technical art" OR "rendering" AI 2025 2026
+Query 2: "Unity" OR "Unreal" "AI terrain" OR "AI texture" OR "AI animation" tutorial after:[week_ago]
+Query 3: "游戏美术" AI OR "技术美术" AI OR "TA" AI Shader 实战 after:[week_ago]
+Query 4: site:zhihu.com "游戏美术" AI OR "技术美术" AI after:[week_ago]
+```
+
 ### 工具发现聚焦
 ```
 Query 1: "AI tool" new launch 2026 after:[yesterday]
@@ -328,6 +435,7 @@ Query 3: "Stable Diffusion" OR "Flux" workflow tutorial after:[yesterday]
 Query 4: "AI tool" new OR launch 2026 after:[yesterday]
 Query 5: GitHub trending AI today
 Query 6: "AI实战" OR "AI技巧" OR "AI Agent" 落地 after:[yesterday]
+Query 7: site:zhihu.com "AI实战" OR "游戏美术" AI OR "技术美术" AI after:[week_ago]
 ```
 
 ---

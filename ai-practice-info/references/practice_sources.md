@@ -190,6 +190,12 @@
 - **URL**: https://zhihu.com/topic/AI
 - **侧重**: 深度技术讨论、工程经验
 - **优势**: 中文 AI 社区深度讨论
+- **访问方式**:
+  - **关注动态**：通过 `opencli` 复用 Chrome 登录态，访问首页「关注」时间线，获取关注用户的近期文章/回答
+  - **收藏夹**：通过 `opencli` 访问用户收藏夹列表，扫描近期收藏内容
+  - **站内搜索**：`opencli` 不可用时，降级到 WebFetch `site:zhihu.com` 搜索
+- **内容提取**：优先提取文章正文核心技术点；回答类内容提取高赞回答要点
+- **重点来源**：用户知乎关注动态中的 AI 实战/游戏美术/TA 相关内容（7 天内优先，最多 14 天）
 
 ### 2. 智谱 AI 技术博客
 - **URL**: https://zhipuai.cn （技术动态）
@@ -216,20 +222,6 @@
 - **侧重**: 文心一言 API 实战
 - **优势**: 百度 AI 服务集成
 
-### 7. 字节豆包/Coze
-- **URL**: https://coze.com/docs
-- **侧重**: Bot 搭建、工作流实战
-- **优势**: 低代码 AI 应用构建
-
-### 8. Dify 中文社区
-- **URL**: https://docs.dify.ai/zh
-- **侧重**: AI 应用搭建教程
-- **优势**: 中文 AI 应用开发文档
-
-### 9. FastGPT
-- **URL**: https://doc.fastai.site
-- **侧重**: 知识库搭建实战
-- **优势**: 知识库 + RAG 实践
 
 ---
 
@@ -278,15 +270,49 @@
 - **侧重**: 国内 AI 绘画
 - **优势**: 国内 AI 绘画平台
 
-### 3. 站酷 ZCOOL
-- **URL**: https://zcool.com.cn
-- **侧重**: AI 辅助设计实战
-- **优势**: 设计师 AI 实践分享
+---
 
-### 4. 游戏葡萄
+## Tier 8: 游戏行业 + TA/渲染垂直
+
+### 1. GDC Vault
+- **URL**: https://gdcvault.com
+- **侧重**: GDC 演讲录像与幻灯片，涵盖 art pipeline、technical art、rendering、AI in games
+- **优势**: 游戏行业最权威的技术分享平台
+
+### 2. SIGGRAPH
+- **URL**: https://www.siggraph.org / https://dl.acm.org/conference/siggraph
+- **侧重**: 实时渲染、程序化生成、游戏美术前沿技术
+- **优势**: 图形学与游戏渲染领域顶级会议
+
+### 3. Unity Blog
+- **URL**: https://unity.com/blog
+- **侧重**: Unity 引擎 AI 功能、美术管线更新、技术美术实践
+- **优势**: Unity 官方一手资料，覆盖 AI terrain/texture/animation/VFX
+
+### 4. Unreal Engine Blog
+- **URL**: https://www.unrealengine.com/blog
+- **侧重**: UE AI 功能、Nanite/Lumen/MetaHuman、美术管线
+- **优势**: Unreal 官方一手资料，覆盖渲染/Shader/程序化生成
+
+### 5. 游戏葡萄
 - **URL**: https://youxiputao.com
-- **侧重**: AI+游戏开发实战
-- **优势**: 游戏行业 AI 应用案例
+- **侧重**: 国内游戏行业深度报道、技术分享
+- **优势**: 中文游戏行业头部媒体，AI 美术/技术美术内容丰富
+
+### 6. GameRes 游资网
+- **URL**: https://www.gameres.com
+- **侧重**: 游戏开发技术文章、TA/渲染/美术管线
+- **优势**: 国内游戏开发者社区，技术深度较高
+
+### 7. GameLook
+- **URL**: https://www.gamelook.com.cn
+- **侧重**: 游戏行业观察、AI 技术应用
+- **优势**: 游戏行业 AI 应用趋势跟踪
+
+### 8. 国内 TA/渲染社区
+- **方式**: 搜索知乎「技术美术」「游戏渲染」话题、CSDN/掘金 TA 标签
+- **侧重**: Shader 开发、渲染管线、技术美术实战
+- **优势**: 中文 TA 社区一线实践分享
 
 ---
 
@@ -301,6 +327,18 @@
 1. 优先查 **Tier 7**（Civitai、LiblibAI）
 2. Reddit r/StableDiffusion
 3. 小红书 AI 绘画教程
+
+### 游戏美术管线采集
+1. 优先查 **Tier 8**（GDC Vault、SIGGRAPH、Unity Blog、Unreal Blog）
+2. 游戏葡萄、GameRes、GameLook 搜索 AI 美术/TA 相关
+3. 知乎「技术美术」「游戏渲染」话题
+4. CSDN/掘金 TA、Shader、渲染管线标签
+
+### 知乎精选采集
+1. 优先通过 `opencli` 访问关注动态时间线，筛选 AI 实战内容
+2. 通过 `opencli` 扫描收藏夹近期收藏
+3. 游戏美术/TA/Unity/Unreal 相关内容额外加权
+4. 不足时用 WebFetch `site:zhihu.com` 补充搜索
 
 ### 工具发现采集
 1. ProductHunt AI

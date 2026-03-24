@@ -9,7 +9,7 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 > **核心定位：不追新闻热点，只追"今天能用"的 AI 技巧。**
 > 聚焦可立刻应用到工作中的技术分享：AI 编程实战、AI 美术工作流、AI 提效工具。
 >
-> **多智能体并行架构**：主智能体作为调度器，通过 Agent tool 并行派发 5 个 Worker 子智能体分别负责不同分类的搜索与抓取，最后由主智能体汇总、去重、过滤、格式化并输出。搜索阶段从串行 ~20 分钟压缩到并行 ~5 分钟。
+> **多智能体并行架构**：主智能体作为调度器，通过 Agent tool 并行派发 6 个 Worker 子智能体分别负责不同分类的搜索与抓取，最后由主智能体汇总、去重、过滤、格式化并输出。搜索阶段从串行 ~20 分钟压缩到并行 ~5 分钟。
 >
 > **检查点机制**：每个 Worker 将原始结果写入 `output/.cache/practice-{category}-YYYYMMDD.md`。如果执行中断，再次触发时自动跳过已完成的 Worker，只补跑缺失分类。
 >
@@ -22,15 +22,31 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 > 主智能体（调度器）
 >   ├─ 阶段 0.5：读历史日报，构建去重清单
 >   ├─ 阶段 A：检查点检测（跳过已有 cache 的分类）
->   ├─ 阶段 B：并行派发 5 个 Worker（Agent tool）
+>   ├─ 阶段 B：并行派发 6 个 Worker（Agent tool）
 >   │   ├─ Worker 1：AI 编程实战（coding）
 >   │   ├─ Worker 2：开源 Agent 实战（agent）
 >   │   ├─ Worker 3：AI 美术工作流（art）
 >   │   ├─ Worker 4：AI 提效工具 + GitHub Trending（tools-github）
->   │   └─ Worker 5：B站精选（bilibili）
+>   │   ├─ Worker 5：B站精选（bilibili）
+>   │   └─ Worker 6：知乎精选（zhihu）
 >   │   → 每个 Worker 写入 output/.cache/practice-{category}-YYYYMMDD.md
 >   └─ 阶段 C：汇总（读 cache → 去重 → 过滤 → 分类 → 格式化 → 保存）
 > ```
+
+## 用户画像
+
+> 以下画像用于阶段 C 汇总时做个性化过滤、优先级加权和落地建议生成。
+
+| 维度 | 描述 |
+|------|------|
+| **角色** | TA（技术美术）+ 美术副总监，兼顾技术深度与团队管理 |
+| **公司类型** | 手游 SLG 公司 |
+| **主力引擎** | Unity / Unreal Engine |
+| **关注领域** | 游戏美术全管线（原画、模型、动作、特效、地编、UI）、渲染/Shader/TA、AI 辅助美术生产、AI 编程提效 |
+| **内容偏好权重** | 游戏美术管线/TA/Shader/渲染 > Unity/Unreal AI 工具 > 可被团队采纳推广的通用 AI 工具 > 纯 Web/前端 AI |
+| **价值判断标准** | 能否在 SLG 美术团队中落地？投入产出比如何？哪些角色最受益？ |
+
+---
 
 ## 何时使用此技能
 
@@ -94,19 +110,19 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 
 ### 检测逻辑
 
-1. **列出 cache 文件**：查找 `output/.cache/practice-{category}-YYYYMMDD.md`，其中 category 为：`coding`、`agent`、`art`、`tools-github`、`bilibili`
-2. **全部存在**（5 个 cache 文件都有）→ 跳过阶段 B，直接进入阶段 C（汇总）
+1. **列出 cache 文件**：查找 `output/.cache/practice-{category}-YYYYMMDD.md`，其中 category 为：`coding`、`agent`、`art`、`tools-github`、`bilibili`、`zhihu`
+2. **全部存在**（6 个 cache 文件都有）→ 跳过阶段 B，直接进入阶段 C（汇总）
 3. **部分存在** → 只派发缺失分类对应的 Worker
-4. **全部不存在** → 正常派发全部 5 个 Worker
+4. **全部不存在** → 正常派发全部 6 个 Worker
 5. **cache 目录不存在** → 自动创建 `output/.cache/`，然后派发全部 Worker
 
 ---
 
 ## 阶段 B：并行搜索派发
 
-**使用 Agent tool 同时派发 5 个子智能体**，每个 Worker 独立完成一个分类的搜索、抓取和初筛，将结果写入对应的 cache 文件。
+**使用 Agent tool 同时派发 6 个子智能体**，每个 Worker 独立完成一个分类的搜索、抓取和初筛，将结果写入对应的 cache 文件。
 
-> **关键指令**：必须在一次响应中同时调用 5 个 Agent tool（或根据阶段 A 的检测结果，只调用缺失分类的 Worker），实现真正的并行执行。
+> **关键指令**：必须在一次响应中同时调用 6 个 Agent tool（或根据阶段 A 的检测结果，只调用缺失分类的 Worker），实现真正的并行执行。
 >
 > **关键稳定性要求**：
 > - 派发完成后，主智能体**不要依赖子智能体的 completion announce / 自动回传消息**来判断流程是否可以继续。
@@ -126,7 +142,7 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 
 在派发缺失分类对应的 Worker 后，主智能体按下面的方式检查完成状态：
 
-1. 记录本轮缺失分类列表，例如：`coding`、`agent`、`art`、`tools-github`、`bilibili`
+1. 记录本轮缺失分类列表，例如：`coding`、`agent`、`art`、`tools-github`、`bilibili`、`zhihu`
 2. 进入**文件检查循环**，每轮只检查这些分类对应的 cache 文件是否已存在且可读
 3. 检查方式优先使用 `read` / `ls` / `find` / `rg --files` 之类的轻量工具；不要靠子智能体回传消息做阻塞等待
 4. 每轮检查后，将已落盘的分类从待完成列表移除
@@ -139,7 +155,7 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 - 不要因为“只剩某个 Worker 没回消息”而一直卡住
 - 不要把“announce 超时”解释成整个任务失败
 - 不要在一个长时间循环里频繁刷 `subagents list` 或等待 completion announce
-- 不要要求 5 个分类必须全部完成才允许进入阶段 C
+- 不要要求 6 个分类必须全部完成才允许进入阶段 C
 
 #### 搜索与抓取工具使用规则
 
@@ -167,6 +183,12 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 ```
 ```
 "LLM" integration OR API best practices tutorial
+```
+```
+"Unity" AI plugin OR "AI Shader" OR "procedural generation" tutorial
+```
+```
+"Unreal Engine" AI plugin OR "AI NPC" OR "behavior tree" AI integration
 ```
 
 #### 工程博客抓取（选 2-3 个）
@@ -255,7 +277,7 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 
 **写入路径**：`output/.cache/practice-art-YYYYMMDD.md`
 
-搜索 SD/Flux 和 AI 美术制作技巧。
+搜索 SD/Flux、AI 美术制作技巧，以及 GDC/SIGGRAPH/Unity/Unreal 游戏美术管线内容（覆盖原画、模型、动作、特效、地编、UI、渲染/Shader/TA）。
 
 #### 搜索查询（英文）
 ```
@@ -266,6 +288,31 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 ```
 ```
 "AI video" generation OR "Sora" OR "Kling" OR "Runway" tutorial
+```
+
+#### GDC / SIGGRAPH 游戏美术查询
+```
+GDC "art pipeline" OR "technical art" OR "rendering" OR "shader" 2025 2026
+```
+```
+SIGGRAPH "game art" OR "real-time rendering" OR "procedural" 2025 2026
+```
+```
+GDC OR SIGGRAPH "concept art" OR "3D modeling" OR "animation" OR "VFX" AI
+```
+```
+GDC OR SIGGRAPH "level design" OR "UI" OR "environment art" AI workflow
+```
+
+#### Unity / Unreal 美术管线查询
+```
+"Unity" "AI terrain" OR "AI texture" OR "AI animation" OR "AI VFX" tutorial
+```
+```
+"Unreal Engine" "AI art pipeline" OR "AI texture" OR "procedural" OR "AI animation"
+```
+```
+"Unity" OR "Unreal" "AI shader" OR "AI rendering" OR "technical art" workflow
 ```
 
 #### 中文美术搜索
@@ -279,9 +326,28 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程
 ```
 
-#### 美术来源抓取（选 1-2 个）
+#### 中文游戏美术 AI 搜索
+```
+"游戏美术" AI OR "AI美术管线" OR "AI原画" OR "AI建模" 实战 OR 教程
+```
+```
+"技术美术" OR "TA" AI OR "AI Shader" OR "AI渲染" 实战 OR 教程
+```
+```
+"Unity" OR "Unreal" AI美术 OR AI动画 OR AI特效 教程 OR 实战
+```
+
+#### 美术来源抓取（选 2-3 个）
 - Civitai：https://civitai.com/
 - LiblibAI：https://www.liblib.art/
+
+#### 游戏行业来源抓取（选 2-3 个）
+- GDC Vault：https://gdcvault.com/ （搜索 AI art / technical art / rendering）
+- Unity Blog：https://unity.com/blog （搜索 AI 相关）
+- Unreal Blog：https://www.unrealengine.com/blog （搜索 AI 相关）
+- 游戏葡萄：https://youxiputao.com/ （搜索 AI 美术）
+- GameRes：https://www.gameres.com/ （搜索 AI / TA）
+- GameLook：https://www.gamelook.com.cn/ （搜索 AI 美术 / 技术美术）
 
 ---
 
@@ -303,6 +369,12 @@ site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程
 ```
 ```
 site:producthunt.com AI tool
+```
+```
+"Unity" AI tool OR plugin OR asset 2026
+```
+```
+"Unreal Engine" AI plugin OR tool OR marketplace 2026
 ```
 
 #### 中文工具搜索
@@ -382,6 +454,59 @@ WebFetch: {subtitle_url}
 
 ---
 
+### Worker 6：知乎精选（category: zhihu）
+
+**写入路径**：`output/.cache/practice-zhihu-YYYYMMDD.md`
+
+通过 `opencli` 访问用户知乎关注动态和收藏夹，筛选 AI 实战相关内容，提取核心技术点。游戏美术/TA/Unity/Unreal 相关内容额外加权。
+
+> **访问方式**：优先使用 `opencli` 复用 Chrome 登录态访问知乎；`opencli` 不可用时降级到托管浏览器；最后回退到 WebFetch `site:zhihu.com` 搜索。
+
+#### 执行步骤
+
+1. **获取关注动态时间线**：使用 `opencli` 访问知乎关注动态（首页 → 关注），获取近期文章和回答（优先 7 天内，最多 14 天）
+2. **扫描收藏夹**：使用 `opencli` 访问用户收藏夹列表，扫描近期收藏的内容
+3. **站内搜索补充**：如果关注动态和收藏夹中 AI 实战内容不足 3 条，使用以下查询补充搜索：
+   ```
+   site:zhihu.com "AI实战" OR "AI工作流" OR "AI编程" 教程 OR 实战
+   ```
+   ```
+   site:zhihu.com "游戏美术" AI OR "技术美术" AI OR "TA" AI Shader
+   ```
+   ```
+   site:zhihu.com "Unity" OR "Unreal" AI 工具 OR 插件 OR 工作流
+   ```
+4. **筛选标准**：只保留与 AI 编程/Agent/工具/美术工作流/游戏开发相关的内容，纯观点/情绪向内容跳过
+5. **加权规则**：游戏美术/TA/Unity/Unreal 相关内容优先收录
+
+#### 降级策略
+
+```
+opencli（知乎适配器）
+  ↓ 失败
+托管浏览器（browser）访问 zhihu.com，复用登录态
+  ↓ 失败
+WebFetch site:zhihu.com 搜索
+  ↓ 失败
+跳过该来源
+```
+
+#### 内容整理要求
+
+从文章/回答中提炼：
+- **核心技术点**：讲了什么技术/工具/方法
+- **关键步骤**：可操作的具体步骤（如有）
+- **工具/资源**：提到的工具名、GitHub 链接、文档地址
+- **亮点结论**：最值得记住的 1-2 句话
+
+#### 筛选重点
+- 优先选择有具体操作步骤或代码的内容（而非纯讨论）
+- 游戏美术/TA/Shader/渲染相关内容额外加权
+- Unity/Unreal AI 工具相关内容额外加权
+- 每次日报最多收录 3 条知乎内容，避免比例失衡
+
+---
+
 ## Cache 文件格式规范
 
 每个 Worker 写入的 cache 文件必须使用以下 Markdown 格式（方便 LLM 直接读写，减少格式错误）：
@@ -389,7 +514,7 @@ WebFetch: {subtitle_url}
 ```markdown
 # AI Practice Raw Cache — {分类名}
 # Generated: YYYY-MM-DD HH:MM
-# Category: coding | agent | art | tools-github | bilibili
+# Category: coding | agent | art | tools-github | bilibili | zhihu
 
 ## Item 1
 - **标题**: xxx
@@ -415,7 +540,7 @@ WebFetch: {subtitle_url}
 
 读取 `output/.cache/` 下本轮**实际成功落盘**的 cache 文件，合并为统一的候选内容池。
 
-- 如果 5 个分类都落盘 → 正常全量汇总
+- 如果 6 个分类都落盘 → 正常全量汇总
 - 如果只有部分分类落盘 → 只汇总已落盘分类，并在最终文档中明确列出缺失分类及原因
 - 至少有 2 个分类成功落盘时，就应继续产出日报，避免因为单一来源失败导致整单中断
 
@@ -443,19 +568,26 @@ WebFetch: {subtitle_url}
 - 超过 7 天的旧内容
 - 重复/重叠内容
 
-从候选池中选出最有价值的 10-15 条结果。
+**用户画像加权**（参考"用户画像"章节）：
+- 游戏美术管线/TA/Shader/渲染 → 提升优先级
+- Unity/Unreal AI 工具 → 提升优先级
+- 可被团队采纳推广的内容 → 提升优先级
+- 与游戏无关的纯 Web/前端 AI → 降低优先级
+
+从候选池中选出最有价值的 8-12 条结果，贵精不贵多，每条写深写透。
 
 ### C.4 分类 + 评级 + 标签
 
-#### 六大分类
+#### 七大分类
 
 | 分类 | 锚点 | 内容范围 |
 |------|------|----------|
-| 🖥️ AI 编程实战 | `code-01` | Claude Code 工作流、Cursor 技巧、提示词工程、LLM 集成 |
+| 🖥️ AI 编程实战 | `code-01` | Claude Code 工作流、Cursor 技巧、提示词工程、LLM 集成、Unity/Unreal AI 编程 |
 | 🤖 开源 Agent 实战 | `agent-01` | OpenClaw/AutoGen/CrewAI/LangGraph 落地分享、多智能体架构、Agent 技术方向 |
-| 🎨 AI 美术工作流 | `art-01` | SD/Flux 技巧、AI 3D/视频、游戏美术管线 |
-| 🔧 AI 提效工具 | `tool-01` | 新工具发现、插件、自动化方案 |
+| 🎨 AI 美术工作流 | `art-01` | SD/Flux 技巧、AI 3D/视频、游戏美术管线（原画/模型/动作/特效/地编/UI/渲染/Shader/TA）、GDC/SIGGRAPH |
+| 🔧 AI 提效工具 | `tool-01` | 新工具发现、插件、自动化方案、Unity/Unreal AI 工具 |
 | 📺 B站精选 | `bili-01` | 关注列表 AI 分组博主近期视频，字幕提取核心技术点 |
+| 📖 知乎精选 | `zhihu-01` | 关注动态 + 收藏夹中的 AI 实战文章/回答，游戏美术/TA 内容加权 |
 | 🔥 GitHub 热门 | `gh-01` | 值得试用的 Trending AI 仓库 |
 
 #### 难度评级（每条内容）
@@ -486,7 +618,20 @@ WebFetch: {subtitle_url}
   - 美术工作流：`art-01`、`art-02`…
   - 提效工具：`tool-01`、`tool-02`…
   - B站精选：`bili-01`、`bili-02`…
+  - 知乎精选：`zhihu-01`、`zhihu-02`…
   - GitHub 热门：`gh-01`、`gh-02`…
+
+#### 团队价值评估与角色标签（每条内容必须包含）
+
+每条内容在"快速上手"或"工作流概述"之后，追加以下字段：
+
+- **🎯 对团队的价值**：评估该内容与 SLG 美术团队的相关性、可采纳性、投入产出比（1-2 句话）
+- **💡 落地建议**：告诉用户怎么在 SLG 美术团队里落地（具体到谁来做、怎么做、预期效果）
+- **角色标签**（至少选一个）：
+  - `TA必看` — 技术美术直接相关的 Shader/渲染/管线内容
+  - `管理者关注` — 影响团队效率或流程的决策级内容
+  - `团队可推广` — 可以在团队内培训推广的实操技巧
+  - `技术预研` — 需要进一步评估但值得关注的前沿方向
 
 #### 与新闻 skill 的关键区别
 
