@@ -199,7 +199,7 @@
 
 **社交媒体**
 - **X（Twitter）**：https://x.com/karpathy
-- **访问方式**：`托管浏览器（最近动态）` + `opencli twitter profile（账号元信息，已验证）`
+- **访问方式**：`opencli（连接本地已登录浏览器，最近动态/帖子上下文）` + `opencli twitter profile（账号元信息，已验证）`
 
 **视频**
 - **YouTube**：https://www.youtube.com/andrejkarpathy
@@ -246,14 +246,14 @@
 - 添加 TechCrunch AI（快速突发新闻）
 - 检查 Twitter/X 获取实时更新
   - 账号元信息：优先 `opencli twitter profile`
-  - 最近帖子 / 搜索：当前机器直接用托管浏览器，不再先试 `opencli twitter search`
+  - 最近帖子 / 搜索 / 帖子展开：当前机器优先用 `opencli` 连接本地已登录浏览器，不再把托管浏览器未登录视为无效来源
 
 **深度分析**：
 - MIT Technology Review
 - VentureBeat 深度文章
 - 公司博客文章（完整公告）
 
-### 大神模块补充来源（2026-03-24 本机缓存）
+### 大神模块补充来源（2026-03-25 本机复核）
 
 为避免与 `SKILL.md` 脱节，下面这些官方/白名单来源也统一记录访问方式：
 
@@ -269,8 +269,8 @@
   - `https://www.anthropic.com/engineering` → `待验证，默认 web_fetch`
 
 - **Elon Musk / xAI / Tesla AI**
-  - `https://x.com/elonmusk` → `托管浏览器（最近动态）` + `opencli twitter profile（账号元信息，已验证）`
-  - `https://x.com/xai` → `托管浏览器（最近动态）` + `opencli twitter profile（账号元信息，已验证）`
-  - `https://x.ai/` → `托管浏览器（已验证需要）`
+  - `https://x.com/elonmusk` → `opencli（连接本地已登录浏览器，最近动态/帖子上下文）` + `opencli twitter profile（账号元信息，已验证）`
+  - `https://x.com/xai` → `opencli（连接本地已登录浏览器，最近动态/帖子上下文）` + `opencli twitter profile（账号元信息，已验证）`
+  - `https://x.ai/` → `opencli（连接本地已登录浏览器优先）`
   - `https://www.tesla.com/AI` → `托管浏览器（已验证需要）`
   - `https://www.tesla.com/blog` → `托管浏览器（已验证需要）`
