@@ -77,6 +77,8 @@ opencli <adapter> <subcommand> -f json
 - 只有用户明确要求网页版，或 `opencli chatgpt` 连续失败时，才允许回退到浏览器版 ChatGPT
 - `opencli chatgpt` 走的是桌面 App 自动化，不依赖 Browser Bridge 扩展；不要把 `opencli doctor` 里的扩展/daemon 结果当成 ChatGPT.app 失败的原因
 - 对 ChatGPT，默认优先使用单入口：`opencli chatgpt ask --fresh true --timeout 600 "..."`
+- 当前 `opencli chatgpt ask / send` 默认会预热并开启 ChatGPT.app 的“搜索网页”模式；对最新资料、链接整理、GitHub / 博客检索这类任务，直接按默认行为执行，不要再额外要求手动开搜索
+- 如果用户明确要求“不要联网”“只基于现有上下文回答”或“不要触发搜索”，才允许显式关闭：`OPENCLI_CHATGPT_WEB_SEARCH=off opencli chatgpt ask ...` 或 `OPENCLI_CHATGPT_WEB_SEARCH=off opencli chatgpt send ...`
 - 如果是在同一个 ChatGPT 线程里继续追问，不要再 `new`，而是继续 `opencli chatgpt ask --timeout 600 "..."`
 - 不要默认让模型自己发明复杂状态机；优先保持 ask 单入口
 - `opencli chatgpt new / send / read` 主要用于排障，不是默认主路径
@@ -110,7 +112,12 @@ opencli chatgpt status
 opencli chatgpt state -f json
 opencli chatgpt ask --fresh true --timeout 600 "..."
 opencli chatgpt ask --timeout 600 "..."
+OPENCLI_CHATGPT_WEB_SEARCH=off opencli chatgpt ask --fresh true --timeout 600 "..."
+OPENCLI_CHATGPT_WEB_SEARCH=off opencli chatgpt send "..."
 ```
+
+- 上面两条 `ask` / `send` 默认都会开启 ChatGPT.app 的“搜索网页”模式。
+- 只有主人明确要求不要联网时，才使用 `OPENCLI_CHATGPT_WEB_SEARCH=off` 显式关闭。
 
 ### ChatGPT ask 何时算完成
 

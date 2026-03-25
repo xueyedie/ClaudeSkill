@@ -1,42 +1,18 @@
 #!/bin/bash
 # 将大 MD 文件分批追加到 Notion 页面（每批最多 80 行，留余量）
 # 用法: batch_append.sh <page_id> <md_file_path>
+#
+# 重要：不得在 ``` 围栏未闭合处切断，否则 notion_cli 会把后续正文误解析成
+# 多段代码块/段落，Notion 客户端易出现「正在加载 Plain Text 代码」与金字塔残缺。
+# 实际切分由同目录 md_batch_append.py 完成。
 
 PAGE_ID="$1"
 MD_FILE="$2"
-BATCH_SIZE=80
-CLI="/Users/bot/.openclaw/workspace/skills/notion-workspace/scripts/notion_cli.py"
+HERE="$(cd "$(dirname "$0")" && pwd)"
 
 if [ -z "$PAGE_ID" ] || [ -z "$MD_FILE" ]; then
   echo "Usage: batch_append.sh <page_id> <md_file_path>"
   exit 1
 fi
 
-TOTAL_LINES=$(wc -l < "$MD_FILE")
-echo "File: $MD_FILE ($TOTAL_LINES lines)"
-
-START=1
-BATCH=1
-while [ $START -le $TOTAL_LINES ]; do
-  END=$((START + BATCH_SIZE - 1))
-  CHUNK=$(sed -n "${START},${END}p" "$MD_FILE")
-  
-  if [ -z "$CHUNK" ]; then
-    START=$((END + 1))
-    continue
-  fi
-  
-  echo "Appending batch $BATCH (lines $START-$END)..."
-  python3 "$CLI" append-text "$PAGE_ID" --content "$CHUNK"
-  
-  if [ $? -ne 0 ]; then
-    echo "ERROR: Batch $BATCH failed at lines $START-$END"
-    exit 1
-  fi
-  
-  START=$((END + 1))
-  BATCH=$((BATCH + 1))
-  sleep 0.5
-done
-
-echo "Done! Appended $((BATCH - 1)) batches."
+exec python3 "$HERE/md_batch_append.py" "$PAGE_ID" "$MD_FILE" --batch-lines 80 --sleep 0.5

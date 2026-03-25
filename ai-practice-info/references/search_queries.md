@@ -145,21 +145,13 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 
 ## AI 美术工作流查询
 
-### Stable Diffusion / Flux
+### AI 生图 / 生视频
 ```
-"Stable Diffusion" OR "SDXL" tips OR tricks OR tutorial after:[yesterday]
-```
-```
-"Flux" model OR workflow OR tutorial after:[yesterday]
+"AI image generation" workflow OR tips OR tutorial after:[yesterday]
 ```
 ```
-"LoRA" training OR tips OR tutorial after:[week_ago]
+"AI art" workflow OR pipeline game after:[week_ago]
 ```
-```
-"Stable Diffusion" OR "Flux" 技巧 OR 教程 after:[yesterday]
-```
-
-### AI 3D / 视频生成
 ```
 "AI 3D" generation OR modeling tutorial after:[week_ago]
 ```
@@ -228,7 +220,7 @@ GDC OR SIGGRAPH "level design" OR "UI" OR "environment art" AI workflow after:[w
 
 ### 小红书美术教程
 ```
-site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程 after:[yesterday]
+site:xiaohongshu.com "AI绘画" OR "AI生图" 教程 OR 工作流 after:[yesterday]
 ```
 ```
 site:xiaohongshu.com "AI视频" OR "AI 3D" 教程 after:[yesterday]
@@ -245,7 +237,7 @@ site:bilibili.com "AI Agent" OR "AutoGen" OR "CrewAI" 实战 after:[week_ago]
 site:bilibili.com "AI工具" OR "AI提效" 教程 OR 实战 after:[week_ago]
 ```
 ```
-site:bilibili.com "AI绘画" OR "Flux" OR "SD" 教程 after:[week_ago]
+site:bilibili.com "AI绘画" OR "AI生图" 教程 OR 工作流 after:[week_ago]
 ```
 
 ---
@@ -274,7 +266,7 @@ site:zhihu.com "Unity" OR "Unreal" AI 工具 OR 插件 OR 工作流 after:[week_
 site:zhihu.com "AI绘画" OR "AI建模" OR "AI动画" 实战 OR 教程 after:[week_ago]
 ```
 ```
-site:zhihu.com "Stable Diffusion" OR "Flux" OR "ComfyUI" 教程 OR 工作流 after:[week_ago]
+site:zhihu.com "AI绘画" OR "AI生图" OR "ComfyUI" 教程 OR 工作流 after:[week_ago]
 ```
 
 ---
@@ -398,9 +390,9 @@ Query 4: "AI编程" 技巧 OR 实战 after:[yesterday]
 
 ### 美术工作流聚焦
 ```
-Query 1: "Stable Diffusion" OR "Flux" tips OR tricks after:[yesterday]
+Query 1: "AI image generation" workflow OR tips game art after:[yesterday]
 Query 2: "AI video" OR "AI 3D" tutorial after:[week_ago]
-Query 3: site:xiaohongshu.com "AI绘画" OR "Flux" 教程 after:[yesterday]
+Query 3: site:xiaohongshu.com "AI绘画" OR "AI生图" 教程 after:[yesterday]
 ```
 
 ### 游戏美术管线聚焦
@@ -431,7 +423,7 @@ Query 4: "open source AI agent" framework comparison 2026
 ```
 Query 1: "Claude Code" OR "Cursor" OR "AI coding" tips after:[yesterday]
 Query 2: "AutoGen" OR "CrewAI" OR "AI agent" tutorial OR production after:[week_ago]
-Query 3: "Stable Diffusion" OR "Flux" workflow tutorial after:[yesterday]
+Query 3: "AI image generation" workflow OR tutorial game art after:[yesterday]
 Query 4: "AI tool" new OR launch 2026 after:[yesterday]
 Query 5: GitHub trending AI today
 Query 6: "AI实战" OR "AI技巧" OR "AI Agent" 落地 after:[yesterday]

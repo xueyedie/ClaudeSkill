@@ -143,10 +143,10 @@
 - **侧重**: 本地模型部署实战
 - **优势**: 本地运行 LLM 的经验分享
 
-### 4. Reddit r/StableDiffusion
-- **URL**: https://reddit.com/r/StableDiffusion
-- **侧重**: SD/Flux 技巧
-- **优势**: AI 绘画技巧社区
+### 4. Reddit r/aivideo / r/AIGenArt
+- **URL**: https://reddit.com/r/aivideo, https://reddit.com/r/AIGenArt
+- **侧重**: AI 生图/生视频实战技巧
+- **优势**: 覆盖主流 AI 图像与视频生成工作流
 
 ### 5. Hacker News
 - **URL**: https://news.ycombinator.com
@@ -258,21 +258,7 @@
 
 ---
 
-## 中文 Tier 7: AI 美术/游戏垂直
-
-### 1. Civitai
-- **URL**: https://civitai.com
-- **侧重**: SD/Flux 模型、工作流
-- **优势**: 全球最大 AI 美术模型社区
-
-### 2. LiblibAI
-- **URL**: https://liblib.art
-- **侧重**: 国内 AI 绘画
-- **优势**: 国内 AI 绘画平台
-
----
-
-## Tier 8: 游戏行业 + TA/渲染垂直
+## Tier 7: 游戏行业 + TA/渲染垂直
 
 ### 1. GDC Vault
 - **URL**: https://gdcvault.com
@@ -294,22 +280,12 @@
 - **侧重**: UE AI 功能、Nanite/Lumen/MetaHuman、美术管线
 - **优势**: Unreal 官方一手资料，覆盖渲染/Shader/程序化生成
 
-### 5. 游戏葡萄
-- **URL**: https://youxiputao.com
-- **侧重**: 国内游戏行业深度报道、技术分享
-- **优势**: 中文游戏行业头部媒体，AI 美术/技术美术内容丰富
-
-### 6. GameRes 游资网
+### 5. GameRes 游资网
 - **URL**: https://www.gameres.com
 - **侧重**: 游戏开发技术文章、TA/渲染/美术管线
 - **优势**: 国内游戏开发者社区，技术深度较高
 
-### 7. GameLook
-- **URL**: https://www.gamelook.com.cn
-- **侧重**: 游戏行业观察、AI 技术应用
-- **优势**: 游戏行业 AI 应用趋势跟踪
-
-### 8. 国内 TA/渲染社区
+### 6. 国内 TA/渲染社区
 - **方式**: 搜索知乎「技术美术」「游戏渲染」话题、CSDN/掘金 TA 标签
 - **侧重**: Shader 开发、渲染管线、技术美术实战
 - **优势**: 中文 TA 社区一线实践分享
@@ -323,16 +299,13 @@
 2. 补充 **Tier 2** 大牛分享（Simon Willison、Karpathy）
 3. **Tier 3** 社区发现（Reddit、HN）
 
-### 美术工作流采集
-1. 优先查 **Tier 7**（Civitai、LiblibAI）
-2. Reddit r/StableDiffusion
-3. 小红书 AI 绘画教程
-
-### 游戏美术管线采集
-1. 优先查 **Tier 8**（GDC Vault、SIGGRAPH、Unity Blog、Unreal Blog）
-2. 游戏葡萄、GameRes、GameLook 搜索 AI 美术/TA 相关
-3. 知乎「技术美术」「游戏渲染」话题
-4. CSDN/掘金 TA、Shader、渲染管线标签
+### 美术工作流 + 游戏美术管线采集
+1. 优先查 **Tier 7**（GDC Vault、SIGGRAPH、Unity Blog、Unreal Blog）
+2. GameRes 搜索 AI 美术/TA 相关
+3. Reddit AI 生图/视频社区
+4. 小红书 AI 绘画教程
+5. 知乎「技术美术」「游戏渲染」话题
+6. CSDN/掘金 TA、Shader、渲染管线标签
 
 ### 知乎精选采集
 1. 优先通过 `opencli` 访问关注动态时间线，筛选 AI 实战内容

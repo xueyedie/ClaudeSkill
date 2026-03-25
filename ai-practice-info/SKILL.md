@@ -53,7 +53,7 @@ description: "AI 实战技巧日报 — 不追新闻热点，只追'今天能用
 当用户出现以下情况时激活此技能：
 - 说出："AI实战" / "AI技巧" / "AI practice"
 - 说出："AI编程技巧" / "Claude Code 最佳实践" / "Cursor 技巧"
-- 说出："AI美术工作流" / "SD技巧" / "Flux教程" / "AI视频生成"
+- 说出："AI美术工作流" / "AI生图技巧" / "AI视频生成"
 - 说出："AI工具推荐" / "AI提效" / "AI工具发现"
 - 说出："AI Agent实战" / "开源Agent" / "AutoGen" / "CrewAI" / "OpenClaw"
 - 询问实用的 AI 技巧、窍门或工作流
@@ -277,11 +277,11 @@ site:juejin.cn "AI Agent" OR "多智能体" 实战 OR 教程 after:[week_ago]
 
 **写入路径**：`output/.cache/practice-art-YYYYMMDD.md`
 
-搜索 SD/Flux、AI 美术制作技巧，以及 GDC/SIGGRAPH/Unity/Unreal 游戏美术管线内容（覆盖原画、模型、动作、特效、地编、UI、渲染/Shader/TA）。
+搜索 AI 生图/生视频实战技巧，以及 GDC/SIGGRAPH/Unity/Unreal 游戏美术管线内容（覆盖原画、模型、动作、特效、地编、UI、渲染/Shader/TA）。
 
 #### 搜索查询（英文）
 ```
-"Stable Diffusion" OR "Flux" tips OR tricks OR workflow
+"AI image generation" workflow OR tips OR tutorial game art
 ```
 ```
 "AI 3D" generation OR modeling tutorial
@@ -323,7 +323,7 @@ GDC OR SIGGRAPH "level design" OR "UI" OR "environment art" AI workflow
 "AI美术" 实战 OR 管线 OR pipeline
 ```
 ```
-site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程
+site:xiaohongshu.com "AI绘画" OR "AI生图" 教程 OR 工作流
 ```
 
 #### 中文游戏美术 AI 搜索
@@ -337,17 +337,11 @@ site:xiaohongshu.com "AI绘画" OR "SD" OR "Flux" 教程
 "Unity" OR "Unreal" AI美术 OR AI动画 OR AI特效 教程 OR 实战
 ```
 
-#### 美术来源抓取（选 2-3 个）
-- Civitai：https://civitai.com/
-- LiblibAI：https://www.liblib.art/
-
 #### 游戏行业来源抓取（选 2-3 个）
 - GDC Vault：https://gdcvault.com/ （搜索 AI art / technical art / rendering）
 - Unity Blog：https://unity.com/blog （搜索 AI 相关）
 - Unreal Blog：https://www.unrealengine.com/blog （搜索 AI 相关）
-- 游戏葡萄：https://youxiputao.com/ （搜索 AI 美术）
 - GameRes：https://www.gameres.com/ （搜索 AI / TA）
-- GameLook：https://www.gamelook.com.cn/ （搜索 AI 美术 / 技术美术）
 
 ---
 
@@ -584,7 +578,7 @@ WebFetch site:zhihu.com 搜索
 |------|------|----------|
 | 🖥️ AI 编程实战 | `code-01` | Claude Code 工作流、Cursor 技巧、提示词工程、LLM 集成、Unity/Unreal AI 编程 |
 | 🤖 开源 Agent 实战 | `agent-01` | OpenClaw/AutoGen/CrewAI/LangGraph 落地分享、多智能体架构、Agent 技术方向 |
-| 🎨 AI 美术工作流 | `art-01` | SD/Flux 技巧、AI 3D/视频、游戏美术管线（原画/模型/动作/特效/地编/UI/渲染/Shader/TA）、GDC/SIGGRAPH |
+| 🎨 AI 美术工作流 | `art-01` | AI 生图/生视频技巧、游戏美术管线（原画/模型/动作/特效/地编/UI/渲染/Shader/TA）、GDC/SIGGRAPH |
 | 🔧 AI 提效工具 | `tool-01` | 新工具发现、插件、自动化方案、Unity/Unreal AI 工具 |
 | 📺 B站精选 | `bili-01` | 关注列表 AI 分组博主近期视频，字幕提取核心技术点 |
 | 📖 知乎精选 | `zhihu-01` | 关注动态 + 收藏夹中的 AI 实战文章/回答，游戏美术/TA 内容加权 |

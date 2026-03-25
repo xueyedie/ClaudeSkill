@@ -12,6 +12,7 @@ import os
 import sys
 import textwrap
 import urllib.error
+import urllib.parse
 import urllib.request
 from typing import Any
 
@@ -280,6 +281,8 @@ def blocks_from_text(text: str) -> list[dict[str, Any]]:
         # Code block (fenced)
         if stripped.startswith("```"):
             lang = stripped[3:].strip() or "plain text"
+            if lang == "text":
+                lang = "plain text"
             code_lines: list[str] = []
             i += 1
             while i < len(lines):
@@ -397,8 +400,34 @@ def list_block_text(blocks: list[dict[str, Any]]) -> list[dict[str, Any]]:
         # Notion child pages expose their title on child_page.title, not rich_text.
         if not text and block_type == "child_page":
             text = payload.get("title", "")
-        lines.append({"type": block_type, "text": text})
+        # Expose block id so callers can open child_page / child_database without fragile shell.
+        # For child_page blocks, this id is the same as the nested page id.
+        bid = block.get("id")
+        entry: dict[str, Any] = {"type": block_type, "text": text}
+        if bid:
+            entry["id"] = bid
+        lines.append(entry)
     return lines
+
+
+def fetch_all_block_children(page_id: str, page_size: int = 100) -> list[dict[str, Any]]:
+    """List all direct child blocks (follows Notion pagination)."""
+    all_results: list[dict[str, Any]] = []
+    cursor: str | None = None
+    while True:
+        query: dict[str, str | int] = {"page_size": page_size}
+        if cursor:
+            query["start_cursor"] = cursor
+        qs = urllib.parse.urlencode(query)
+        path = f"/blocks/{page_id}/children?{qs}"
+        data = notion_request("GET", path)
+        all_results.extend(data.get("results", []))
+        if not data.get("has_more"):
+            break
+        cursor = data.get("next_cursor")
+        if not cursor:
+            break
+    return all_results
 
 
 def cmd_search(args: argparse.Namespace) -> None:
@@ -419,11 +448,11 @@ def cmd_search(args: argparse.Namespace) -> None:
 
 def cmd_get_page(args: argparse.Namespace) -> None:
     page = notion_request("GET", f"/pages/{args.page_id}")
-    children = notion_request("GET", f"/blocks/{args.page_id}/children?page_size=100")
+    child_blocks = fetch_all_block_children(args.page_id)
     summary = {
         "page": summarize_result(page),
         "properties": page.get("properties", {}),
-        "children": list_block_text(children.get("results", [])),
+        "children": list_block_text(child_blocks),
     }
     if args.format == "json":
         print(json.dumps(summary, ensure_ascii=False, indent=2))
